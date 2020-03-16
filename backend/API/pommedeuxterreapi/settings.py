@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['10.10.153.8']
-
+LOGIN_REDIRECT_URL = '../../blog/'
 
 # Application definition
 
@@ -90,13 +90,14 @@ DATABASES = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES':{
+    ),
+    'DEFAULT_PERMISSION_CLASSES':(
         'rest_framework.permissions.IsAuthenticated',
-    }
+    )
 }
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

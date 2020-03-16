@@ -1,0 +1,7 @@
+.container-fluid{
+    background-color: darkslategrey;
+    color: white;
+    border-top: 2px solid white;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}

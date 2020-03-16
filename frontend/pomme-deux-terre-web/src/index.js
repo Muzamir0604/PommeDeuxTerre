@@ -6,6 +6,8 @@ import Login from './components/login'
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
+import Blog from './components/blog';
+import BlogOverview from './components/blog-overview';
 
 
 // dont forget to install react-router-dom
@@ -16,6 +18,8 @@ const routing = (
     <CookiesProvider>
       <Route exact path="/" component={Login} />
       <Route exact path="/posts" component={App} />
+      <Route exact path="/blog" component={Blog} />
+      <Route exact path="/blog-overview" component={BlogOverview} />
     </CookiesProvider>
   </BrowserRouter>
 )

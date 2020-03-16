@@ -7,9 +7,9 @@ from django.conf.urls import include
 
 
 router =  routers.DefaultRouter()
-router.register('posts',PostViewSet,basename='api')
-router.register('reviews',ReviewViewSet,basename='api')
-router.register('users', UserViewSet, basename='api')
+router.register('posts',PostViewSet)
+router.register('reviews',ReviewViewSet)
+router.register('users', UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
