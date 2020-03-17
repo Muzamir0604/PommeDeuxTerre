@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container } from 'react-bootstrap';
+import { Container, Col, Row} from 'react-bootstrap';
 
 
 import BreadCrumb from '../globals/breadcrumb'
-
+import CardPost from './details/card';
+import TemplateCarousel from './details/carousel'
 
 import '../../styles/globals/breadcrumb.css'
-import ListCategory from './details/list-category';
+
 
 class PostList extends Component {
 
@@ -20,14 +21,30 @@ class PostList extends Component {
                 
                 </Container>
                 <Container>
-                    <ListCategory/>
-                    <ListCategory/>
-                    <ListCategory/>
-                    <ListCategory/>
-                    <ListCategory/>
-                    <ListCategory/>
+                <Row>
+                    <h3 style={{ float: "left" }}>Category</h3>
+                    <Col>
+                        <TemplateCarousel item= {<CardPost image={require('../../assets/blog/castle.png')} /> } />
+                    </Col>
+                    <h3 style={{ float: "left" }}>Category</h3>
+                    <Col>
+                        <TemplateCarousel item= {<CardPost image={require('../../assets/blog/castle.png')} /> } />
+                    </Col>
+                    <h3 style={{ float: "left" }}>Category</h3>
+                    <Col>
+                        <TemplateCarousel item= {<CardPost image={require('../../assets/blog/castle.png')} /> } />
+                    </Col>
+                    <h3 style={{ float: "left" }}>Category</h3>
+                    <Col>
+                        <TemplateCarousel item= {<CardPost image={require('../../assets/blog/castle.png')} /> } />
+                    </Col>
+                    <h3 style={{ float: "left" }}>Category</h3>
+                    <Col>
+                        <TemplateCarousel item= {<CardPost image={require('../../assets/blog/castle.png')} /> } />
+                    </Col>
+                 
+                </Row>
                 </Container>
-
             </React.Fragment>
 
         );

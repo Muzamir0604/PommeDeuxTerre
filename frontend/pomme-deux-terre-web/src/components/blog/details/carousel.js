@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col } from 'react-bootstrap';
-import CardPost from './card-post';
-
+import { withCookies } from 'react-cookie'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-class ListCategory extends Component {
+
+class TemplateCarousel extends Component {
+
 
     render() {
-
         const responsive = {
             desktop: {
                 breakpoint: { max: 3000, min: 1024 },
@@ -29,10 +27,6 @@ class ListCategory extends Component {
         };
         return (
             <React.Fragment>
-                <Row>
-                <h3 style={{float:"left"}}>Category</h3>
-                    <Col>
-                    
                 <Carousel
                     swipeable={false}
                     draggable={false}
@@ -51,18 +45,24 @@ class ListCategory extends Component {
                     dotListClass="custom-dot-list-style"
                     itemClass="carousel-item-padding-40-px"
                 >
-                    <div> <CardPost image={require('../../../assets/blog/castle.png')} /> </div>
-                    <div> <CardPost image={require('../../../assets/blog/city.png')} /> </div>
-                    <div> <CardPost image={require('../../../assets/blog/sunset.png')} /> </div>
-                    <div> <CardPost image={require('../../../assets/blog/castle.png')} /> </div>
+                    {/* Need to loop here */}
+                    <div> {this.props.item}
+                    </div>
+                    <div>  {this.props.item}
+                    </div>
+                    <div>  {this.props.item}
+                    </div>
+                    <div> {this.props.item}
+                    </div>
+                    <div> {this.props.item}
+                    </div>
+                    <div> {this.props.item}
+                    </div>
+                    <div> {this.props.item}
+                    </div>
                 </Carousel>
-                </Col>
-                </Row>
             </React.Fragment>
-
-        );
+        )
     }
 }
-
-
-export default (ListCategory);
+export default withCookies(TemplateCarousel);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Button} from 'react-bootstrap';
+import { withCookies } from 'react-cookie'
 
 class CardPost extends Component {
 
@@ -25,4 +26,4 @@ class CardPost extends Component {
 }
 
 
-export default (CardPost);
+export default withCookies(CardPost);

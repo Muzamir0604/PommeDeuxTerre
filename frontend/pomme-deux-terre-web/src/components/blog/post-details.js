@@ -5,7 +5,9 @@ import { Container } from 'react-bootstrap';
 
 import PostInfo from './details/post-info';
 import PostReview from './details/post-review';
-import ControlledCarousel from './details/image-carousel'
+// import ControlledCarousel from './details/image-carousel'
+import ImageItem from './details/image'
+import TemplateCarousel from './details/carousel'
 import BreadCrumb from '../globals/breadcrumb'
 
 import '../../styles/blog/post-details.css'
@@ -14,19 +16,27 @@ import '../../styles/globals/breadcrumb.css'
 class PostDetails extends Component {
 
     render() {
+       
+        const review ={
+            title : "Batman vs Superman",
+            description : "Justice League",
+            avg_rating : 3,
+            user : "Muzamir"
+
+        }
         return (
             <React.Fragment>
                 <Container className="post-detail">
                 <BreadCrumb className="post-detail" />
-                <ControlledCarousel className="image-carousel" />
+                <TemplateCarousel className = "image-carousel" item= {<ImageItem image={require('../../assets/blog/castle.png')} /> } />
                 </Container>
                 <Container className="post-detail">
-                    <PostInfo />
+                    <PostInfo post={review} />
                     <h3>Reviews</h3>
-                    <PostReview />
-                    <PostReview />
-                    <PostReview />
-                    <PostReview />
+                    <PostReview review = {review} />
+                    <PostReview review = {review} />
+                    <PostReview review = {review} />
+                    <PostReview review = {review} />
                 </Container>
 
             </React.Fragment>
