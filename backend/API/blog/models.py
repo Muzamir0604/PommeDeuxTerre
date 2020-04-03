@@ -2,11 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+class Category(models.Model):
+    title = models.CharField(max_length=32, default="others")
+    def __str__(self):
+        return self.title
 
-# Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=32)
     description = models.TextField(max_length=360)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE)
 
     def no_of_reviews(self):
         reviews =  Review.objects.filter(post=self)
@@ -21,7 +25,8 @@ class Post(models.Model):
             return sum/len(reviews)
         else:
             return 0
-
+    def __str__(self):
+        return self.title
 
 
 class Review(models.Model):
@@ -31,6 +36,14 @@ class Review(models.Model):
     title = models.CharField(max_length=32, null=True)
     description =models.TextField(max_length=360, null=True)
 
+
     class Meta:
         unique_together = (('user', 'post'),)
         index_together = (('user', 'post'),)
+    
+    def __str__(self):
+        return "%s: %s - %s" % (self.post,self.title, self.user)
+
+
+ 
+

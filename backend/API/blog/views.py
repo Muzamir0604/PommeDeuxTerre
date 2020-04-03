@@ -1,25 +1,23 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import action
-from .models import Post, Review
-from .serializers import PostSerializer, ReviewSerializer, UserSerializer
+from .models import Post, Review, Category
+from .serializers import PostSerializer, ReviewSerializer, CategorySerializer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class= UserSerializer
-    permission_classes = (AllowAny,)
-
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework as filters
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class= PostSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes= (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields=['category']
+
 
     @action(detail=True, methods=['POST'])
     def review_post(self,request,pk=None):
@@ -50,6 +48,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class= ReviewSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes= (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields=['post']
+
 
 
     # to overwrite the create and update function of viewset hence restricting use
@@ -60,3 +61,16 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def create(self, request ,*args, **kwargs):
         response = {'message':'you can\'t create like that'}
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class= CategorySerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes= (IsAuthenticated,)
+
+
+# class PostList(generics.ListAPIView):
+#     queryset= Post.objects.all()
+#     serializer_class = PostListSerializer
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes= (IsAuthenticated,)

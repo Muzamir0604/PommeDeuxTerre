@@ -1,30 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import Login from './components/login'
-import * as serviceWorker from './serviceWorker';
-import { Route, BrowserRouter } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
-import Blog from './components/blog';
-import BlogOverview from './components/blog-overview';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import Login from "./app/containers/login";
+import UserProfile from "./app/containers/user";
+import * as serviceWorker from "./serviceWorker";
+import { Route, BrowserRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
+import { Provider } from "react-redux";
+import store from "./app/store";
 
 // dont forget to install react-router-dom
 // and react-cookie
 
 const routing = (
   <BrowserRouter>
-    <CookiesProvider>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/posts" component={App} />
-      <Route exact path="/blog" component={Blog} />
-      <Route exact path="/blog-overview" component={BlogOverview} />
-    </CookiesProvider>
+    <Provider store={store}>
+      <CookiesProvider>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/posts" component={App} />
+        <Route exact path={"/user/:id"} component={UserProfile} />
+        {/* <Route path={"/"} component={Root}>
+              <IndexRoute component={Home} />
+              <Route path{"home"} component={Home}/>
+              <Route path{"user/:id"} component={User}/>
+              // to access ID, go to component file, call this.props.params.id
+        </Route> */}
+      </CookiesProvider>
+    </Provider>
   </BrowserRouter>
-)
+);
 
-ReactDOM.render(routing, document.getElementById('root'));
+ReactDOM.render(routing, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
