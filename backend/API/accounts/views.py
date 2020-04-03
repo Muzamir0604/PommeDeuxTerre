@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from blog.serializers import ReviewSerializer
+from rest_framework.decorators import action
 
 
 class UserList(generics.ListCreateAPIView):
@@ -27,3 +29,4 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
