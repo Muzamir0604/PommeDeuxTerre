@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from blog.serializers import ReviewSerializer
 
 
 class UserListSerializer(serializers.ModelSerializer):
@@ -24,9 +25,10 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
 
-# class UserReviewSerializer(serializers.ModelSerializer):
-#     user_reviews = LimitedReviewSerializer(many=True, read_only=True)
+class UserBlogDetailSerializer(serializers.ModelSerializer):
+    user_reviews = ReviewSerializer(many=True, read_only=True)
 
-#     class Meta:
-#         model = User
-#         fields = ['id', 'username', 'first_name', 'last_name', 'user_reviews']
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'user_reviews')
+        # extra_kwargs = {'password': {'write_only': True, 'required': True}}

@@ -19,7 +19,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     category = models.ForeignKey(
-        Category, related_name="posts", on_delete=models.CASCADE, null=True)
+        Category, related_name="category_posts", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(
+        User, related_name="user_posts", on_delete=models.CASCADE, null=True)
 
     def no_of_reviews(self):
         reviews = Review.objects.filter(post=self)

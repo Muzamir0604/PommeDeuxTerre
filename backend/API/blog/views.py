@@ -26,7 +26,7 @@ class PostViewSet(viewsets.ModelViewSet):
         try:
             reviews = Review.objects.filter(post=post.id)
             serializer = ReviewSerializer(reviews, many=True)
-            response = {'result': serializer.data}
+            response = {'reviews': serializer.data}
             return Response(response, status=status.HTTP_200_OK)
         except ValueError:
             response = {'message': "Error in retrieving Reviews"}

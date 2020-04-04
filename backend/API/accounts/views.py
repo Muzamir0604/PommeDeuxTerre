@@ -1,11 +1,10 @@
-from rest_framework import generics, views
-from .serializers import UserListSerializer, UserSerializer
-from django.contrib.auth.models import User
+from rest_framework import generics, views, status
+from .serializers import UserListSerializer, UserSerializer, UserBlogDetailSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-from blog.serializers import ReviewSerializer
 from rest_framework.decorators import action
+from django.contrib.auth.models import User
 
 
 class UserList(generics.ListCreateAPIView):
@@ -30,3 +29,12 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
         return Response(serializer.data)
 
+
+class UserFullDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserBlogDetailSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+
+# TODO: Create a query to list out all posts and reviews by user. Minimized detail of post and review
