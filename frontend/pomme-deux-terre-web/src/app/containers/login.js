@@ -3,26 +3,30 @@ import { withCookies } from "react-cookie";
 import { Button } from "react-bootstrap";
 import { loginApi, createUser } from "../api/user";
 import { fetchUsers } from "../actions/userActions";
+import { setAuth } from "../actions/authActions";
 
 import { useDispatch } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 
 // Use Axios
 // https://designrevision.com/react-axios/
-//TODO: commit files to git-dev
+
 //TODO: install in dev, jest, mock, enzyme and react redux testing library
 //TODO: implementing jest, mock and react-redux-testing library for login.js
 function Login(props) {
   const dispatch = useDispatch();
 
-  const setUser = user => {
+  const setUser = (user, token) => {
+    console.log("setuser", token);
     dispatch(fetchUsers(user));
+    dispatch(setAuth(token));
   };
+
   const [state, setState] = useState({
     credentials: {
       username: "",
-      password: ""
-    }
+      password: "",
+    },
   });
   const [isLoginView, setIsLoginView] = useState(true);
 
@@ -32,43 +36,42 @@ function Login(props) {
   const query = useQuery();
   useEffect(() => {
     if (query.get("signup")) {
-      setIsLoginView(false);
-    }
-  }, [query]);
+      toggleView();
+    } // eslint-disable-next-line
+  }, []);
 
-  const fetchUserDetails = userId => {
+  const fetchUserDetails = (userId, token) => {
     if (userId > -1) {
-      setUser(userId);
+      setUser(userId, token);
     }
   };
-  const inputChanged = event => {
+  const inputChanged = (event) => {
     let cred = state.credentials;
     cred[event.target.name] = event.target.value;
     setState({ credentials: cred });
   };
-  const login = event => {
+  const login = (event) => {
     if (isLoginView) {
       loginApi(state.credentials)
-        .then(res => {
-          console.log("loginAPI");
-          props.cookies.set("mr-token", res.token);
+        .then((res) => {
+          props.cookies.set("mr-token", res.data.token);
           props.cookies.set("user-id", res.data.id);
-          fetchUserDetails(res.data.id);
+          fetchUserDetails(res.data.id, res.data.token);
           props.history.push("/posts");
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e.response);
         });
     } else {
       createUser(state.credentials)
-        .then(res => setIsLoginView({ isLoginView: true }))
-        .catch(error => console.log(error));
+        .then((res) => setIsLoginView({ isLoginView: true }))
+        .catch((error) => console.log(error));
     }
   };
   const toggleView = () => {
     setIsLoginView(!isLoginView);
   };
-  const keyPress = event => {
+  const keyPress = (event) => {
     if (event.key === "Enter") {
       login();
     }

@@ -17,7 +17,7 @@ class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category']
+    filterset_fields = ['category', 'user']
 
     @action(detail=True, methods=['GET'])
     def reviews(self, request, pk=None):
@@ -65,7 +65,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['post']
+    filterset_fields = ['post', 'user']
 
     # to overwrite the create and update function of viewset hence restricting use
 

@@ -17,6 +17,7 @@ class PostTitleSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     post = PostTitleSerializer(many=False)
+    user = UserNameSerializer(many=False)
 
     class Meta:
         model = Review

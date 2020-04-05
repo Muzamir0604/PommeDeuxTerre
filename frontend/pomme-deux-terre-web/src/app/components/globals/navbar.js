@@ -31,11 +31,17 @@ function NavBarHead(props) {
 
       <Col sm={8} style={{ padding: "0em" }}>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand href="#home">Pomme Deux Terre</Navbar.Brand>
+          <Navbar.Brand>
+            <Link className="nav-link" to={"/posts"} replace>
+              Pomme Deux Terre
+            </Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link to={"/posts"}>Home</Nav.Link>
+              <Link className="nav-link" to={"/posts"} replace>
+                Home
+              </Link>
               <Nav.Link href="#pricing">Pricing</Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -63,7 +69,12 @@ function NavBarHead(props) {
                     </Link>
                   </Navbar>
                   <Navbar>
-                    <Link className="nav-link" onClick={releaseUserDispatch}>
+                    <Link
+                      className="nav-link"
+                      onClick={releaseUserDispatch}
+                      to={"/"}
+                      replace
+                    >
                       Logout
                     </Link>
                   </Navbar>
@@ -71,12 +82,12 @@ function NavBarHead(props) {
               ) : (
                 <React.Fragment>
                   <Navbar>
-                    <Link className="nav-link" to={"/?signup=true"}>
+                    <Link className="nav-link" to={"/?signup=true"} replace>
                       Signup
                     </Link>
                   </Navbar>
                   <Navbar>
-                    <Link className="nav-link" to={"/"}>
+                    <Link className="nav-link" to={"/"} replace>
                       LogIn
                     </Link>
                   </Navbar>

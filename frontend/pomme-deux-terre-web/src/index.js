@@ -9,6 +9,8 @@ import { Route, BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 import store from "./app/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "./app/store";
 
 // dont forget to install react-router-dom
 // and react-cookie
@@ -16,17 +18,19 @@ import store from "./app/store";
 const routing = (
   <BrowserRouter>
     <Provider store={store}>
-      <CookiesProvider>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/posts" component={App} />
-        <Route exact path={"/user/:id"} component={UserProfile} />
-        {/* <Route path={"/"} component={Root}>
+      <PersistGate loading={null} persistor={persistor}>
+        <CookiesProvider>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/posts" component={App} />
+          <Route exact path={"/user/:id"} component={UserProfile} />
+          {/* <Route path={"/"} component={Root}>
               <IndexRoute component={Home} />
               <Route path{"home"} component={Home}/>
               <Route path{"user/:id"} component={User}/>
               // to access ID, go to component file, call this.props.params.id
         </Route> */}
-      </CookiesProvider>
+        </CookiesProvider>
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );

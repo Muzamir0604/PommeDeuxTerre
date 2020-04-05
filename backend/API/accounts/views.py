@@ -35,6 +35,3 @@ class UserFullDetail(generics.RetrieveAPIView):
     serializer_class = UserBlogDetailSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-
-
-# TODO: Create a query to list out all posts and reviews by user. Minimized detail of post and review
