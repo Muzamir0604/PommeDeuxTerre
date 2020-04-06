@@ -1,6 +1,12 @@
 from rest_framework import serializers
-from .models import Post, Review, Category
+from .models import Post, Review, Category, PostImage
 from django.contrib.auth.models import User
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostImage
+        fields = "__all__"
 
 
 class UserNameSerializer(serializers.ModelSerializer):
@@ -40,12 +46,13 @@ class LimitedReviewSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    post_images = ImageSerializer(many=True)
     post_reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False)
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'description',
+        fields = ('id', 'title', 'description', 'post_images',
                   'no_of_reviews', 'avg_rating', 'post_reviews', 'user')
 
 
@@ -56,13 +63,14 @@ class FilteredPostSerializer(serializers.ListSerializer):
 
 
 class LimitedPostSerializer(serializers.ModelSerializer):
+    post_images = ImageSerializer(many=True)
     post_reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False)
 
     class Meta:
         list_serializer_class = FilteredPostSerializer
         model = Post
-        fields = ('id', 'title', 'description', 'user',
+        fields = ('id', 'title', 'description', 'post_images', 'user',
                   'no_of_reviews', 'avg_rating', 'created_at', 'post_reviews')
 
 

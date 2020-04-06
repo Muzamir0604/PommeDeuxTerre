@@ -1,14 +1,60 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, views
 from rest_framework.decorators import action
-from .models import Post, Review, Category
-from .serializers import PostSerializer, ReviewSerializer, CategorySerializer
+from .models import Post, Review, Category, PostImage
+from .serializers import PostSerializer, ReviewSerializer, CategorySerializer, ImageSerializer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from django.http import JsonResponse
+
+# https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
+# https://stackoverflow.com/questions/52903232/how-to-upload-multiple-images-using-django-rest-framework
+# https://stackoverflow.com/questions/52389956/uploading-multiple-files-using-django-rest-framework-without-using-forms
+
+
+def modify_input_for_multiple_files(post_id, image):
+    dict = {}
+    dict['post_id'] = post_id
+    dict['image'] = image
+    return dict
+# TODO: POST + IMAGES post via API
+
+
+class ImageUploadView(views.APIView):
+    parser_class = (MultiPartParser, FormParser)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        all_images = PostImage.objects.all()
+        serializer = ImageSerializer(all_images, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    def post(self, request, *args, **kwargs):
+        post_id = request.data['post_id']
+        # converts querydict to original dict
+        images = dict((request.data).lists())['image']
+        flag = 1
+        arr = []
+        for img_name in images:
+            modified_data = modify_input_for_multiple_files(post_id,
+                                                            img_name)
+            file_serializer = ImageSerializer(data=modified_data)
+            if file_serializer.is_valid():
+                file_serializer.save()
+                arr.append(file_serializer.data)
+            else:
+                flag = 0
+
+        if flag == 1:
+            return Response(arr, status=status.HTTP_201_CREATED)
+        else:
+            return Response(arr, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostViewSet(viewsets.ModelViewSet):

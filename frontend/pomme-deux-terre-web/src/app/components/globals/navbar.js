@@ -1,23 +1,17 @@
 import React from "react";
 import { withCookies } from "react-cookie";
-import { Navbar, Nav, NavDropdown, Col, Row } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Col, Row, Image } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { releaseUser } from "../../actions/userActions";
 
-// import { Link } from "react-router";
-//  <li><Link to={"/home"} activeStyle={{color:""red}}>Home</Link></li>
-// <li><Link to={"/user" + 2} activeClassName={"active"}>User</Link></li>
-
-// putting link in Button
-// onNavigateHome(){
-//   browserHistory.push("/home")
-// }
-// <button onClick={this,onNavigateHome}>Go home </button>
-
+// https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
+// FIXME: Figure out the problem with the nested Anchor tags warnings
 function NavBarHead(props) {
   const dispatch = useDispatch();
+
+  const CatshortList = useSelector((state) => state.categoryReducer.shortList);
 
   const releaseUserDispatch = () => {
     dispatch(releaseUser());
@@ -31,8 +25,14 @@ function NavBarHead(props) {
 
       <Col sm={8} style={{ padding: "0em" }}>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Image src="holder.js/171x180" rounded />
           <Navbar.Brand>
-            <Link className="nav-link" to={"/posts"} replace>
+            <Link
+              className="nav-link"
+              style={{ color: "white" }}
+              to={"/posts"}
+              replace
+            >
               Pomme Deux Terre
             </Link>
           </Navbar.Brand>
@@ -42,19 +42,21 @@ function NavBarHead(props) {
               <Link className="nav-link" to={"/posts"} replace>
                 Home
               </Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
+              <Nav.Link href="#pricing">About Us</Nav.Link>
+              <NavDropdown title="Category" id="collasible-nav-dropdown">
+                {CatshortList.map((category) => {
+                  return (
+                    <NavDropdown.Item key={category.id}>
+                      <Link
+                        className="nav-link"
+                        to={"/category?category=" + category.id}
+                        style={{ color: "black" }}
+                      >
+                        {category.title}
+                      </Link>
+                    </NavDropdown.Item>
+                  );
+                })}
               </NavDropdown>
             </Nav>
             <Nav>

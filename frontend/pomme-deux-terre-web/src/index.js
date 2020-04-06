@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import store from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
+import Category from "./app/containers/category";
 
 // dont forget to install react-router-dom
 // and react-cookie
@@ -23,6 +24,7 @@ const routing = (
           <Route exact path="/" component={Login} />
           <Route exact path="/posts" component={App} />
           <Route exact path={"/user/:id"} component={UserProfile} />
+          <Route exact path={"/category"} component={Category} />
           {/* <Route path={"/"} component={Root}>
               <IndexRoute component={Home} />
               <Route path{"home"} component={Home}/>

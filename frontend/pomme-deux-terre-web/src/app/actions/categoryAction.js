@@ -1,6 +1,6 @@
-import { getCategoryShortList } from "../api/category";
+import { getCategoryShortList, getCategory } from "../api/category";
 import { apiErrorHandler } from "../utils/errorhandler";
-import { FETCH_SHORTLIST_SUCCESS } from "../actions/types";
+import { FETCH_SHORTLIST_SUCCESS, FETCH_CATEGORY } from "../actions/types";
 
 export const fetchShortList = () => (dispatch) => {
   //   dispatch(fetchUsersRequest());
@@ -14,7 +14,24 @@ export const fetchShortList = () => (dispatch) => {
       //   dispatch(fetchUsersFailure(errorMessage));
     });
 };
+export const fetchCategory = (category) => (dispatch) => {
+  getCategory(category)
+    .then((response) => {
+      dispatch(fetchCategorySuccess(response.data));
+    })
+    .catch((error) => {
+      const errorMessage = apiErrorHandler(error);
+      console.log(errorMessage);
+      console.log(error.category);
+    });
+};
 
+export const fetchCategorySuccess = (data) => {
+  return {
+    type: FETCH_CATEGORY,
+    payload: data,
+  };
+};
 // export const fetchUsersRequest = () => {
 //   return {
 //     type: FETCH_USERS_REQUEST

@@ -1,6 +1,7 @@
 import React from "react";
 import { withCookies } from "react-cookie";
 import CardCarousel from "../components/post-carousel";
+import { Link } from "react-router-dom";
 
 function Overview(props) {
   const authorized = (
@@ -11,7 +12,15 @@ function Overview(props) {
           // console.log(category.title);
           let CatList = (
             <React.Fragment>
-              <h3>{category.title}</h3>
+              <h3>
+                <Link
+                  className=".nav-link"
+                  style={{ color: "black" }}
+                  to={"/category/?category=" + category.id}
+                >
+                  {category.title}
+                </Link>
+              </h3>
               <CardCarousel posts={category.category_posts} />
             </React.Fragment>
           );
