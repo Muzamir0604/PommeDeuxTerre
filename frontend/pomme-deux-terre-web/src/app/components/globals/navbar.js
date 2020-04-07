@@ -24,7 +24,13 @@ function NavBarHead(props) {
       <Col sm={2} style={{ backgroundColor: "#343a40" }}></Col>
 
       <Col sm={8} style={{ padding: "0em" }}>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="dark"
+          variant="dark"
+          style={{ padding: "0px 0px" }}
+        >
           <Image src="holder.js/171x180" rounded />
           <Navbar.Brand>
             <Link

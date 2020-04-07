@@ -8,3 +8,4 @@ export const RELEASE_USER = "RELEASE_USER";
 export const SET_AUTH = "SET_AUTH";
 export const FETCH_SHORTLIST_SUCCESS = "FETCH_SHORTLIST_SUCCESS";
 export const FETCH_CATEGORY = "FETCH_CATEGORY";
+export const FETCH_POST = "FETCH_POST";

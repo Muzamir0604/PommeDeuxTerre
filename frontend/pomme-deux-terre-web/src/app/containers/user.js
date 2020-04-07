@@ -40,10 +40,10 @@ const UserProfile = (props) => {
         .max(20, "Must be 20 characters or less")
         .required("Required"),
       first_name: Yup.string()
-        .max(15, "Must be 15 characters or less")
+        .max(35, "Must be 35 characters or less")
         .required("Required"),
       last_name: Yup.string()
-        .max(20, "Must be 20 characters or less")
+        .max(20, "Must be 35 characters or less")
         .required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
     }),
@@ -137,13 +137,17 @@ const UserProfile = (props) => {
               </Form.Group>
             </Form.Row>
             <Form.Row>
-              <Button style={{ marginRight: "5px" }} type="submit">
-                Update
-              </Button>
+              {formik.dirty ? (
+                <Button style={{ marginRight: "5px" }} type="submit">
+                  Update
+                </Button>
+              ) : null}
               <p />
-              <Button type="Button" style={{}} onClick={formik.handleReset}>
-                Reset
-              </Button>
+              {formik.dirty ? (
+                <Button type="Button" style={{}} onClick={formik.handleReset}>
+                  Reset
+                </Button>
+              ) : null}
             </Form.Row>
 
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}

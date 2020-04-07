@@ -12,6 +12,7 @@ import store from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
 import Category from "./app/containers/category";
+import Post from "./app/containers/post";
 
 // dont forget to install react-router-dom
 // and react-cookie
@@ -23,6 +24,8 @@ const routing = (
         <CookiesProvider>
           <Route exact path="/" component={Login} />
           <Route exact path="/posts" component={App} />
+          <Route path="/posts/:id" component={Post} />
+
           <Route exact path={"/user/:id"} component={UserProfile} />
           <Route exact path={"/category"} component={Category} />
           {/* <Route path={"/"} component={Root}>
