@@ -5,7 +5,7 @@ import { Card, Button } from "react-bootstrap";
 function CardPost(props) {
   return (
     <React.Fragment>
-      <Card style={{ width: "18rem", height: "100%" }}>
+      <Card style={{ width: "90%", height: "100%" }}>
         <Card.Img
           variant="top"
           src={

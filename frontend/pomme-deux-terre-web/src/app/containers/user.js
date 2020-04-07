@@ -1,159 +1,173 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { updateUser } from "../actions/userActions";
 import { withCookies } from "react-cookie";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Form, Field } from "react-final-form";
-import { Row, Col, Container } from "react-bootstrap";
+
+import { Row, Col, Container, Form, Button, Alert } from "react-bootstrap";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
 import AdsColumn from "../components/globals/ads";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-class userProfile extends Component {
-  render() {
-    let form;
-    if (parseInt(this.props.match.params.id) === parseInt(this.props.user.id)) {
-      form = (
-        <React.Fragment>
-          <Container
-            style={{
-              backgroundColor: "white",
-              Color: "black",
+const UserProfile = (props) => {
+  const dispatch = useDispatch();
 
-              alignText: "center"
-            }}
-          >
-            <h1>Your Profile</h1>
-            <Form
-              className="User-Form container"
-              onSubmit={async values => {
-                this.props.updateUser(this.props.user.id, values);
-                await sleep(300);
+  const update = (id, user) => {
+    dispatch(updateUser(id, user));
+    sleep(2000);
+  };
+  const userDetails = useSelector((state) => state.userReducer.user);
 
-                window.alert(JSON.stringify(values, 0, 2));
-              }}
-              initialValues={{
-                username: this.props.user.username,
-                first_name: this.props.user.first_name,
-                last_name: this.props.user.last_name,
-                email: this.props.user.email
-              }}
-              render={({
-                handleSubmit,
-                form,
-                submitting,
-                pristine,
-                values
-              }) => (
-                <form onSubmit={handleSubmit}>
-                  <div>
-                    <label>Username</label>
-                    <Field
-                      name="username"
-                      component="input"
-                      type="text"
-                      placeholder="Username"
-                    />
-                  </div>
-                  <Row>
-                    <div>
-                      <label>First Name</label>
-                      <Field
-                        name="first_name"
-                        component="input"
-                        type="text"
-                        placeholder="First Name"
-                      />
-                    </div>
+  const [user, setUser] = useState(userDetails);
+  const [successFlag, setSuccessFlag] = useState(false);
 
-                    <div>
-                      <label>Last Name</label>
-                      <Field
-                        name="last_name"
-                        component="input"
-                        type="text"
-                        placeholder="Last Name"
-                      />
-                    </div>
-                  </Row>
-                  <div>
-                    <label>Email</label>
-                    <Field
-                      name="email"
-                      component="input"
-                      type="text"
-                      placeholder="email"
-                    />
-                  </div>
+  let form;
 
-                  <div className="buttons">
-                    <Row>
-                      <button
-                        style={{
-                          display: submitting || pristine ? "none" : "block"
-                        }}
-                        type="submit"
-                      >
-                        Submit
-                      </button>
-                      <button
-                        type="button"
-                        style={{
-                          display: submitting || pristine ? "none" : "block"
-                        }}
-                        onClick={form.reset}
-                      >
-                        Reset
-                      </button>
-                    </Row>
-                  </div>
-                  <pre>{JSON.stringify(values, 0, 2)}</pre>
-                </form>
-              )}
-            />
-          </Container>
-        </React.Fragment>
-      );
-    } else {
-      form = <h1>ACCESS DENIED</h1>;
-    }
+  const formik = useFormik({
+    initialValues: {
+      id: user.id,
+      username: user.username,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .max(20, "Must be 20 characters or less")
+        .required("Required"),
+      first_name: Yup.string()
+        .max(15, "Must be 15 characters or less")
+        .required("Required"),
+      last_name: Yup.string()
+        .max(20, "Must be 20 characters or less")
+        .required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+    }),
+    onSubmit: (values) => {
+      setTimeout(() => {
+        update(user.id, values);
+        setUser(values);
+        setSuccessFlag(true);
+      }, 400);
+    },
+  });
 
-    return (
+  if (parseInt(props.match.params.id) === parseInt(user.id)) {
+    form = (
       <React.Fragment>
-        <NavBarHead />
-        <Row>
-          <AdsColumn />
+        <Container
+          style={{
+            backgroundColor: "white",
+            Color: "black",
+            alignText: "center",
+          }}
+        >
+          <h1>Your Profile</h1>
+          {successFlag ? (
+            <Alert variant={"success"}>Update Successful</Alert>
+          ) : null}
 
-          <Col sm={8}>{form}</Col>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Row>
+              <Form.Group>
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  name="username"
+                  type="text"
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Username"
+                />
+                {formik.touched.username && formik.errors.username ? (
+                  <p style={{ color: "red" }}>{formik.errors.username}</p>
+                ) : null}
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} style={{ paddingLeft: "0px" }}>
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  name="first_name"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.first_name}
+                  onBlur={formik.handleBlur}
+                  placeholder="First Name"
+                />
+                {formik.touched.first_name && formik.errors.first_name ? (
+                  <p style={{ color: "red" }}>{formik.errors.first_name}</p>
+                ) : null}
+              </Form.Group>
 
-          <AdsColumn />
-        </Row>
-        <PageFooter />
+              <Form.Group as={Col}>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  name="last_name"
+                  type="text"
+                  value={formik.values.last_name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Last Name"
+                />
+                {formik.touched.last_name && formik.errors.last_name ? (
+                  <p style={{ color: "red" }}>{formik.errors.last_name}</p>
+                ) : null}
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  name="email"
+                  type="text"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="email"
+                />
+
+                {formik.touched.email && formik.errors.email ? (
+                  <p style={{ color: "red" }}>{formik.errors.email}</p>
+                ) : null}
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Button style={{ marginRight: "5px" }} type="submit">
+                Update
+              </Button>
+              <p />
+              <Button type="Button" style={{}} onClick={formik.handleReset}>
+                Reset
+              </Button>
+            </Form.Row>
+
+            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+          </Form>
+        </Container>
       </React.Fragment>
     );
+  } else {
+    form = <h1>ACCESS DENIED</h1>;
   }
-}
 
-const mapStateToProps = state => {
-  return {
-    user: state.userReducer.user
-  };
+  return (
+    <React.Fragment>
+      <NavBarHead />
+      <Row>
+        <AdsColumn />
+
+        <Col sm={8}>{form}</Col>
+
+        <AdsColumn />
+      </Row>
+      <PageFooter />
+    </React.Fragment>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateUser: (id, user) => {
-      dispatch(updateUser(id, user));
-    }
-  };
-};
-
-userProfile.propTypes = {
-  user: PropTypes.any
-};
-export default withCookies(
-  connect(mapStateToProps, mapDispatchToProps)(userProfile)
-);
+export default withCookies(UserProfile);

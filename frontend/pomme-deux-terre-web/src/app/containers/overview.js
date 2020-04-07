@@ -3,13 +3,12 @@ import { withCookies } from "react-cookie";
 import CardCarousel from "../components/post-carousel";
 import { Link } from "react-router-dom";
 
+//FIXME: Redesign the layout to make it mobile friendly
 function Overview(props) {
   const authorized = (
     <React.Fragment>
       <div>
-        {/* {console.log(props.shortList)} */}
         {props.shortList.map((category) => {
-          // console.log(category.title);
           let CatList = (
             <React.Fragment>
               <h3>
