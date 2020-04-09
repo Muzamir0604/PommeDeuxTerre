@@ -10,7 +10,7 @@ import { Col, Row } from "react-bootstrap";
 import { getPostList } from "./app/api/post";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "./app/actions/postActions";
-import { fetchShortList } from "./app/actions/categoryAction";
+// import { fetchShortList } from "./app/actions/categoryAction";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -27,10 +27,10 @@ function App(props) {
       getPostList().then((response) => {
         listing(response.data);
       });
-      dispatch(fetchShortList());
+      // dispatch(fetchShortList());
     }
     getPostList();
-    fetchShortList(); // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (

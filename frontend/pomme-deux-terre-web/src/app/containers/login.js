@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { withCookies } from "react-cookie";
+import { withCookies, useCookies } from "react-cookie";
 import { Button } from "react-bootstrap";
 import { loginApi, createUser } from "../api/user";
 import { fetchUsers } from "../actions/userActions";
 import { setAuth } from "../actions/authActions";
+import { fetchShortList } from "../actions/categoryAction";
 
 import { useDispatch } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
@@ -15,11 +16,14 @@ import { Redirect, useLocation } from "react-router-dom";
 //TODO: implementing jest, mock and react-redux-testing library for login.js
 function Login(props) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line
+  const [Tcookies, setTCookie] = useCookies(["token"]);
+  // eslint-disable-next-line
+  const [Icookies, setICookie] = useCookies(["userId"]);
 
   const setUser = (user, token) => {
-    console.log("setuser", token);
-    dispatch(fetchUsers(user));
     dispatch(setAuth(token));
+    dispatch(fetchUsers(user));
   };
 
   const [state, setState] = useState({
@@ -38,6 +42,8 @@ function Login(props) {
     if (query.get("signup")) {
       toggleView();
     } // eslint-disable-next-line
+    dispatch(fetchShortList());
+    // eslint-disable-next-line
   }, []);
 
   const fetchUserDetails = (userId, token) => {
@@ -54,8 +60,8 @@ function Login(props) {
     if (isLoginView) {
       loginApi(state.credentials)
         .then((res) => {
-          props.cookies.set("mr-token", res.data.token);
-          props.cookies.set("user-id", res.data.id);
+          setTCookie("token", res.data.token);
+          setICookie("userId", res.data.id);
           fetchUserDetails(res.data.id, res.data.token);
           props.history.push("/posts");
         })

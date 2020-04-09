@@ -15,8 +15,8 @@ function NavBarHead(props) {
 
   const releaseUserDispatch = () => {
     dispatch(releaseUser());
-    props.cookies.remove("mr-token");
-    props.cookies.remove("user-id");
+    props.cookies.remove("token");
+    props.cookies.remove("userId");
   };
 
   return (
@@ -52,26 +52,25 @@ function NavBarHead(props) {
               <NavDropdown title="Category" id="collasible-nav-dropdown">
                 {CatshortList.map((category) => {
                   return (
-                    <NavDropdown.Item key={category.id}>
-                      <Link
-                        className="nav-link"
-                        to={"/category?category=" + category.id}
-                        style={{ color: "black" }}
-                      >
-                        {category.title}
-                      </Link>
-                    </NavDropdown.Item>
+                    <Link
+                      key={category.id}
+                      className="dropdown-item"
+                      to={"/category?category=" + category.id}
+                      style={{ color: "black" }}
+                    >
+                      {category.title}
+                    </Link>
                   );
                 })}
               </NavDropdown>
             </Nav>
             <Nav>
-              {props.cookies.get("user-id") ? (
+              {props.cookies.get("userId") ? (
                 <React.Fragment>
                   <Navbar>
                     <Link
                       className="nav-link"
-                      to={"/user/" + props.cookies.get("user-id")}
+                      to={"/user/" + props.cookies.get("userId")}
                     >
                       Profile
                     </Link>

@@ -5,7 +5,10 @@ export const getConfig = () => {
   if (isAuthenticated) {
     const token = store.getState().authReducer.token;
     const config = {
-      headers: { Authorization: "Token " + token }
+      headers: {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json",
+      },
     };
     return config;
   }

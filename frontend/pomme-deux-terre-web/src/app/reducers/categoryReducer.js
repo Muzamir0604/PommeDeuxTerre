@@ -1,9 +1,17 @@
-import { FETCH_SHORTLIST_SUCCESS, FETCH_CATEGORY } from "../actions/types";
+import {
+  FETCH_SHORTLIST_SUCCESS,
+  FETCH_CATEGORY_SUCCESS,
+  FETCH_SHORTLIST_FAILURE,
+  FETCH_SHORTLIST_REQUEST,
+  FETCH_CATEGORY_FAILURE,
+  FETCH_CATEGORY_REQUEST,
+} from "../actions/types";
 
 const initialState = {
   shortList: {},
   categories: {},
   isLoading: false,
+  error: [],
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -13,10 +21,32 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         shortList: action.payload,
       };
-    case FETCH_CATEGORY:
+    case FETCH_SHORTLIST_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case FETCH_SHORTLIST_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case FETCH_CATEGORY_SUCCESS:
       return {
         ...state,
         categories: action.payload,
+      };
+    case FETCH_CATEGORY_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case FETCH_CATEGORY_FAILURE:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;

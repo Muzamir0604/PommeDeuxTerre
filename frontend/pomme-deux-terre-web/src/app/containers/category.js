@@ -16,12 +16,15 @@ import Star from "../components/globals/star";
 function Category(props) {
   const dispatch = useDispatch();
 
-  const CategoryData = useSelector((state) => state.categoryReducer.categories);
-
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQuery();
+  useEffect(() => {
+    dispatch(fetchCategory(query.get("category")));
+    return () => {};
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     dispatch(fetchCategory(query.get("category")));
@@ -29,6 +32,7 @@ function Category(props) {
     // eslint-disable-next-line
   }, [query.get("category")]);
 
+  const CategoryData = useSelector((state) => state.categoryReducer.categories);
   return (
     <React.Fragment>
       <NavBarHead />
@@ -38,7 +42,7 @@ function Category(props) {
           <div className="container" style={{ alignItems: "center" }}>
             {CategoryData.map((post) => {
               return (
-                <Link to={"/posts/" + post.id}>
+                <Link key={post.id} to={"/posts/" + post.id}>
                   <Jumbotron
                     fluid
                     style={{
@@ -96,6 +100,7 @@ function Category(props) {
             })}
           </div>
         </Col>
+
         <AdsColumn />
       </Row>
       <PageFooter />

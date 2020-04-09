@@ -30,7 +30,7 @@ function Overview(props) {
   );
   const notAuthorized = <div>Not authorized</div>;
   let renderComponent;
-  if (props.cookies.get("mr-token")) {
+  if (props.cookies.get("token")) {
     renderComponent = authorized;
   } else {
     renderComponent = notAuthorized;

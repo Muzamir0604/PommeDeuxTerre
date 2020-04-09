@@ -1,42 +1,31 @@
 import { getCategoryShortList, getCategory } from "../api/category";
 import { apiErrorHandler } from "../utils/errorhandler";
-import { FETCH_SHORTLIST_SUCCESS, FETCH_CATEGORY } from "../actions/types";
+import {
+  FETCH_SHORTLIST_SUCCESS,
+  FETCH_SHORTLIST_FAILURE,
+  FETCH_SHORTLIST_REQUEST,
+  FETCH_CATEGORY_SUCCESS,
+  FETCH_CATEGORY_FAILURE,
+  FETCH_CATEGORY_REQUEST,
+} from "../actions/types";
 
 export const fetchShortList = () => (dispatch) => {
-  //   dispatch(fetchUsersRequest());
+  dispatch(fetchShortListRequest());
   getCategoryShortList()
     .then((response) => {
       dispatch(fetchShortListSuccess(response.data));
     })
     .catch((error) => {
       const errorMessage = apiErrorHandler(error);
-      console.log(errorMessage);
-      //   dispatch(fetchUsersFailure(errorMessage));
-    });
-};
-export const fetchCategory = (category) => (dispatch) => {
-  getCategory(category)
-    .then((response) => {
-      dispatch(fetchCategorySuccess(response.data));
-    })
-    .catch((error) => {
-      const errorMessage = apiErrorHandler(error);
-      console.log(errorMessage);
-      console.log(error.category);
+      dispatch(fetchShortListFailure(errorMessage));
     });
 };
 
-export const fetchCategorySuccess = (data) => {
+export const fetchShortListRequest = () => {
   return {
-    type: FETCH_CATEGORY,
-    payload: data,
+    type: FETCH_SHORTLIST_REQUEST,
   };
 };
-// export const fetchUsersRequest = () => {
-//   return {
-//     type: FETCH_USERS_REQUEST
-//   };
-// };
 
 export const fetchShortListSuccess = (data) => {
   return {
@@ -45,9 +34,40 @@ export const fetchShortListSuccess = (data) => {
   };
 };
 
-// export const fetchUsersFailure = error => {
-//   return {
-//     type: FETCH_USERS_FAILURE,
-//     error
-//   };
-// };
+export const fetchShortListFailure = (error) => {
+  return {
+    type: FETCH_SHORTLIST_FAILURE,
+    error,
+  };
+};
+
+export const fetchCategory = (category) => (dispatch) => {
+  dispatch(fetchCategoryRequest());
+  getCategory(category)
+    .then((response) => {
+      dispatch(fetchCategorySuccess(response.data));
+    })
+    .catch((error) => {
+      const errorMessage = apiErrorHandler(error);
+      dispatch(fetchCategoryFailure(errorMessage));
+    });
+};
+
+export const fetchCategorySuccess = (data) => {
+  return {
+    type: FETCH_CATEGORY_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchCategoryFailure = (error) => {
+  return {
+    type: FETCH_CATEGORY_FAILURE,
+    error,
+  };
+};
+export const fetchCategoryRequest = () => {
+  return {
+    type: FETCH_CATEGORY_REQUEST,
+  };
+};

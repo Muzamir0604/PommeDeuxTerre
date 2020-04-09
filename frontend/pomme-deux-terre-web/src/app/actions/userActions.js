@@ -7,16 +7,16 @@ import {
   SET_USER_SUCCESS,
   SET_USER_REQUEST,
   SET_USER_FAILURE,
-  RELEASE_USER
+  RELEASE_USER,
 } from "../actions/types";
 
-export const fetchUsers = id => dispatch => {
+export const fetchUsers = (id) => (dispatch) => {
   dispatch(fetchUsersRequest());
   fetchUserApi(id)
-    .then(response => {
+    .then((response) => {
       dispatch(fetchUsersSuccess(response.data));
     })
-    .catch(error => {
+    .catch((error) => {
       const errorMessage = apiErrorHandler(error);
       dispatch(fetchUsersFailure(errorMessage));
     });
@@ -24,32 +24,32 @@ export const fetchUsers = id => dispatch => {
 
 export const fetchUsersRequest = () => {
   return {
-    type: FETCH_USERS_REQUEST
+    type: FETCH_USERS_REQUEST,
   };
 };
 
-export const fetchUsersSuccess = data => {
+export const fetchUsersSuccess = (data) => {
   return {
     type: FETCH_USERS_SUCCESS,
-    user: data
+    user: data,
   };
 };
 
-export const fetchUsersFailure = error => {
+export const fetchUsersFailure = (error) => {
   return {
     type: FETCH_USERS_FAILURE,
-    error
+    error,
   };
 };
 
-export const updateUser = (id, user) => dispatch => {
+export const updateUser = (id, user) => (dispatch) => {
   dispatch(updateUserRequest());
   updateUserApi(id, user)
-    .then(response => {
+    .then((response) => {
       console.log("SUCCESS::", response);
       dispatch(updateUserSuccess(user));
     })
-    .catch(error => {
+    .catch((error) => {
       const errorMessage = apiErrorHandler(error);
       dispatch(updateUserFailure(errorMessage));
     });
@@ -57,26 +57,26 @@ export const updateUser = (id, user) => dispatch => {
 
 export const updateUserRequest = () => {
   return {
-    type: SET_USER_REQUEST
+    type: SET_USER_REQUEST,
   };
 };
 
-export const updateUserSuccess = data => {
+export const updateUserSuccess = (data) => {
   return {
     type: SET_USER_SUCCESS,
-    user: data
+    user: data,
   };
 };
 
-export const updateUserFailure = error => {
+export const updateUserFailure = (error) => {
   return {
     type: SET_USER_FAILURE,
-    error
+    error,
   };
 };
 
 export const releaseUser = () => {
   return {
-    type: RELEASE_USER
+    type: RELEASE_USER,
   };
 };
