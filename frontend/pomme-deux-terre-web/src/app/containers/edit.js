@@ -9,9 +9,17 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import MyParagraph from "./my-paragraph";
 import ImageTool from "@editorjs/image";
+import { useSelector } from "react-redux";
+import { UPLOAD_IMAGE_ONLY } from "../api/constant";
+import "./edit.css";
+//TODO: check if image removed, image from database also removed
+//TODO: Create specific layout for writing posts
+//TODO: Map posts content to specific fields
 
 function EditLayout(props) {
-  const editor = new EditorJS({
+  const auth = useSelector((state) => state.authReducer);
+  //Editors
+  const postInfo = new EditorJS({
     /**
      * Id of Element that should contain Editor instance
      */
@@ -23,35 +31,44 @@ function EditLayout(props) {
         class: Header,
         inlineToolbar: ["link"],
       },
-      steps: {
-        class: List,
+      description: {
+        class: MyParagraph,
         inlineToolbar: true,
         config: {
-          placeholder: "Write the steps",
+          placeholder: "Write the your description",
         },
       },
-      myOwnParagraph: MyParagraph,
+      image: {
+        class: ImageTool,
+        field: "image",
+        config: {
+          endpoints: {
+            byFile: UPLOAD_IMAGE_ONLY, // Your backend file uploader endpoint
+            byUrl: UPLOAD_IMAGE_ONLY, // Your endpoint that provides uploading by Url
+          },
+          additionalRequestHeaders: {
+            authorization: "Token " + auth.token,
+            // ...
+          },
+        },
+      },
     },
     // initialBlock: myOwnParagraph,
     autofocus: true,
   });
-  const image = new EditorJS({
+  const recipestep = new EditorJS({
     /**
      * Id of Element that should contain Editor instance
      */
-    placeholder: "Let's write an awesome story",
+    placeholder: "Tell us your recipe steps and attach images in order",
     holderId: "image",
     loglevel: "ERROR",
     tools: {
-      image_title: {
-        class: Header,
-        inlineToolbar: ["link"],
-      },
-      ingredients: {
+      steps: {
         class: List,
         inlineToolbar: true,
         config: {
-          placeholder: "Write the steps",
+          placeholder: "Write the recipe steps",
         },
       },
       image: {
@@ -63,7 +80,7 @@ function EditLayout(props) {
             byUrl: "http://10.10.153.8:8000/blog/image/", // Your endpoint that provides uploading by Url
           },
           additionalRequestHeaders: {
-            authorization: "Token 7dff600ec54292686617e9030a2a5fea62f9aa98",
+            authorization: "Token " + auth.token,
             // ...
           },
         },
@@ -73,7 +90,28 @@ function EditLayout(props) {
     // initialBlock: myOwnParagraph,
     autofocus: true,
   });
-  editor.isReady
+  const ingredient = new EditorJS({
+    /**
+     * Id of Element that should contain Editor instance
+     */
+    placeholder: "Give us your list of ingredients",
+    holderId: "ingredient",
+    loglevel: "ERROR",
+    tools: {
+      ingredient: {
+        class: List,
+        inlineToolbar: true,
+        config: {
+          placeholder: "Place your ingredients here",
+        },
+      },
+    },
+    // initialBlock: myOwnParagraph,
+    autofocus: true,
+  });
+
+  //Editors Ready
+  postInfo.isReady
     .then(() => {
       console.log("Editor.js is ready to work!");
       /** Do anything you need after editor initialization */
@@ -81,32 +119,61 @@ function EditLayout(props) {
     .catch((reason) => {
       console.log(`Editor.js initialization failed because of ${reason}`);
     });
-  //   editor
-  //     .save()
-  //     .then((outputData) => {
-  //       console.log("Article data:", outputData);
-  //     })
-  //     .catch((error) => {
-  //       console.log("saving failed", error);
-  //     });
+  recipestep.isReady
+    .then(() => {
+      console.log("Editor.js is ready to work!");
+    })
+    .catch((reason) => {
+      console.log(`Editor.js initialization failed because of ${reason}`);
+    });
+  ingredient.isReady
+    .then(() => {
+      console.log("Editor.js is ready to work!");
+    })
+    .catch((reason) => {
+      console.log(`Editor.js initialization failed because of ${reason}`);
+    });
 
+  //SaveArticle
   const saveArticle = () => {
-    editor.save().then((savedData) => {
-      console.log(JSON.stringify(savedData, null, 4));
-    });
-    image.save().then((savedData) => {
-      console.log(JSON.stringify(savedData, null, 4));
-    });
+    postInfo
+      .save()
+      .then((savedData) => {
+        console.log(JSON.stringify(savedData, null, 4));
+      })
+      .catch((error) => {
+        console.log("saving failed", error);
+      });
+    recipestep
+      .save()
+      .then((savedData) => {
+        console.log(JSON.stringify(savedData, null, 4));
+      })
+      .catch((error) => {
+        console.log("saving failed", error);
+      });
+    ingredient
+      .save()
+      .then((savedData) => {
+        console.log(JSON.stringify(savedData, null, 4));
+      })
+      .catch((error) => {
+        console.log("saving failed", error);
+      });
   };
   return (
     <React.Fragment>
       <NavBarHead />
       <Row>
         <AdsColumn />
+
         <Col sm={8}>
           <h2>Add Post</h2>
-          <div style={{ backgroundColor: "#F0FFFF" }} id="editorjs"></div>
-          <div style={{ backgroundColor: "grey" }} id="image"></div>
+          <Row>
+            <Col className="post-container" id="editorjs"></Col>
+            <Col className="image-container" id="image"></Col>
+            <Col className="ingredient-container" id="ingredient"></Col>
+          </Row>
           <Button className="btn btn-primary" onClick={saveArticle}>
             Save
           </Button>

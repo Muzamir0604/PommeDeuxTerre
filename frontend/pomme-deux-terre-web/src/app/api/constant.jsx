@@ -28,3 +28,6 @@ export const USER_REVIEWS_QUERY = REVIEW_LIST_DETAIL + "?user=";
 
 // sub post actions
 export const REVIEW_POST = "/review_post/";
+
+//Upload Image
+export const UPLOAD_IMAGE_ONLY = API_URL + "/blog/image/";

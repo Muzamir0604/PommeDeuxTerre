@@ -5,7 +5,7 @@ class AdsColumn extends Component {
   render() {
     const text = "This is here for a reason";
     return (
-      <Col>
+      <Col style={{ margin: "5px 5px" }}>
         <Row className="App" sm={2}>
           {text}
         </Row>

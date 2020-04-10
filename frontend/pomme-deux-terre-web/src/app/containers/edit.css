@@ -1,0 +1,31 @@
+.h2 {
+  text-align: center;
+  text-shadow: cadetblue;
+}
+.btn {
+}
+.post-container {
+  background-color: cadetblue;
+  margin-right: 10px;
+}
+
+.image-container {
+  background-color: bisque;
+  margin-right: 10px;
+}
+.ingredient-container {
+  background-color: darksalmon;
+}
+.Row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.Col {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  margin: 2px, 2px;
+}
