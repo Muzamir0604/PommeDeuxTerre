@@ -3,6 +3,40 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+class RecipeStep(models.Model):
+    title = models.CharField(max_length=64)
+    description = models.TextField(max_length=240)
+    post = models.ForeignKey(
+        'Post', related_name="post_recipesteps", null=True, on_delete=models.CASCADE)
+    ingredient = models.ManyToManyField('Ingredient')
+
+    def __str__(self):
+        return self.title
+
+
+class Ingredient(models.Model):
+    UNIT_CHOICES = (
+        ('ml', 'millilitre'),
+        ('L', 'litre'),
+        ('tbsp', 'tablespoon'),
+        ('tsp', 'teaspoon'),
+        ('tcp', 'teacup'),
+        ('cm', 'centimetre'),
+        ('m', 'metre'),
+        ('g', 'gram'),
+        ('kg', 'kilogram'),
+        ('cup', 'cup'),
+    )
+    name = models.CharField(max_length=64)
+    post = models.ForeignKey(
+        'Post', related_name="post_ingredients", null=True, on_delete=models.CASCADE)
+    quantity = models.IntegerField(validators=[MinValueValidator(1)])
+    unit = models.CharField(max_length=5, choices=UNIT_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+
 class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=False, default=1, on_delete=models.CASCADE)
@@ -30,8 +64,6 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=32, default="title")
     description = models.TextField(max_length=360, default="description")
-    thumbnail_id = models.IntegerField(
-        validators=[MinValueValidator(1)], null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     category = models.ForeignKey(

@@ -2,17 +2,29 @@
 # https://django-admin-sortable2.readthedocs.io/en/latest/usage.html#integrate-your-models
 # TODO: add admin sortable for thumbnail purpose
 from django.contrib import admin
-from .models import Post, Review, Category, PostImage
+from .models import Post, Review, Category, PostImage, Ingredient, RecipeStep
 
 
 from django.db import models
 from django.forms.models import ModelForm
 
 
-class ReviewInline(admin.StackedInline):
-    model = Review
+class IngredientInline(admin.StackedInline):
+    model = Ingredient
     fk_name = "post"
     extra = 0
+
+
+class RecipeStepInline(admin.StackedInline):
+    model = RecipeStep
+    fk_name = "post"
+    extra = 0
+
+
+#  class ReviewInline(admin.StackedInline):
+#     model = Review
+#     fk_name = "post"
+#     extra = 0
 
 
 class PostImageInline(admin.StackedInline):
@@ -30,7 +42,7 @@ class PostImageAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_at',
                     'updated_at', 'no_of_reviews', 'avg_rating']
-    inlines = [ReviewInline, PostImageInline]
+    inlines = [PostImageInline, RecipeStepInline, IngredientInline]
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -48,3 +60,4 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(PostImage, PostImageAdmin)
+admin.site.register(Ingredient)
