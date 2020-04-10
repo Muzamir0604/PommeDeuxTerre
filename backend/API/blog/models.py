@@ -39,7 +39,7 @@ class Ingredient(models.Model):
 
 class PostImage(models.Model):
     post_id = models.ForeignKey(
-        'Post', related_name="post_images", null=False, default=1, on_delete=models.CASCADE)
+        'Post', related_name="post_images", null=True, default=1, on_delete=models.CASCADE)
     image = models.ImageField(blank=False, null=False)
 
     def __str__(self):

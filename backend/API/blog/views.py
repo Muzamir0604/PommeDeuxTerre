@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, status, generics, views
 from rest_framework.decorators import action
 from .models import Post, Review, Category, PostImage
-from .serializers import PostSerializer, ReviewSerializer, CategorySerializer, ImageSerializer
+from .serializers import PostSerializer, ReviewSerializer, CategorySerializer, ImageSerializer, ImageOnlySerializer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
@@ -11,6 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from django.http import JsonResponse
+from rest_framework.renderers import JSONRenderer
 
 # https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
 # https://stackoverflow.com/questions/52903232/how-to-upload-multiple-images-using-django-rest-framework
@@ -22,7 +23,43 @@ def modify_input_for_multiple_files(post_id, image):
     dict['post_id'] = post_id
     dict['image'] = image
     return dict
-# TODO: POST + IMAGES post via API
+
+
+def modify_input(image):
+    dict = {}
+    # dict['post_id'] = post_id
+    dict['image'] = image
+    return dict
+
+
+class ImageUploadOnly(views.APIView):
+    parser_class = (MultiPartParser, FormParser)
+    renderer_classes = [JSONRenderer]
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+
+        images = dict((request.data).lists())['image']
+        flag = 1
+        for img_name in images:
+            modified_data = modify_input(
+                img_name)
+            file_serializer = ImageOnlySerializer(
+                data=modified_data, context={"request": request})
+
+            if file_serializer.is_valid():
+                file_serializer.save()
+            else:
+                flag = 0
+
+        res = {"success": 1, "file": {
+            "url": file_serializer.data['image']}}
+
+        if flag == 1:
+            return Response(res)
+        else:
+            return Response(arr, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ImageUploadView(views.APIView):

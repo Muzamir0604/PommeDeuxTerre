@@ -60,6 +60,10 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
+    "@editorjs/editorjs": "^2.17.0",
+    "@editorjs/header": "^2.4.0",
+    "@editorjs/image": "^2.3.3",
+    "@editorjs/list": "^1.4.0",
     "jest-cli": "^25.2.7",
     "jest-enzyme": "^7.1.2",
     "react-test-renderer": "^16.13.1"

@@ -15,6 +15,14 @@ class RecipeStepSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ImageOnlySerializer(serializers.ModelSerializer):
+    # TODO: GET full URL
+    class Meta:
+        model = PostImage
+        fields = ('id', 'image')
+
+
+
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostImage
