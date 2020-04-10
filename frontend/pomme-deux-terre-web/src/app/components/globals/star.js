@@ -7,9 +7,9 @@ function Star(props) {
   return (
     <React.Fragment>
       {[...Array(5)].map((e, i) => {
-        console.log("STAR::", props.star);
         return (
           <FontAwesomeIcon
+            key={i}
             icon={faStar}
             className={props.star > i ? "orange" : ""}
           />

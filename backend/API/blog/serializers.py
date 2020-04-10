@@ -1,6 +1,18 @@
 from rest_framework import serializers
-from .models import Post, Review, Category, PostImage
+from .models import Post, Review, Category, PostImage, Ingredient, RecipeStep
 from django.contrib.auth.models import User
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = "__all__"
+
+
+class RecipeStepSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeStep
+        fields = "__all__"
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -47,13 +59,15 @@ class LimitedReviewSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     post_images = ImageSerializer(many=True)
+    post_ingredients = IngredientSerializer(many=True)
+    post_recipesteps = RecipeStepSerializer(many=True)
     post_reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False)
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'description', 'post_images',
-                  'no_of_reviews', 'avg_rating', 'post_reviews', 'user')
+                  'no_of_reviews', 'avg_rating', 'post_reviews', 'user', 'post_ingredients', 'post_recipesteps')
 
 
 class FilteredPostSerializer(serializers.ListSerializer):

@@ -50,12 +50,11 @@ function Category(props) {
                       display: "flex",
                       color: "black",
                     }}
-                    key={post.id}
                   >
                     <Container>
                       <Row>
                         <Col sm={8} style={{ order: 1 }}>
-                          <h1 key={post.id}>{post.title}</h1>{" "}
+                          <h1>{post.title}</h1>
                           <Star star={post.avg_rating} />
                           <hr />
                           <p>{post.description}</p>
@@ -64,7 +63,6 @@ function Category(props) {
                               <p>No of Reviews {post.no_of_reviews}</p>
                             </Col>
                             <Col>
-                              {" "}
                               {/* <Button
                               onClick={() => history.push("/posts/" + post.id)}
                             >
