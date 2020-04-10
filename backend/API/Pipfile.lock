@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "975ee60f024227e82df5b02acf63d31a0016b30015da9f106c6ce14ba5818b64"
+            "sha256": "29467e911681caf790c6131e29d872b9412662751d3efe98995e17c3882a037e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -34,7 +34,15 @@
         "django-admin-sortable2": {
             "editable": true,
             "git": "https://github.com/jrief/django-admin-sortable2",
-            "ref": "61e103c46388824664178e56977b30bbcec08c9f"
+            "ref": "b49ca682e1c6edf4b8b46fe8d2de9eacfb71f205"
+        },
+        "django-cleanup": {
+            "hashes": [
+                "sha256:412c3f9417ddaaaa561b60237b109550b16e556db92d4616278fc7e1ad9ab0a4",
+                "sha256:b2bdb590eccc1a8e0688d5c6224080d3bb4a77e5bad1688fbe452d8c3454d755"
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
         },
         "django-cors-headers": {
             "hashes": [
