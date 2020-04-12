@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-class RecipeStep(models.Model):
-    title = models.CharField(max_length=64)
-    description = models.TextField(max_length=240)
-    post = models.ForeignKey(
-        'Post', related_name="post_recipesteps", null=True, on_delete=models.CASCADE)
-    ingredient = models.ManyToManyField('Ingredient')
+class Instruction(models.Model):
+    title = models.CharField(max_length=100)
+    # description = models.TextField(max_length=100, null=True)
+    recipe = models.ForeignKey(
+        'Recipe', related_name="recipe_instructions", null=True, on_delete=models.CASCADE)
+    # ingredient = models.ManyToManyField('Ingredient')
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
@@ -21,26 +23,48 @@ class Ingredient(models.Model):
         ('tbsp', 'tablespoon'),
         ('tsp', 'teaspoon'),
         ('tcp', 'teacup'),
+        ('cup', 'cup'),
         ('cm', 'centimetre'),
         ('m', 'metre'),
         ('g', 'gram'),
         ('kg', 'kilogram'),
-        ('cup', 'cup'),
+        ('pc', 'piece(s)')
+
     )
     name = models.CharField(max_length=64)
-    post = models.ForeignKey(
-        'Post', related_name="post_ingredients", null=True, on_delete=models.CASCADE)
-    quantity = models.IntegerField(validators=[MinValueValidator(1)])
-    unit = models.CharField(max_length=5, choices=UNIT_CHOICES)
+    recipe = models.ForeignKey(
+        'Recipe', related_name="recipe_ingredients", null=True, on_delete=models.CASCADE)
+    quantity = models.IntegerField(
+        validators=[MinValueValidator(1)], null=True, blank=True)
+    unit = models.CharField(
+        max_length=5, choices=UNIT_CHOICES, default=UNIT_CHOICES[0][0], null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name
+
+
+class Recipe(models.Model):
+    name = models.CharField(max_length=64)
+    prep_time = models.IntegerField(validators=[MinValueValidator(1)])
+    cook_time = models.IntegerField(validators=[MinValueValidator(1)])
+    servings = models.IntegerField(validators=[MinValueValidator(1)])
+    post = models.ForeignKey(
+        'Post', related_name="post_recipes", null=True, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return "%s" % (self.name)
 
 
 class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=True, default=1, on_delete=models.CASCADE)
     image = models.ImageField(blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.image.name
@@ -62,8 +86,8 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=32, default="title")
-    description = models.TextField(max_length=360, default="description")
+    title = models.CharField(max_length=64, default="")
+    description = models.TextField(max_length=360, default="")
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     category = models.ForeignKey(
@@ -86,7 +110,7 @@ class Post(models.Model):
             return 0
 
     def __str__(self):
-        return "%s: %s - %s" % (self.category, self.title, self.user)
+        return "%s: %s" % (self.category, self.title)
 
 
 class Review(models.Model):
@@ -107,3 +131,12 @@ class Review(models.Model):
 
     def __str__(self):
         return "%s: %s - %s" % (self.post, self.title, self.user)
+
+
+class Reply(models.Model):
+    title = title = models.CharField(max_length=64, default="")
+    text = models.TextField(max_length=360, null=True)
+    review = models.ForeignKey(
+        Review, related_name="review_replies", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name="user_replies", on_delete=models.CASCADE)

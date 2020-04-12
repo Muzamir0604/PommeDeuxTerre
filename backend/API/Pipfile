@@ -16,6 +16,8 @@ django-filter = "*"
 pillow = "*"
 django-admin-sortable2 = {editable = true,git = "https://github.com/jrief/django-admin-sortable2"}
 django-cleanup = "*"
+django-nested-inline = "*"
+django-suit = "*"
 
 [requires]
 python_version = "3.8"

@@ -12,7 +12,7 @@ import ImageTool from "@editorjs/image";
 import { useSelector } from "react-redux";
 import { UPLOAD_IMAGE_ONLY } from "../api/constant";
 import "./edit.css";
-import SimpleImage from "./simple-image";
+
 //TODO: check if image removed, image from database also removed
 //TODO: Create specific layout for writing posts
 //TODO: Map posts content to specific fields
@@ -28,7 +28,7 @@ function EditLayout(props) {
     holderId: "editorjs",
     loglevel: "ERROR",
     tools: {
-      imageTest: SimpleImage,
+      imageTest: ImageTool,
       title: {
         class: Header,
         inlineToolbar: ["link"],
