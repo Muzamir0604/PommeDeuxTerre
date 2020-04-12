@@ -114,9 +114,7 @@ function Post(props) {
                 <Row>
                   {undefined !== post.post_recipes &&
                   post.post_recipes.length ? (
-                    <Container>
-                      <RecipeCard recipes={post.post_recipes} />
-                    </Container>
+                    <RecipeCard recipes={post.post_recipes} />
                   ) : null}
                 </Row>
               </Container>
@@ -131,7 +129,9 @@ function Post(props) {
               {undefined !== post.post_reviews && post.post_reviews.length ? (
                 <ReviewCard reviews={post.post_reviews} />
               ) : (
-                <p>No reviews</p>
+                <Container>
+                  <p>No reviews</p>
+                </Container>
               )}
             </Jumbotron>
           </div>
