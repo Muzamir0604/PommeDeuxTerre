@@ -8,6 +8,7 @@ import PageFooter from "../components/globals/footer";
 import Star from "../components/globals/star";
 import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
+import ReviewCard from "../components/review";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
@@ -73,35 +74,11 @@ function Post(props) {
               style={{ padding: "20px 0px", display: "flex" }}
               key={post.id}
             >
-              <Container>
-                <h4>Reviews</h4>
-                {undefined !== post.post_reviews && post.post_reviews.length
-                  ? post.post_reviews.map((review) => {
-                      return (
-                        <Card
-                          key={review.id}
-                          style={{
-                            margin: "2px 2px",
-                            backgroundColor: "lightgrey",
-                          }}
-                        >
-                          <Container>
-                            <Row>
-                              <Col>
-                                <h5>{review.title}</h5>
-                                <p>{review.description}</p>
-                              </Col>
-                              <Col>
-                                <Star star={review.stars} />
-                                <pre> Posted by {review.user.username}</pre>
-                              </Col>
-                            </Row>
-                          </Container>
-                        </Card>
-                      );
-                    })
-                  : null}
-              </Container>
+              {undefined !== post.post_reviews && post.post_reviews.length ? (
+                <ReviewCard reviews={post.post_reviews} />
+              ) : (
+                <div>No reviews</div>
+              )}
             </Jumbotron>
           </div>
         </Col>
