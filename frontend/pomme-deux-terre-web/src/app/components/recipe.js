@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Row, Col, Container } from "react-bootstrap";
+import Instruction from "./recipe/instruction";
+import Ingredient from "./recipe/ingredient";
 // import Star from "./globals/star";
 // import { useHistory } from "react-router-dom";
 
@@ -22,7 +24,20 @@ function RecipeCard(props) {
               <Container>
                 <Row>
                   <Col>
-                    <h2>RECIPE</h2>
+                    <p>{recipe.name}</p>
+                    <p>Prep Time: {recipe.prep_time}</p>
+                  </Col>
+                  <Col>
+                    <p>Cook Time: {recipe.cook_time}</p>
+                    <p>Servings: {recipe.servings}</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Instruction instructions={recipe.recipe_instructions} />
+                  </Col>
+                  <Col>
+                    <Ingredient ingredients={recipe.recipe_ingredients} />
                   </Col>
                 </Row>
               </Container>
