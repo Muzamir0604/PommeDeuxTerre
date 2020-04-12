@@ -2,12 +2,13 @@ import React from "react";
 import { withCookies } from "react-cookie";
 import CardCarousel from "../components/post-carousel";
 import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 //FIXME: Redesign the layout to make it mobile friendly
 function Overview(props) {
   const authorized = (
     <React.Fragment>
-      <div>
+      <Container>
         {props.shortList.map((category) => {
           let CatList = (
             <React.Fragment>
@@ -25,7 +26,7 @@ function Overview(props) {
           );
           return <React.Fragment key={category.id}>{CatList}</React.Fragment>;
         })}
-      </div>
+      </Container>
     </React.Fragment>
   );
   const notAuthorized = <div>Not authorized</div>;

@@ -41,9 +41,10 @@ function Post(props) {
                   <Col sm={8} style={{ order: 1 }}>
                     <h1 key={post.id}>{post.title}</h1>
                     <p>{post.description}</p>
-                    <p>No of Reviews: {post.no_of_reviews}</p>
+
                     <p>
-                      Average Rating: <Star star={post.avg_rating} />{" "}
+                      Average Rating: <Star star={post.avg_rating} /> (
+                      {post.no_of_reviews}){" "}
                     </p>
                   </Col>
                   <Col

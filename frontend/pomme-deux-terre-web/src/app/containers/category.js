@@ -42,42 +42,33 @@ function Category(props) {
           <div className="container" style={{ alignItems: "center" }}>
             {CategoryData.map((post) => {
               return (
-                <Link key={post.id} to={"/posts/" + post.id}>
-                  <Jumbotron
-                    fluid
-                    style={{
-                      padding: "20px 0px",
-                      display: "flex",
-                      color: "black",
-                    }}
-                  >
-                    <Container>
-                      <Row>
-                        <Col sm={8} style={{ order: 1 }}>
+                <Jumbotron
+                  fluid
+                  style={{
+                    padding: "20px 0px",
+                    display: "flex",
+                    color: "black",
+                  }}
+                >
+                  <Container>
+                    <Row>
+                      <Col sm={8} style={{ order: 1 }}>
+                        <Link key={post.id} to={"/posts/" + post.id}>
                           <h1>{post.title}</h1>
-                          <Star star={post.avg_rating} />
-                          <hr />
-                          <p>{post.description}</p>
-                          <Row>
-                            <Col>
-                              <p>No of Reviews {post.no_of_reviews}</p>
-                            </Col>
-                            <Col>
-                              {/* <Button
-                              onClick={() => history.push("/posts/" + post.id)}
-                            >
-                              Read More
-                            </Button> */}
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col
-                          style={{
-                            order: 2,
-                            padding: "5px 5px",
-                            margin: "5px 5px",
-                          }}
-                        >
+                        </Link>
+                        <Star star={post.avg_rating} />
+                        <text>({post.no_of_reviews})</text>
+                        <hr />
+                        <p>{post.description}</p>
+                      </Col>
+                      <Col
+                        style={{
+                          order: 2,
+                          padding: "5px 5px",
+                          margin: "5px 5px",
+                        }}
+                      >
+                        <Link key={post.id} to={"/posts/" + post.id}>
                           <Card.Img
                             src={
                               post.post_images.length > 0
@@ -89,11 +80,11 @@ function Category(props) {
                               height: "100%",
                             }}
                           />
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Jumbotron>
-                </Link>
+                        </Link>
+                      </Col>
+                    </Row>
+                  </Container>
+                </Jumbotron>
               );
             })}
           </div>
