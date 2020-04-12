@@ -22,15 +22,15 @@ function RecipeCard(props) {
               }}
             >
               <Container>
-                <Row>
+                <Row className="justify-content-md-center">
                   <Col>
-                    <p>{recipe.name}</p>
-                    <p>Prep Time: {recipe.prep_time}</p>
+                    <h5>{recipe.name}</h5>
+                    {/* <p>Prep Time: {recipe.prep_time}</p> */}
                   </Col>
-                  <Col>
-                    <p>Cook Time: {recipe.cook_time}</p>
-                    <p>Servings: {recipe.servings}</p>
-                  </Col>
+                  {/* <Col> */}
+                  {/* <p>Cook Time: {recipe.cook_time}</p> */}
+                  {/* <p>Servings: {recipe.servings}</p> */}
+                  {/* </Col> */}
                 </Row>
                 <Row>
                   <Col>

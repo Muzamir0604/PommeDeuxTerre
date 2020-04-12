@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withCookies } from "react-cookie";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,20 @@ function Post(props) {
 
     // eslint-disable-next-line
   }, []);
+  const [preptime, setpreptime] = useState(0);
+  const [cooktime, setcooktime] = useState(0);
+  const [serving, setserving] = useState(0);
+
+  useEffect(() => {
+    if (undefined !== post.post_recipes && post.post_recipes.length > 0) {
+      post.post_recipes.map((recipe) => {
+        setpreptime((preptime) => preptime + recipe.prep_time);
+        setcooktime((cooktime) => cooktime + recipe.cook_time);
+        setserving(recipe.servings);
+        return null;
+      });
+    }
+  }, [post.post_recipes]);
 
   return (
     <React.Fragment>
@@ -41,12 +55,40 @@ function Post(props) {
                   <Col sm={8} style={{ order: 1 }}>
                     <h1 key={post.id}>{post.title}</h1>
                     <p>{post.description}</p>
-
-                    <p>
-                      Average Rating: <Star star={post.avg_rating} /> (
-                      {post.no_of_reviews}){" "}
-                    </p>
+                    <Row>
+                      <Col>
+                        <p>
+                          Average Rating: <Star star={post.avg_rating} /> (
+                          {post.no_of_reviews}){" "}
+                        </p>
+                      </Col>
+                      <Col>
+                        {undefined !== post.post_recipes &&
+                        post.post_recipes.length &&
+                        undefined !== post.post_recipes &&
+                        post.post_recipes.length ? (
+                          <React.Fragment>
+                            <p
+                              style={{ margin: "0px 0px", padding: "0px 0px" }}
+                            >
+                              Prep Time: {preptime}
+                            </p>
+                            <p
+                              style={{ margin: "0px 0px", padding: "0px 0px" }}
+                            >
+                              Cook Time: {cooktime}
+                            </p>
+                            <p
+                              style={{ margin: "0px 0px", padding: "0px 0px" }}
+                            >
+                              Servings: {serving}
+                            </p>
+                          </React.Fragment>
+                        ) : null}
+                      </Col>
+                    </Row>
                   </Col>
+
                   <Col
                     style={{
                       order: 2,
