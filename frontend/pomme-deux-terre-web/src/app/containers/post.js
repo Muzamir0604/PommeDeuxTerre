@@ -9,6 +9,7 @@ import Star from "../components/globals/star";
 import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import ReviewCard from "../components/review";
+import RecipeCard from "../components/recipe";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
@@ -41,7 +42,9 @@ function Post(props) {
                     <h1 key={post.id}>{post.title}</h1>
                     <p>{post.description}</p>
                     <p>No of Reviews: {post.no_of_reviews}</p>
-                    <Star star={post.avg_rating} />
+                    <p>
+                      Average Rating: <Star star={post.avg_rating} />{" "}
+                    </p>
                   </Col>
                   <Col
                     style={{
@@ -50,7 +53,7 @@ function Post(props) {
                       margin: "5px 5px",
                     }}
                   >
-                    {console.log(post)}
+                    {/* {console.log(post)} */}
                     <Card.Img
                       src={
                         undefined !== post.post_images &&
@@ -65,6 +68,14 @@ function Post(props) {
                     />
                   </Col>
                 </Row>
+                <Row>
+                  {undefined !== post.post_recipes &&
+                  post.post_recipes.length ? (
+                    <Container>
+                      <RecipeCard recipes={post.post_recipes} />
+                    </Container>
+                  ) : null}
+                </Row>
               </Container>
             </Jumbotron>
           </div>
@@ -77,7 +88,7 @@ function Post(props) {
               {undefined !== post.post_reviews && post.post_reviews.length ? (
                 <ReviewCard reviews={post.post_reviews} />
               ) : (
-                <div>No reviews</div>
+                <p>No reviews</p>
               )}
             </Jumbotron>
           </div>
