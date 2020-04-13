@@ -121,10 +121,14 @@ class PostViewSet(viewsets.ModelViewSet):
         if 'stars' in request.data:
             post = Post.objects.get(id=pk)
             stars = request.data['stars']
+            title = request.data['title']
+            description = request.data['description']
             user = request.user
             try:
                 review = Review.objects.get(user=user.id, post=post.id)
                 review.stars = stars
+                review.title = title
+                review.description = description
                 review.save()
                 serializer = ReviewSerializer(review, many=False)
                 response = {'message': 'Review updated',
@@ -132,14 +136,15 @@ class PostViewSet(viewsets.ModelViewSet):
                 return Response(response, status=status.HTTP_200_OK)
             except:
                 review = Review.objects.create(
-                    user=user, post=post, stars=stars)
+                    user=user, post=post, stars=stars, title=title, description=description)
                 serializer = ReviewSerializer(review, many=False)
                 response = {'message': 'Review created',
                             'result': serializer.data}
                 return Response(response, status=status.HTTP_200_OK)
 
         else:
-            response = {'message': 'You need to provide stars'}
+            response = {
+                'message': 'You need to provide stars, title or description'}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
