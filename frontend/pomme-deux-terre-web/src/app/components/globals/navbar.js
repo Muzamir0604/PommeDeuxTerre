@@ -5,6 +5,7 @@ import { Navbar, Nav, NavDropdown, Col, Row, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { releaseUser } from "../../actions/userActions";
+import "./navbar.css";
 
 // https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
 
