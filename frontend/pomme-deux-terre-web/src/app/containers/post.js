@@ -10,6 +10,13 @@ import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClock,
+  faCalendarWeek,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+import "./post.css";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
@@ -45,69 +52,61 @@ function Post(props) {
         <AdsColumn />
         <Col sm={8}>
           <div>
-            <Jumbotron
-              fluid
-              style={{ padding: "20px 0px", display: "flex" }}
-              key={post.id}
-            >
+            <Jumbotron fluid key={post.id}>
               <Container>
                 <Row>
-                  <Col sm={8} style={{ order: 1 }}>
+                  <Col className="recipe-info" sm={8}>
                     <h1 key={post.id}>{post.title}</h1>
                     <p>{post.description}</p>
                     <Row>
-                      <Col>
+                      <Col sm={7}>
                         <p>
                           Average Rating: <Star star={post.avg_rating} /> (
                           {post.no_of_reviews}){" "}
                         </p>
                       </Col>
-                      <Col>
+                      <Col className="recipe-detail" sm={5}>
                         {undefined !== post.post_recipes &&
                         post.post_recipes.length &&
                         undefined !== post.post_recipes &&
                         post.post_recipes.length ? (
                           <React.Fragment>
-                            <p
-                              style={{ margin: "0px 0px", padding: "0px 0px" }}
-                            >
-                              Prep Time: {preptime}
-                            </p>
-                            <p
-                              style={{ margin: "0px 0px", padding: "0px 0px" }}
-                            >
-                              Cook Time: {cooktime}
-                            </p>
-                            <p
-                              style={{ margin: "0px 0px", padding: "0px 0px" }}
-                            >
-                              Servings: {serving}
-                            </p>
+                            <span>
+                              <FontAwesomeIcon icon={faClock} />
+                              <p className="recipe-detail">
+                                &nbsp; Prep Time: {preptime}
+                              </p>
+                            </span>
+                            <br />
+                            <span>
+                              <FontAwesomeIcon icon={faCalendarWeek} />
+                              <p className="recipe-detail">
+                                &nbsp; Cook Time: {cooktime}
+                              </p>
+                            </span>
+                            <br />
+                            <span>
+                              <FontAwesomeIcon icon={faUsers} />
+                              <p className="recipe-detail">
+                                &nbsp; Servings: {serving}
+                              </p>
+                            </span>
                           </React.Fragment>
                         ) : null}
                       </Col>
                     </Row>
                   </Col>
 
-                  <Col
-                    style={{
-                      order: 2,
-                      padding: "5px 5px",
-                      margin: "5px 5px",
-                    }}
-                  >
+                  <Col className="image-card">
                     {/* {console.log(post)} */}
                     <Card.Img
+                      className="image-card-src"
                       src={
                         undefined !== post.post_images &&
                         post.post_images.length
                           ? post.post_images[0].image
                           : require("../../assets/blog/castle.png")
                       }
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                      }}
                     />
                   </Col>
                 </Row>
@@ -121,11 +120,7 @@ function Post(props) {
             </Jumbotron>
           </div>
           <div>
-            <Jumbotron
-              fluid
-              style={{ padding: "20px 0px", display: "flex" }}
-              key={post.id}
-            >
+            <Jumbotron fluid key={post.id}>
               {undefined !== post.post_reviews && post.post_reviews.length ? (
                 <ReviewCard reviews={post.post_reviews} />
               ) : (
