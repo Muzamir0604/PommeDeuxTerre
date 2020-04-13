@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { updateUser } from "../actions/userActions";
+// import { updateUser } from "../actions/userActions";
 import { withCookies } from "react-cookie";
-
 import { Row, Col, Container, Form, Button, Alert } from "react-bootstrap";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
@@ -11,153 +9,149 @@ import AdsColumn from "../components/globals/ads";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-const reviewForm = (props) => {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+//TODO: work on Formik Star reviews
+const ReviewForm = (props) => {
   const dispatch = useDispatch();
 
-  const update = (id, user) => {
-    dispatch(updateUser(id, user));
+  const createUpdate = (id, review) => {
+    dispatch(createUpdate(id, review));
     sleep(2000);
   };
-  const userDetails = useSelector((state) => state.userReducer.user);
+  const userReviewData = useSelector((state) => state.reviewReducer);
+  const auth = useSelector((state) => state.authReducer);
 
-  const [user, setUser] = useState(userDetails);
+  const [userReview, setUserReview] = useState(userReviewData);
   const [successFlag, setSuccessFlag] = useState(false);
 
   let form;
 
   const formik = useFormik({
     initialValues: {
-      id: user.id,
-      username: user.username,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
+      stars: null,
+      title: null,
+      description: null,
     },
     validationSchema: Yup.object({
-      username: Yup.string()
-        .max(20, "Must be 20 characters or less")
+      stars: Yup.number()
+        .min(0, "Number must be at least 0")
+        .max(5, "Number must be at most 5")
         .required("Required"),
-      first_name: Yup.string()
+      title: Yup.string()
         .max(35, "Must be 35 characters or less")
-        .required("Required"),
-      last_name: Yup.string()
-        .max(20, "Must be 35 characters or less")
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
+        .required("Required")
+        .nullable(),
+      description: Yup.string()
+        .max(200, "Must be 200 characters or less")
+        .required("Required")
+        .nullable(),
     }),
+
     onSubmit: (values) => {
       setTimeout(() => {
-        update(user.id, values);
-        setUser(values);
+        createUpdate(auth.id, values);
+        setUserReview(values);
         setSuccessFlag(true);
       }, 400);
     },
   });
+  form = (
+    <React.Fragment>
+      <Container
+        style={{
+          backgroundColor: "white",
+          Color: "black",
+          alignText: "center",
+        }}
+      >
+        <h1>Review</h1>
+        {successFlag ? (
+          <Alert variant={"success"}>Update Successful</Alert>
+        ) : null}
 
-  if (parseInt(props.match.params.id) === parseInt(user.id)) {
-    form = (
-      <React.Fragment>
-        <Container
-          style={{
-            backgroundColor: "white",
-            Color: "black",
-            alignText: "center",
-          }}
-        >
-          <h1>Your Profile</h1>
-          {successFlag ? (
-            <Alert variant={"success"}>Update Successful</Alert>
-          ) : null}
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Row>
+            <Form.Group>
+              <Form.Label>Stars</Form.Label>
+              {[...Array(5)].map((e, i) => {
+                console.log(i);
+                return (
+                  <FontAwesomeIcon
+                    key={i}
+                    icon={faStar}
+                    className={i >= 0 ? "orange" : ""}
+                    consol
+                  />
+                );
+              })}
 
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Row>
-              <Form.Group>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  name="username"
-                  type="text"
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="Username"
-                />
-                {formik.touched.username && formik.errors.username ? (
-                  <p style={{ color: "red" }}>{formik.errors.username}</p>
-                ) : null}
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} style={{ paddingLeft: "0px" }}>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  name="first_name"
-                  type="text"
-                  onChange={formik.handleChange}
-                  value={formik.values.first_name}
-                  onBlur={formik.handleBlur}
-                  placeholder="First Name"
-                />
-                {formik.touched.first_name && formik.errors.first_name ? (
-                  <p style={{ color: "red" }}>{formik.errors.first_name}</p>
-                ) : null}
-              </Form.Group>
-
-              <Form.Group as={Col}>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  name="last_name"
-                  type="text"
-                  value={formik.values.last_name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="Last Name"
-                />
-                {formik.touched.last_name && formik.errors.last_name ? (
-                  <p style={{ color: "red" }}>{formik.errors.last_name}</p>
-                ) : null}
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  name="email"
-                  type="text"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="email"
-                />
-
-                {formik.touched.email && formik.errors.email ? (
-                  <p style={{ color: "red" }}>{formik.errors.email}</p>
-                ) : null}
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              {formik.dirty ? (
-                <Button style={{ marginRight: "5px" }} type="submit">
-                  Update
-                </Button>
+              {/* <Star stars={formik.values.stars}/> */}
+              {/* <Form.Control
+                name="stars"
+                type="text"
+                value={formik.values.stars}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Stars"
+              /> */}
+              {formik.touched.stars && formik.errors.stars ? (
+                <p style={{ color: "red" }}>{formik.errors.stars}</p>
               ) : null}
-              <p />
-              {formik.dirty ? (
-                <Button type="Button" style={{}} onClick={formik.handleReset}>
-                  Reset
-                </Button>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} style={{ paddingLeft: "0px" }}>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                name="title"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.title}
+                onBlur={formik.handleBlur}
+                placeholder="title"
+              />
+              {formik.touched.title && formik.errors.title ? (
+                <p style={{ color: "red" }}>{formik.errors.title}</p>
               ) : null}
-            </Form.Row>
+            </Form.Group>
 
-            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
-          </Form>
-        </Container>
-      </React.Fragment>
-    );
-  } else {
-    form = <h1>ACCESS DENIED</h1>;
-  }
+            <Form.Group as={Col}>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                name="description"
+                type="textarea"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Description"
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <p style={{ color: "red" }}>{formik.errors.description}</p>
+              ) : null}
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            {formik.dirty ? (
+              <Button style={{ marginRight: "5px" }} type="submit">
+                Save
+              </Button>
+            ) : null}
+            <p />
+            {formik.dirty ? (
+              <Button type="Button" style={{}} onClick={formik.handleReset}>
+                Reset
+              </Button>
+            ) : null}
+          </Form.Row>
+
+          {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+        </Form>
+      </Container>
+    </React.Fragment>
+  );
 
   return (
     <React.Fragment>
@@ -174,4 +168,4 @@ const reviewForm = (props) => {
   );
 };
 
-export default withCookies(reviewForm);
+export default withCookies(ReviewForm);

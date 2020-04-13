@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { releaseUser } from "../../actions/userActions";
 
 // https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
-// FIXME: Figure out the problem with the nested Anchor tags warnings
+
 function NavBarHead(props) {
   const dispatch = useDispatch();
 

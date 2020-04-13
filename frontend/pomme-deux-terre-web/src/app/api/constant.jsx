@@ -27,6 +27,7 @@ export const USER_REVIEWS_QUERY = REVIEW_LIST_DETAIL + "?user=";
 //or USER_LIST_DETAIL + "<userID>" + REVIEWS
 
 // sub post actions
+// POST_LIST_DETAIL + postID + REVIEW_POST
 export const REVIEW_POST = "/review_post/";
 
 //Upload Image

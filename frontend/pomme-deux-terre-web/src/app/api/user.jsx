@@ -3,8 +3,6 @@ import { API_AUTH, CREATE_USER, USER_LIST_DETAIL } from "./constant";
 import { getConfig } from "../utils/config";
 
 export const loginApi = (credentials) => {
-  console.log("Login API");
-  console.log("Credentials", credentials);
   return axios.post(API_AUTH, credentials, {
     headers: {
       "Content-Type": "application/json",

@@ -14,6 +14,7 @@ import { persistor } from "./app/store";
 import Category from "./app/containers/category";
 import Post from "./app/containers/post";
 import EditLayout from "./app/containers/edit";
+import ReviewForm from "./app/containers/review-form";
 
 // dont forget to install react-router-dom
 // and react-cookie
@@ -30,6 +31,7 @@ const routing = (
           <Route exact path={"/user/:id"} component={UserProfile} />
           <Route exact path={"/category"} component={Category} />
           <Route exact path={"/edit"} component={EditLayout} />
+          <Route exact path={"/review"} component={ReviewForm} />
           {/* <Route path={"/"} component={Root}>
               <IndexRoute component={Home} />
               <Route path{"home"} component={Home}/>

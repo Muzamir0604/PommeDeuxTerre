@@ -43,6 +43,7 @@ function Category(props) {
             {CategoryData.map((post) => {
               return (
                 <Jumbotron
+                  key={post.id}
                   fluid
                   style={{
                     padding: "20px 0px",
@@ -56,8 +57,12 @@ function Category(props) {
                         <Link key={post.id} to={"/posts/" + post.id}>
                           <h1>{post.title}</h1>
                         </Link>
+
                         <Star star={post.avg_rating} />
-                        <text>({post.no_of_reviews})</text>
+                        <p style={{ display: "inline" }}>
+                          ({post.no_of_reviews})
+                        </p>
+
                         <hr />
                         <p>{post.description}</p>
                       </Col>
