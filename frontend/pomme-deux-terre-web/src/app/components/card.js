@@ -11,8 +11,11 @@ function CardPost(props) {
 
   return (
     <React.Fragment>
-      <Card style={{ width: "90%", height: "100%" }}>
+      <Card style={{ width: "100%", height: "100%" }} key={props.post.id}>
         <Card.Img
+          onClick={() => {
+            history.push("/posts/" + props.post.id);
+          }}
           variant="top"
           src={
             props.post.post_images.length > 0
@@ -21,12 +24,12 @@ function CardPost(props) {
           }
           style={{ height: "40%" }}
         />
-        <Card.Body>
+        <Card.Body style={{ padding: "5px 20px" }}>
           <Card.Title style={{ color: "black" }}>{props.post.title}</Card.Title>
           <Card.Text style={{ color: "black" }}>
             {display ? (
               <TextTruncate
-                line={5}
+                line={3}
                 element="span"
                 text={props.post.description}
                 textTruncateChild={
@@ -38,7 +41,7 @@ function CardPost(props) {
               />
             ) : (
               <TextTruncate
-                line={3}
+                line={2}
                 element="span"
                 text={props.post.description}
                 textTruncateChild={
@@ -51,6 +54,7 @@ function CardPost(props) {
             )}
           </Card.Text>
           <Button
+            style={{ display: "flex", justifyContent: "flex-end" }}
             variant="primary"
             onClick={() => history.push("/posts/" + props.post.id)}
           >

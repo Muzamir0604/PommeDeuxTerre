@@ -12,16 +12,18 @@ function Overview(props) {
         {props.shortList.map((category) => {
           let CatList = (
             <React.Fragment>
-              <h3>
-                <Link
-                  className=".nav-link"
-                  style={{ color: "black" }}
-                  to={"/category/?category=" + category.id}
-                >
-                  {category.title}
-                </Link>
-              </h3>
-              <CardCarousel posts={category.category_posts} />
+              <Container>
+                <h3 style={{ paddingTop: "10px" }}>
+                  <Link
+                    className=".nav-link"
+                    style={{ color: "black" }}
+                    to={"/category/?category=" + category.id}
+                  >
+                    {category.title}
+                  </Link>
+                </h3>
+                <CardCarousel posts={category.category_posts} />
+              </Container>
             </React.Fragment>
           );
           return <React.Fragment key={category.id}>{CatList}</React.Fragment>;
