@@ -16,7 +16,7 @@ import {
   faCalendarWeek,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import "./post.css";
+import "../styles/container/post.css";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 

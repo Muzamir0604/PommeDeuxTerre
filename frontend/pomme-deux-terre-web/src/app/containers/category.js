@@ -10,7 +10,7 @@ import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import { Link } from "react-router-dom";
 import Star from "../components/globals/star";
-import "./category.css";
+import "../styles/container/category.css";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
