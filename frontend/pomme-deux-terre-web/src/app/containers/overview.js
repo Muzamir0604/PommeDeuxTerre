@@ -12,7 +12,7 @@ function Overview(props) {
         {props.shortList.map((category) => {
           let CatList = (
             <React.Fragment>
-              <Container>
+              <Container key={category.id}>
                 <h3 style={{ paddingTop: "10px" }}>
                   <Link
                     className=".nav-link"

@@ -5,6 +5,7 @@ import "./post-carousel.css";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Container } from "react-bootstrap";
 
 function CardCarousel(props) {
   const responsive = {
@@ -29,7 +30,11 @@ function CardCarousel(props) {
     <React.Fragment>
       <Carousel responsive={responsive} draggable showDots>
         {props.posts.map((post) => {
-          return <CardPost post={post} />;
+          return (
+            <Container key={post.id} style={{ height: "100%" }}>
+              <CardPost post={post} />
+            </Container>
+          );
         })}
       </Carousel>
     </React.Fragment>

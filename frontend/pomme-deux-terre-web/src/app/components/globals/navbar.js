@@ -8,6 +8,7 @@ import { releaseUser } from "../../actions/userActions";
 import "../../styles/globals/navbar.css";
 
 // https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
+//TODO: Add css file
 
 function NavBarHead(props) {
   const dispatch = useDispatch();
@@ -22,9 +23,9 @@ function NavBarHead(props) {
 
   return (
     <Row>
-      <Col sm={2} style={{ backgroundColor: "#343a40" }}></Col>
+      <Col sm={2} className="side"></Col>
 
-      <Col sm={8} style={{ padding: "0em" }}>
+      <Col sm={8} className="main">
         <Navbar
           collapseOnSelect
           expand="lg"
@@ -34,12 +35,7 @@ function NavBarHead(props) {
         >
           <Image src="holder.js/171x180" rounded />
           <Navbar.Brand>
-            <Link
-              className="nav-link"
-              style={{ color: "white" }}
-              to={"/posts"}
-              replace
-            >
+            <Link className="nav-link" to={"/posts"} replace>
               Pomme Deux Terre
             </Link>
           </Navbar.Brand>
@@ -57,7 +53,6 @@ function NavBarHead(props) {
                       key={category.id}
                       className="dropdown-item"
                       to={"/category?category=" + category.id}
-                      style={{ color: "black" }}
                     >
                       {category.title}
                     </Link>
@@ -65,10 +60,10 @@ function NavBarHead(props) {
                 })}
               </NavDropdown>
             </Nav>
-            <Nav>
+            <Nav style={{ alignItems: "center" }}>
               {props.cookies.get("userId") ? (
                 <React.Fragment>
-                  <Navbar>
+                  <Navbar className="solo-nav">
                     <Link
                       className="nav-link"
                       to={"/user/" + props.cookies.get("userId")}
@@ -76,7 +71,7 @@ function NavBarHead(props) {
                       Profile
                     </Link>
                   </Navbar>
-                  <Navbar>
+                  <Navbar className="solo-nav">
                     <Link
                       className="nav-link"
                       onClick={releaseUserDispatch}
@@ -106,7 +101,7 @@ function NavBarHead(props) {
         </Navbar>
       </Col>
 
-      <Col sm={2} style={{ backgroundColor: "#343a40" }}></Col>
+      <Col sm={2} className="side"></Col>
     </Row>
   );
 }

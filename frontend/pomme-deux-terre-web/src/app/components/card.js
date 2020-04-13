@@ -34,7 +34,10 @@ function CardPost(props) {
                 text={props.post.description}
                 textTruncateChild={
                   // eslint-disable-next-line
-                  <a href="#" onClick={() => setDisplay(false)}>
+                  <a
+                    style={{ color: "blue" }}
+                    onClick={() => setDisplay(false)}
+                  >
                     Collapse
                   </a>
                 }
@@ -46,7 +49,7 @@ function CardPost(props) {
                 text={props.post.description}
                 textTruncateChild={
                   // eslint-disable-next-line
-                  <a href="#" onClick={() => setDisplay(true)}>
+                  <a style={{ color: "blue" }} onClick={() => setDisplay(true)}>
                     Read on
                   </a>
                 }

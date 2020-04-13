@@ -1,8 +1,27 @@
+.side {
+  background-color: #343a40;
+}
+
 .nav-link {
   padding-top: 1px;
   padding-bottom: 1px;
+  color: white;
 }
 .navbar-nav {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+.mr-auto {
+  align-items: center;
+}
+.dropdown-item {
+  background-color: grey;
+  color: white;
+  align-items: center;
+}
+.main {
+  padding: 0em;
+}
+.solo-nav {
+  padding: 0px;
 }
