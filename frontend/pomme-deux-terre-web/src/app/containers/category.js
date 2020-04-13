@@ -10,6 +10,7 @@ import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import { Link } from "react-router-dom";
 import Star from "../components/globals/star";
+import "./category.css";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
@@ -39,40 +40,24 @@ function Category(props) {
       <Row>
         <AdsColumn />
         <Col sm={8}>
-          <div className="container" style={{ alignItems: "center" }}>
+          <div className="container">
             {CategoryData.map((post) => {
               return (
-                <Jumbotron
-                  key={post.id}
-                  fluid
-                  style={{
-                    padding: "20px 0px",
-                    display: "flex",
-                    color: "black",
-                  }}
-                >
+                <Jumbotron key={post.id} fluid>
                   <Container>
                     <Row>
                       <Col sm={8} style={{ order: 1 }}>
                         <Link key={post.id} to={"/posts/" + post.id}>
-                          <h1>{post.title}</h1>
+                          <h3>{post.title}</h3>
                         </Link>
 
                         <Star star={post.avg_rating} />
-                        <p style={{ display: "inline" }}>
-                          ({post.no_of_reviews})
-                        </p>
+                        <p className="numReview">({post.no_of_reviews})</p>
 
                         <hr />
                         <p>{post.description}</p>
                       </Col>
-                      <Col
-                        style={{
-                          order: 2,
-                          padding: "5px 5px",
-                          margin: "5px 5px",
-                        }}
-                      >
+                      <Col className="image-col">
                         <Link key={post.id} to={"/posts/" + post.id}>
                           <Card.Img
                             src={
@@ -80,10 +65,6 @@ function Category(props) {
                                 ? post.post_images[0].image
                                 : require("../../assets/blog/castle.png")
                             }
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                            }}
                           />
                         </Link>
                       </Col>
