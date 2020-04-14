@@ -116,6 +116,24 @@ class PostViewSet(viewsets.ModelViewSet):
             response = {'message': "Error in retrieving Reviews"}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['GET'])
+    def user_review(self, request, pk=None):
+        user = request.user
+        post = Post.objects.get(id=pk)
+        try:
+            reviews = Review.objects.filter(post=post.id, user=user.id)
+            serializer = ReviewSerializer(reviews, many=True)
+            response = []
+            if not serializer.data:
+                response = {'user_review': [
+                    {"id": 0, "title": "", "description": "", "stars": 4}]}
+            else:
+                response = {'user_review': serializer.data}
+            return Response(response, status=status.HTTP_200_OK)
+        except ValueError:
+            response = {'message': "Error in retrieving user Review"}
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
     @action(detail=True, methods=['POST'])
     def review_post(self, request, pk=None):
         if 'stars' in request.data:

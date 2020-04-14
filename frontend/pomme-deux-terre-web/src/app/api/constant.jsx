@@ -30,5 +30,9 @@ export const USER_REVIEWS_QUERY = REVIEW_LIST_DETAIL + "?user=";
 // POST_LIST_DETAIL + postID + REVIEW_POST
 export const REVIEW_POST = "/review_post/";
 
+//SUB GET ACTIONS
+// POST_LIST_DETAIL + postID + USER_REVIEW
+export const USER_REVIEW = "/user_review";
+
 //Upload Image
 export const UPLOAD_IMAGE_ONLY = API_URL + "/blog/image/";

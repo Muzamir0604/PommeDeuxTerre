@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-// import { updateUser } from "../actions/userActions";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { withCookies } from "react-cookie";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 
 import { Field, Formik, Form as BaseForm, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 
 import StarsInput from "../components/review/starsInput";
-import { createUpdateReview } from "../actions/reviewActions";
+import {
+  createUpdateReview,
+  getUserPostReview,
+} from "../actions/reviewActions";
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const submit = (
@@ -22,7 +25,6 @@ const submit = (
   setSubmit,
   submit = true
 ) => {
-  console.log(description);
   setfName(fName);
   setDescription(description);
   setSubmit(true);
@@ -39,29 +41,44 @@ const SignupSchema = Yup.object().shape({
 });
 
 const ReviewForm = (props) => {
-  // console.log(props);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [stars, setStars] = useState(0);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isSubmitted, setSubmit] = useState(false);
 
   const createUpdate = (id, review) => {
-    console.log(id);
     dispatch(createUpdateReview(id, review));
     sleep(2000);
   };
   const handleReset = (resetForm) => {
-    if (window.confirm("Reset?")) {
-      resetForm();
-    }
+    resetForm();
   };
-  // const userReviewData = useSelector((state) => state.reviewReducer);
+  const [isSubmitted, setSubmit] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUserPostReview(id));
+    sleep(2000);
+    // eslint-disable-next-line
+  }, []);
+  // review.data[0]
+  const review = useSelector((state) => state.reviewReducer);
+  console.log("REview-Form", review);
+  let reviewdata;
+  if (review.data.length > 0) {
+    reviewdata = review.data[0];
+  } else {
+    reviewdata += { stars: 0 };
+    reviewdata += { title: "" };
+    reviewdata += { description: "" };
+  }
+  const [stars, setStars] = useState(reviewdata.stars || "");
+  const [title, setTitle] = useState(reviewdata.title || "");
+  const [description, setDescription] = useState(reviewdata.description || "");
 
   return (
     <section>
       <h5>Tell us your rating</h5>
+      {isSubmitted ? (
+        <Alert variant={"success"}>Update Successful</Alert>
+      ) : null}
       <Formik
         onSubmit={(values) => {
           submit(
@@ -80,7 +97,11 @@ const ReviewForm = (props) => {
             description: values.description,
           });
         }}
-        initialValues={{ stars: stars, title: title, description: description }}
+        initialValues={{
+          stars: stars,
+          title: title,
+          description: description,
+        }}
         validationSchema={SignupSchema}
       >
         {(formProps) => (
@@ -126,69 +147,8 @@ const ReviewForm = (props) => {
       </Formik>
 
       <hr />
-
-      {isSubmitted && (
-        <div>
-          Form submitted with {stars} stars and title {title}
-          and {description}
-        </div>
-      )}
     </section>
   );
 };
 
 export default ReviewForm;
-
-// const ReviewForm = (props) => {
-//   const dispatch = useDispatch();
-
-//   const createUpdate = (id, review) => {
-//     dispatch(createUpdate(id, review));
-//     sleep(2000);
-//   };
-//   const userReviewData = useSelector((state) => state.reviewReducer);
-//   const auth = useSelector((state) => state.authReducer);
-
-//   const [userReview, setUserReview] = useState(userReviewData);
-//   const [successFlag, setSuccessFlag] = useState(false);
-
-//   let form;
-
-//   const formik = useFormik({
-//     initialValues: {
-//       stars: 0,
-//     },
-//     validationSchema: Yup.object({
-//       stars: Yup.number()
-//         .min(0, "Number must be at least 0")
-//         .max(5, "Number must be at most 5")
-//         .required("Required"),
-
-//     onSubmit: (values) => {
-//       setTimeout(() => {
-//         createUpdate(auth.id, values);
-//         setUserReview(values);
-//         setSuccessFlag(true);
-//       }, 400);
-//     },
-//   });
-//   form = (
-
-//   );
-
-//   return (
-//     <React.Fragment>
-//       <NavBarHead />
-//       <Row>
-//         <AdsColumn />
-
-//         <Col sm={8}>{form}</Col>
-
-//         <AdsColumn />
-//       </Row>
-//       <PageFooter />
-//     </React.Fragment>
-//   );
-// };
-
-// export default withCookies(ReviewForm);

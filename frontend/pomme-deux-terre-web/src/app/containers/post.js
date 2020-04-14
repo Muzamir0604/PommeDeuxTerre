@@ -6,15 +6,7 @@ import { fetchPost } from "../actions/postActions";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
 import Star from "../components/globals/star";
-import {
-  Row,
-  Col,
-  Jumbotron,
-  Container,
-  Card,
-  Accordion,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
@@ -26,7 +18,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewForm from "./review-form";
 import "../styles/container/post.css";
-import auth from "../reducers/authReducer";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 

@@ -5,6 +5,7 @@ import mathReducer from "./mathReducer";
 import postReducer from "./postReducer";
 import authReducer from "./authReducer";
 import categoryReducer from "./categoryReducer";
+import reviewReducer from "./reviewReducer";
 
 const rootReducer = combineReducers({
   userReducer,
@@ -12,5 +13,6 @@ const rootReducer = combineReducers({
   postReducer,
   authReducer,
   categoryReducer,
+  reviewReducer,
 });
 export default rootReducer;
