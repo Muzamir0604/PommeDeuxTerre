@@ -6,7 +6,15 @@ import { fetchPost } from "../actions/postActions";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
 import Star from "../components/globals/star";
-import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Jumbotron,
+  Container,
+  Card,
+  Accordion,
+  Button,
+} from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
@@ -38,6 +46,8 @@ function Post(props) {
   const [serving, setserving] = useState(0);
 
   useEffect(() => {
+    setpreptime(0);
+    setcooktime(0);
     if (undefined !== post.post_recipes && post.post_recipes.length > 0) {
       post.post_recipes.map((recipe) => {
         setpreptime((preptime) => preptime + recipe.prep_time);
@@ -121,11 +131,23 @@ function Post(props) {
               </Container>
             </Jumbotron>
           </div>
+
           <div>
             {auth.token ? (
-              <Container>
-                <ReviewForm reviews={reviews.data[0]} />
-              </Container>
+              <Accordion defaultActiveKey="1">
+                <Card>
+                  <Card.Header>
+                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                      Rate Me !
+                    </Accordion.Toggle>
+                  </Card.Header>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <ReviewForm reviews={reviews.data[0]} />
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
             ) : null}
 
             <Jumbotron fluid key={post.id}>

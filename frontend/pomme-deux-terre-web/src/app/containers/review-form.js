@@ -18,7 +18,7 @@ const SignupSchema = Yup.object().shape({
     .max(5, "Too Long!")
     .required("Required"),
   title: Yup.string().required("Required"),
-  description: Yup.string().required("Required"),
+  description: Yup.string(),
 });
 
 const submit = (stars, title, description, setSubmit, setState) => {
