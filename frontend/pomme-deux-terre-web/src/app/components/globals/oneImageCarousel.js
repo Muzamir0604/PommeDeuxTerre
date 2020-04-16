@@ -5,7 +5,7 @@ import "../../styles/container/category.css";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { Container, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 
 function ImageCarousel(props) {
   let renderCompoent = (

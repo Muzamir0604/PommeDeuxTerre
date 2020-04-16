@@ -63,7 +63,7 @@ function Login(props) {
           setTCookie("token", res.data.token);
           setICookie("userId", res.data.id);
           fetchUserDetails(res.data.id, res.data.token);
-          props.history.push("/posts");
+          props.history.push("/");
         })
         .catch((e) => {
           console.log(e.response);
@@ -82,7 +82,7 @@ function Login(props) {
       login();
     }
   };
-  const redirected = <Redirect to="/posts" />;
+  const redirected = <Redirect to="/" />;
 
   const loginSignup = (
     <div className="container">

@@ -39,14 +39,14 @@ function NavBarHead(props) {
             rounded
           />
           <Navbar.Brand>
-            <Link className="nav-link" to={"/posts"} replace>
+            <Link className="nav-link" to={"/"} replace>
               Pomme Deux Terre
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Link className="nav-link" to={"/posts"} replace>
+              <Link className="nav-link" to={"/"} replace>
                 Home
               </Link>
               <Nav.Link href="#pricing">About Us</Nav.Link>
@@ -79,7 +79,7 @@ function NavBarHead(props) {
                     <Link
                       className="nav-link"
                       onClick={releaseUserDispatch}
-                      to={"/"}
+                      to={"/login"}
                       replace
                     >
                       Logout
@@ -89,12 +89,16 @@ function NavBarHead(props) {
               ) : (
                 <React.Fragment>
                   <Navbar>
-                    <Link className="nav-link" to={"/?signup=true"} replace>
+                    <Link
+                      className="nav-link"
+                      to={"/login/?signup=true"}
+                      replace
+                    >
                       Signup
                     </Link>
                   </Navbar>
                   <Navbar>
-                    <Link className="nav-link" to={"/"} replace>
+                    <Link className="nav-link" to={"/login"} replace>
                       LogIn
                     </Link>
                   </Navbar>

@@ -8,9 +8,9 @@ class PageFooter extends Component {
       <React.Fragment>
         <footer>
           <div className="container-fluid padding">
-            <div className="row text-center">
+            {/* <div className="row text-center">
               <div className="col-md-4">
-                {/* <img className="bug-icon img-fluid" src="#"alt=""/> */}
+                <img className="bug-icon img-fluid" src="#"alt=""/>
                 <h5>Contact</h5>
                 <p>555-555-5555</p>
                 <p>email@ymail.com</p>
@@ -30,7 +30,7 @@ class PageFooter extends Component {
                 <p>City state</p>
                 <p>City state</p>
               </div>
-            </div>
+            </div> */}
             <div className="col-12">
               <h5>&copy; PommeDeuxTerre.com</h5>
             </div>

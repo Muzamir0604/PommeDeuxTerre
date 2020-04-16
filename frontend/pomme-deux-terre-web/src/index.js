@@ -13,7 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
 import Category from "./app/containers/category";
 import Post from "./app/containers/post";
-import EditLayout from "./app/containers/edit";
+// import EditLayout from "./app/containers/edit";
 // import ReviewForm from "./app/containers/review-form";
 
 // dont forget to install react-router-dom
@@ -24,13 +24,13 @@ const routing = (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <CookiesProvider>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/posts" component={App} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={App} />
           <Route path="/posts/:id" component={Post} />
 
           <Route exact path={"/user/:id"} component={UserProfile} />
           <Route exact path={"/category/"} component={Category} />
-          <Route exact path={"/edit"} component={EditLayout} />
+          {/* <Route exact path={"/edit"} component={EditLayout} /> */}
           {/* <Route exact path={"/review"} component={ReviewForm} /> */}
           {/* <Route path={"/"} component={Root}>
               <IndexRoute component={Home} />

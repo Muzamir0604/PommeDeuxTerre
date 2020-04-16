@@ -34,13 +34,13 @@ function Overview(props) {
       </Container>
     </React.Fragment>
   );
-  const notAuthorized = <div>Not authorized</div>;
+  // const notAuthorized = <div>Not authorized</div>;
   let renderComponent;
-  if (props.cookies.get("token")) {
-    renderComponent = authorized;
-  } else {
-    renderComponent = notAuthorized;
-  }
+  // if (props.cookies.get("token")) {
+  renderComponent = authorized;
+  // } else {
+  //   renderComponent = notAuthorized;
+  // }
 
   return <React.Fragment>{renderComponent}</React.Fragment>;
 }
