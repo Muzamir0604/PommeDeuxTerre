@@ -25,6 +25,7 @@ const submit = (stars, title, description, setSubmit, setState) => {
   setState({ stars: stars, title: title, description: description });
   setSubmit(true);
 };
+
 const ReviewForm = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const ReviewForm = (props) => {
   };
 
   const [isSubmitted, setSubmit] = useState(false);
+  // eslint-disablee-next-line
   const [state, setState] = useState(props.reviews);
 
   useEffect(() => {

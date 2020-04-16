@@ -33,7 +33,11 @@ function NavBarHead(props) {
           variant="dark"
           style={{ padding: "0px 0px" }}
         >
-          <Image src="holder.js/171x180" rounded />
+          <Image
+            className="navbar-icon"
+            src={require("../../../assets/Apple.ico")}
+            rounded
+          />
           <Navbar.Brand>
             <Link className="nav-link" to={"/posts"} replace>
               Pomme Deux Terre

@@ -2,10 +2,22 @@
   background-color: #343a40;
 }
 
+.navbar-icon {
+  height: 30px;
+  width: 40px;
+  transform: rotate(180deg);
+  margin-left: 20px;
+}
+.dropdown-menu {
+  background-color: #212529;
+}
 .nav-link {
   padding-top: 1px;
   padding-bottom: 1px;
   color: white;
+}
+a.nav-link:hover {
+  color: grey;
 }
 .navbar-nav {
   padding-top: 0px;
@@ -15,7 +27,7 @@
   align-items: center;
 }
 .dropdown-item {
-  background-color: grey;
+  background-color: #212529;
   color: white;
   align-items: center;
 }
