@@ -9,25 +9,29 @@ function Overview(props) {
   const authorized = (
     <React.Fragment>
       <Container>
-        {props.shortList.map((category) => {
-          let CatList = (
-            <React.Fragment>
-              <Container key={category.id}>
-                <h3 style={{ paddingTop: "10px" }}>
-                  <Link
-                    className=".nav-link"
-                    style={{ color: "black" }}
-                    to={"/category/?category=" + category.id}
-                  >
-                    {category.title}
-                  </Link>
-                </h3>
-                <CardCarousel posts={category.category_posts} />
-              </Container>
-            </React.Fragment>
-          );
-          return <React.Fragment key={category.id}>{CatList}</React.Fragment>;
-        })}
+        {undefined !== props.shortList && props.shortList.length
+          ? props.shortList.map((category) => {
+              let CatList = (
+                <React.Fragment>
+                  <Container key={category.id}>
+                    <h3 style={{ paddingTop: "10px" }}>
+                      <Link
+                        className=".nav-link"
+                        style={{ color: "black" }}
+                        to={"/category/?category=" + category.id}
+                      >
+                        {category.title}
+                      </Link>
+                    </h3>
+                    <CardCarousel posts={category.category_posts} />
+                  </Container>
+                </React.Fragment>
+              );
+              return (
+                <React.Fragment key={category.id}>{CatList}</React.Fragment>
+              );
+            })
+          : null}
       </Container>
     </React.Fragment>
   );

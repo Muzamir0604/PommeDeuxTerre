@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { withCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
-
 import { Field, Formik, Form as BaseForm, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
-
 import StarsInput from "../components/review/starsInput";
 import {
   createUpdateReview,
@@ -14,22 +11,6 @@ import {
 } from "../actions/reviewActions";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const submit = (
-  stars,
-  setStars,
-  fName,
-  setfName,
-  description,
-  setDescription,
-  setSubmit,
-  submit = true
-) => {
-  setfName(fName);
-  setDescription(description);
-  setSubmit(true);
-  setStars(stars);
-};
 
 const SignupSchema = Yup.object().shape({
   stars: Yup.number()
@@ -40,6 +21,10 @@ const SignupSchema = Yup.object().shape({
   description: Yup.string().required("Required"),
 });
 
+const submit = (stars, title, description, setSubmit, setState) => {
+  setState({ stars: stars, title: title, description: description });
+  setSubmit(true);
+};
 const ReviewForm = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -51,27 +36,17 @@ const ReviewForm = (props) => {
   const handleReset = (resetForm) => {
     resetForm();
   };
+
   const [isSubmitted, setSubmit] = useState(false);
+  const [state, setState] = useState(props.reviews);
 
   useEffect(() => {
     dispatch(getUserPostReview(id));
     sleep(2000);
     // eslint-disable-next-line
   }, []);
-  // review.data[0]
-  const review = useSelector((state) => state.reviewReducer);
-  console.log("REview-Form", review);
-  let reviewdata;
-  if (review.data.length > 0) {
-    reviewdata = review.data[0];
-  } else {
-    reviewdata += { stars: 0 };
-    reviewdata += { title: "" };
-    reviewdata += { description: "" };
-  }
-  const [stars, setStars] = useState(reviewdata.stars || "");
-  const [title, setTitle] = useState(reviewdata.title || "");
-  const [description, setDescription] = useState(reviewdata.description || "");
+
+  const reviewinit = { ...props.reviews };
 
   return (
     <section>
@@ -79,16 +54,15 @@ const ReviewForm = (props) => {
       {isSubmitted ? (
         <Alert variant={"success"}>Update Successful</Alert>
       ) : null}
+
       <Formik
         onSubmit={(values) => {
           submit(
             values.stars,
-            setStars,
             values.title,
-            setTitle,
             values.description,
-            setDescription,
-            setSubmit
+            setSubmit,
+            setState
           );
 
           createUpdate(id, {
@@ -97,11 +71,7 @@ const ReviewForm = (props) => {
             description: values.description,
           });
         }}
-        initialValues={{
-          stars: stars,
-          title: title,
-          description: description,
-        }}
+        initialValues={reviewinit}
         validationSchema={SignupSchema}
       >
         {(formProps) => (
@@ -111,7 +81,7 @@ const ReviewForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label htmlFor="title">Title</Form.Label>
+              <Form.Label>Title</Form.Label>
               <Field className="form-control" name="title" type="text" />
               <ErrorMessage name="title" />
             </Form.Group>

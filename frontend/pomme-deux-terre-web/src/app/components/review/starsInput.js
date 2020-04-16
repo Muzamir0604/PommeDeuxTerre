@@ -3,22 +3,25 @@ import Stars from "./star";
 import { Field } from "formik";
 
 const fieldName = "stars";
-const StarsInput = () => (
-  <Field name={fieldName} id={fieldName} type="number">
-    {({ field: { value }, form: { setFieldValue } }) => (
-      <div>
-        <label htmlFor={fieldName} className={"label-color"}>
-          Stars
-        </label>
+
+const StarsInput = () => {
+  return (
+    <Field name={fieldName} id={fieldName} type="number">
+      {({ field: { value }, form: { setFieldValue } }) => (
         <div>
-          <Stars
-            count={value}
-            handleClick={(number) => setFieldValue(fieldName, number)}
-          />
+          <label htmlFor={fieldName} className={"label-color"}>
+            Stars
+          </label>
+          <div>
+            <Stars
+              count={value}
+              handleClick={(number) => setFieldValue(fieldName, number)}
+            />
+          </div>
         </div>
-      </div>
-    )}
-  </Field>
-);
+      )}
+    </Field>
+  );
+};
 
 export default StarsInput;

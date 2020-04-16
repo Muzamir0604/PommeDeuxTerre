@@ -29,7 +29,7 @@ const routing = (
           <Route path="/posts/:id" component={Post} />
 
           <Route exact path={"/user/:id"} component={UserProfile} />
-          <Route exact path={"/category"} component={Category} />
+          <Route exact path={"/category/"} component={Category} />
           <Route exact path={"/edit"} component={EditLayout} />
           {/* <Route exact path={"/review"} component={ReviewForm} /> */}
           {/* <Route path={"/"} component={Root}>
