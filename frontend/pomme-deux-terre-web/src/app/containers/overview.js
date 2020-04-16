@@ -4,7 +4,6 @@ import CardCarousel from "../components/post-carousel";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-//FIXME: Redesign the layout to make it mobile friendly
 function Overview(props) {
   const authorized = (
     <React.Fragment>

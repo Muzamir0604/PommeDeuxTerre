@@ -10,6 +10,7 @@ import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
 import AdsColumn from "../components/globals/ads";
 import { Link } from "react-router-dom";
 import Star from "../components/globals/star";
+import ImageCarousel from "../components/globals/oneImageCarousel";
 import "../styles/container/category.css";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
@@ -22,7 +23,6 @@ function Category(props) {
   }
   const query = useQuery();
   useEffect(() => {
-    console.log("QUERY::", query.get("category"));
     dispatch(fetchCategory(query.get("category")));
     sleep(2000);
     return () => {};
@@ -30,7 +30,6 @@ function Category(props) {
   }, []);
 
   useEffect(() => {
-    console.log("QUERY:: multiole", query.get("category"));
     dispatch(fetchCategory(query.get("category")));
     sleep(2000);
     return () => {};
@@ -38,7 +37,7 @@ function Category(props) {
   }, [query.get("category")]);
 
   const CategoryData = useSelector((state) => state.categoryReducer.categories);
-  console.log("CATEGORYDATA : ::", CategoryData);
+
   return (
     <React.Fragment>
       <NavBarHead />
@@ -56,14 +55,29 @@ function Category(props) {
                             <Link key={post.id} to={"/posts/" + post.id}>
                               <h3>{post.title}</h3>
                             </Link>
-
                             <Star star={post.avg_rating} />
                             <p className="numReview">({post.no_of_reviews})</p>
-
                             <hr />
                             <p>{post.description}</p>
                           </Col>
-                          <Col className="image-col">
+                          <Col className="image-col" style={{ order: 2 }}>
+                            {/* <Link
+                              key={post.id}
+                              to={"/posts/" + post.id}
+                              onDoubleClick
+                            > */}
+                            {undefined !== post.post_images &&
+                            post.post_images.length ? (
+                              <ImageCarousel images={post.post_images} />
+                            ) : (
+                              <Card.Img
+                                className=""
+                                src={require("../../assets/blog/castle.png")}
+                              />
+                            )}
+                            {/* </Link> */}
+                          </Col>
+                          {/* <Col className="image-col" style={{ order: 2 }}>
                             <Link key={post.id} to={"/posts/" + post.id}>
                               <Card.Img
                                 src={
@@ -73,7 +87,7 @@ function Category(props) {
                                 }
                               />
                             </Link>
-                          </Col>
+                          </Col> */}
                         </Row>
                       </Container>
                     </Jumbotron>

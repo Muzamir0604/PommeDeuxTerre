@@ -26,6 +26,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewForm from "./review-form";
 import "../styles/container/post.css";
+import ImageCarousel from "../components/globals/oneImageCarousel";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 
@@ -111,15 +112,15 @@ function Post(props) {
                   </Col>
 
                   <Col className="image-card">
-                    <Card.Img
-                      className="image-card-src"
-                      src={
-                        undefined !== post.post_images &&
-                        post.post_images.length
-                          ? post.post_images[0].image
-                          : require("../../assets/blog/castle.png")
-                      }
-                    />
+                    {undefined !== post.post_images &&
+                    post.post_images.length ? (
+                      <ImageCarousel images={post.post_images} />
+                    ) : (
+                      <Card.Img
+                        className="image-card-src"
+                        src={require("../../assets/blog/castle.png")}
+                      />
+                    )}
                   </Col>
                 </Row>
                 <Row>
@@ -137,7 +138,11 @@ function Post(props) {
               <Accordion defaultActiveKey="1">
                 <Card>
                   <Card.Header>
-                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                    <Accordion.Toggle
+                      as={Button}
+                      variant="primary"
+                      eventKey="0"
+                    >
                       Rate Me !
                     </Accordion.Toggle>
                   </Card.Header>

@@ -20,3 +20,13 @@ p.recipe-detail {
 .recipe-info {
   order: 1;
 }
+.card-header {
+  padding: 0px 0px;
+}
+.card-header button {
+  width: 100%;
+}
+.photo-accord {
+  width: 100%;
+  margin-top: 10px;
+}
