@@ -13,7 +13,7 @@ from django_filters import rest_framework as filters
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from django.http import JsonResponse
 from rest_framework.renderers import JSONRenderer
-
+from rest_framework import filters
 # https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
 # https://stackoverflow.com/questions/52903232/how-to-upload-multiple-images-using-django-rest-framework
 # https://stackoverflow.com/questions/52389956/uploading-multiple-files-using-django-rest-framework-without-using-forms
@@ -101,8 +101,10 @@ class PostViewSet(viewsets.ModelViewSet):
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['category', 'user']
+    search_fields = ['title', 'description',
+                     'category__title', 'user__username', 'post_recipes__name']
 
     @action(detail=True, methods=['GET'])
     def reviews(self, request, pk=None):

@@ -36,3 +36,6 @@ export const USER_REVIEW = "/user_review";
 
 //Upload Image
 export const UPLOAD_IMAGE_ONLY = API_URL + "/blog/image/";
+
+//Search action place suffix with search term
+export const POST_SEARCH = POST_LIST_DETAIL + "?search=";

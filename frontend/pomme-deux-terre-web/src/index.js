@@ -24,8 +24,9 @@ const routing = (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <CookiesProvider>
-          <Route exact path="/login" component={Login} />
           <Route exact path="/" component={App} />
+          <Route exact path="/login" component={Login} />
+
           <Route path="/posts/:id" component={Post} />
 
           <Route exact path={"/user/:id"} component={UserProfile} />

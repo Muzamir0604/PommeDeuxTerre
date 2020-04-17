@@ -35,7 +35,7 @@ function Post(props) {
 
   const post = useSelector((state) => state.postReducer.post);
   const reviews = useSelector((state) => state.reviewReducer);
-  const auth = useSelector((state) => state.authReducer);
+  // const auth = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     dispatch(fetchPost(props.match.params.id));
@@ -134,7 +134,7 @@ function Post(props) {
           </div>
 
           <div>
-            {auth.token ? (
+            {props.cookies.get("token") ? (
               <Accordion defaultActiveKey="1">
                 <Card>
                   <Card.Header>
