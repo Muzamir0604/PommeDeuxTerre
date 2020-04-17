@@ -98,7 +98,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class FilteredPostSerializer(serializers.ListSerializer):
     def to_representation(self, data):
-        data = data.order_by('-created_at')[:7]
+        data = data.filter(is_published=True).order_by('-created_at')[:7]
         return super(FilteredPostSerializer, self).to_representation(data)
 
 

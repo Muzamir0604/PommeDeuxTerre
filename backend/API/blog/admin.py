@@ -56,11 +56,11 @@ class PostImageInline(admin.TabularInline):
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'created_at',
-                    'updated_at', 'no_of_reviews', 'avg_rating']
-    list_editable = ['category']
+                    'updated_at', 'no_of_reviews', 'avg_rating', 'is_published']
+    list_editable = ['category', 'is_published']
     # radio_fields = {"post_recipes": admin.VERTICAL}
     inlines = [PostImageInline, RecipeInline]
-    fields = (('title', 'category'), 'user', 'description')
+    fields = (('title', 'category'), 'user', 'description', 'is_published')
     # search_fields = ['title', 'category']
 
 

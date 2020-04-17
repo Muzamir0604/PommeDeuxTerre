@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { withCookies } from "react-cookie";
@@ -10,13 +10,16 @@ import { Col, Row } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "./app/actions/postActions";
-// import { fetchShortList } from "./app/actions/categoryAction";
+import { fetchShortList } from "./app/actions/categoryAction";
 
 function App(props) {
   const dispatch = useDispatch();
 
   const post = useSelector((state) => state.postReducer.post);
-
+  useEffect(() => {
+    dispatch(fetchShortList());
+    // eslint-disable-next-line
+  }, []);
   const CatshortList = useSelector((state) => state.categoryReducer.shortList);
   // eslint-disable-next-line
   const listing = (post) => {
@@ -29,7 +32,9 @@ function App(props) {
       <Row>
         <AdsColumn />
         <Col sm={8}>
-          <Overview post={post} shortList={CatshortList} />
+          {CatshortList ? (
+            <Overview post={post} shortList={CatshortList} />
+          ) : null}
         </Col>
         <AdsColumn />
       </Row>

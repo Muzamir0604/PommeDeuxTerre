@@ -96,7 +96,7 @@ class ImageUploadView(views.APIView):
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.filter(is_published=True)
     serializer_class = PostSerializer
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)

@@ -68,11 +68,6 @@ function Overview(props) {
               ) : (
                 <p>No such data found</p>
               )}
-              {console.log(
-                search.data.data.map((post) => {
-                  return <p>{post.title}</p>;
-                })
-              )}
             </div>
           </Container>
         ) : null}

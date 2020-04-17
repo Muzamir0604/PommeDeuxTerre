@@ -92,6 +92,7 @@ class Post(models.Model):
     description = models.TextField(max_length=360, default="")
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    is_published = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, related_name="category_posts", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(
