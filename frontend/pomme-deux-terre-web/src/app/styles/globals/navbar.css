@@ -1,5 +1,5 @@
 .side {
-  background-color: #8fb8bb;
+  background-color: #009a89;
 }
 
 .navbar-icon {
@@ -9,7 +9,7 @@
   margin-left: 20px;
 }
 .dropdown-menu {
-  background-color: #8fb8bb;
+  background-color: #009a89;
 }
 .nav-link {
   padding-top: 1px;
@@ -20,6 +20,9 @@
 a.nav-link:hover {
   color: #3d2910;
 }
+a.nav-link {
+  padding-bottom: 0px;
+}
 .navbar-nav {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -28,9 +31,9 @@ a.nav-link:hover {
   align-items: center;
 }
 .dropdown-item {
-  background-color: #8fb8bb;
-  color: #21403e;
-  align-items: center;
+  background-color: #009a89;
+  color: black;
+  /* align-items: center; */
 }
 .dropdown-item:hover {
   color: #3d2910;
@@ -39,10 +42,45 @@ a.nav-link:hover {
 }
 .main {
   padding: 0em;
+  background-color: #009a89;
+  height: 100%;
+  color: black;
 }
 .solo-nav {
   padding: 0px;
 }
 .navbar-expand-lg {
-  background-color: #8fb8bb;
+  background-color: #009a89;
+}
+.row.navbar-title {
+  background-color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0px 0px;
+  border-radius: 25px;
+}
+div.navbar-toprow.row {
+  background-color: #009a89;
+}
+.row.navbar-menu {
+  background-color: #009a89;
+}
+.brand-title {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0px;
+  display: inline-block;
+}
+.navbar-brand {
+  padding: 0px;
+}
+.image-bottom {
+  background-color: white;
+}
+.quotes-tag {
+  align-items: center;
+  margin: 0px 10px;
+  font-style: italic;
 }
