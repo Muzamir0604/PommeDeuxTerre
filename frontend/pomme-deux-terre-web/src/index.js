@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./app/store";
 import Category from "./app/containers/category";
 import Post from "./app/containers/post";
+import About from "./app/containers/about";
 // import EditLayout from "./app/containers/edit";
 // import ReviewForm from "./app/containers/review-form";
 
@@ -31,6 +32,7 @@ const routing = (
 
           <Route exact path={"/user/:id"} component={UserProfile} />
           <Route exact path={"/category/"} component={Category} />
+          <Route exact path={"/aboutus"} component={About} />
           {/* <Route exact path={"/edit"} component={EditLayout} /> */}
           {/* <Route exact path={"/review"} component={ReviewForm} /> */}
           {/* <Route path={"/"} component={Root}>

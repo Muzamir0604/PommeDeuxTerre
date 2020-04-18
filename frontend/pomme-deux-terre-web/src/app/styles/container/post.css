@@ -1,6 +1,7 @@
 .jumbotron {
   padding: 20px 0px;
   display: flex;
+  border-radius: 25px;
 }
 p.recipe-detail {
   display: inline;

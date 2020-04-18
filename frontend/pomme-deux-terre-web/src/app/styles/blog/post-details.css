@@ -1,17 +1,17 @@
-.image-carousel{
-  border-color: white;
+.image-carousel {
+  border-color: #eaeceb;
 }
-.post-detail{
-    padding-left: 5px;
-    padding-right: 5px;
-    text-align: left;
+.post-detail {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+}
+h3 {
+  text-decoration: underline;
+  margin-top: 1em;
+}
 
-}
-h3{
-    text-decoration: underline;
-    margin-top: 1em;
-}
-.carousel{
+.carousel {
   margin: 2em 2em;
   padding: 2em 2em;
 }

@@ -28,7 +28,12 @@ function CardCarousel(props) {
   };
   let renderCompoent = (
     <React.Fragment>
-      <Carousel responsive={responsive} draggable showDots>
+      <Carousel
+        style={{ margin: "10px 0px" }}
+        responsive={responsive}
+        draggable
+        showDots
+      >
         {props.posts.map((post) => {
           return (
             <Container key={post.id} style={{ height: "100%" }}>

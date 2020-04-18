@@ -11,7 +11,10 @@ function CardPost(props) {
 
   return (
     <React.Fragment>
-      <Card style={{ width: "100%", height: "100%" }} key={props.post.id}>
+      <Card
+        style={{ width: "100%", height: "100%", borderRadius: "25px" }}
+        key={props.post.id}
+      >
         <Card.Img
           onClick={() => {
             history.push("/posts/" + props.post.id);
@@ -22,10 +25,16 @@ function CardPost(props) {
               ? props.post.post_images[0].image
               : require("../../assets/blog/castle.png")
           }
-          style={{ height: "40%" }}
+          style={{
+            height: "40%",
+            borderTopRightRadius: "25px",
+            borderTopLeftRadius: "25px",
+          }}
         />
         <Card.Body style={{ padding: "5px 20px" }}>
-          <Card.Title style={{ color: "black" }}>{props.post.title}</Card.Title>
+          <Card.Title style={{ color: "black", marginTop: "10px" }}>
+            {props.post.title}
+          </Card.Title>
           <Card.Text style={{ color: "black" }}>
             {display ? (
               <TextTruncate

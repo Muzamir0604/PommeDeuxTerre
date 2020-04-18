@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status, generics, views
 from rest_framework.decorators import action
 from .models import Post, Review, Category, PostImage
@@ -14,6 +14,7 @@ from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from django.http import JsonResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework import filters
+
 # https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
 # https://stackoverflow.com/questions/52903232/how-to-upload-multiple-images-using-django-rest-framework
 # https://stackoverflow.com/questions/52389956/uploading-multiple-files-using-django-rest-framework-without-using-forms
@@ -98,7 +99,7 @@ class ImageUploadView(views.APIView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(is_published=True)
     serializer_class = PostSerializer
-    # authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -145,8 +146,9 @@ class PostViewSet(viewsets.ModelViewSet):
             title = request.data['title']
             description = request.data['description']
             user = request.user
+            print("REVIEW_POST USER::::", user)
             try:
-                review = Review.objects.get(user=user.id, post=post.id)
+                review = get_object_or_404(Review, user=user.id, post=post.id)
                 review.stars = stars
                 review.title = title
                 review.description = description

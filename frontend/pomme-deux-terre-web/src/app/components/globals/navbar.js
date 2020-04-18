@@ -31,8 +31,7 @@ function NavBarHead(props) {
             <Navbar
               collapseOnSelect
               expand="lg"
-              bg="dark"
-              variant="dark"
+              variant="light"
               style={{ padding: "0px 0px" }}
             >
               <Image
@@ -51,7 +50,11 @@ function NavBarHead(props) {
                   <Link className="nav-link" to={"/"} replace>
                     Home
                   </Link>
-                  <Nav.Link href="#pricing">About Us</Nav.Link>
+                  <Nav>
+                    <Link className="nav-link" to={"/aboutus"} replace>
+                      About Us
+                    </Link>
+                  </Nav>
                   <NavDropdown title="Category" id="collasible-nav-dropdown">
                     {CatshortList.map((category) => {
                       return (

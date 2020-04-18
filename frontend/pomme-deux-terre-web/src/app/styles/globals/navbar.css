@@ -1,5 +1,5 @@
 .side {
-  background-color: #343a40;
+  background-color: #8fb8bb;
 }
 
 .navbar-icon {
@@ -9,15 +9,16 @@
   margin-left: 20px;
 }
 .dropdown-menu {
-  background-color: #212529;
+  background-color: #8fb8bb;
 }
 .nav-link {
   padding-top: 1px;
   padding-bottom: 1px;
-  color: white;
+  color: #21403e;
+  font-family: Arial, Helvetica, sans-serif;
 }
 a.nav-link:hover {
-  color: grey;
+  color: #3d2910;
 }
 .navbar-nav {
   padding-top: 0px;
@@ -27,13 +28,21 @@ a.nav-link:hover {
   align-items: center;
 }
 .dropdown-item {
-  background-color: #212529;
-  color: white;
+  background-color: #8fb8bb;
+  color: #21403e;
   align-items: center;
+}
+.dropdown-item:hover {
+  color: #3d2910;
+  text-decoration: underline;
+  background-color: #8fb8bb;
 }
 .main {
   padding: 0em;
 }
 .solo-nav {
   padding: 0px;
+}
+.navbar-expand-lg {
+  background-color: #8fb8bb;
 }

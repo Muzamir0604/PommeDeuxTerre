@@ -11,7 +11,7 @@ import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "./app/actions/postActions";
 import { fetchShortList } from "./app/actions/categoryAction";
-
+import "./App.css";
 function App(props) {
   const dispatch = useDispatch();
 
