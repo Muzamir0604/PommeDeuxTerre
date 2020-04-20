@@ -14,17 +14,18 @@ import { fetchShortList } from "./app/actions/categoryAction";
 import "./App.css";
 function App(props) {
   const dispatch = useDispatch();
-
-  const post = useSelector((state) => state.postReducer.post);
   useEffect(() => {
     dispatch(fetchShortList());
     // eslint-disable-next-line
   }, []);
-  const CatshortList = useSelector((state) => state.categoryReducer.shortList);
   // eslint-disable-next-line
   const listing = (post) => {
     dispatch(setPost(post));
   };
+
+  const post = useSelector((state) => state.postReducer.post);
+
+  const CatshortList = useSelector((state) => state.categoryReducer.shortList);
 
   return (
     <React.Fragment>

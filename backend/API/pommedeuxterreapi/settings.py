@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'adminsortable2',
     'django_cleanup',
+    'django_filters'
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000", "http://localhost", "http://192.168.56.1:3000", "http://10.10.153.8"
+    "http://localhost:3000", "http://localhost", "http://192.168.56.1:3000", "http://10.10.153.8", "https://pommedeuxterre-3bd49.web.app", "https://pommedeuxterre-3bd49.firebaseapp.com"
 ]
 
 ROOT_URLCONF = 'pommedeuxterreapi.urls'
@@ -83,9 +85,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pommedeuxterreapi.wsgi.application'
 
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "image")
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\', '/')
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -140,6 +141,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+ROOT_URLCONF = 'pommedeuxterreapi.urls'

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withCookies } from "react-cookie";
 import { Navbar, Nav, NavDropdown, Col, Row, Image } from "react-bootstrap";
 
@@ -69,17 +69,19 @@ function NavBarHead(props) {
                       </Link>
                     </Nav>
                     <NavDropdown title="Category" id="collasible-nav-dropdown">
-                      {CatshortList.map((category) => {
-                        return (
-                          <Link
-                            key={category.id}
-                            className="dropdown-item"
-                            to={"/category?category=" + category.id}
-                          >
-                            {category.title}
-                          </Link>
-                        );
-                      })}
+                      {CatshortList.length
+                        ? CatshortList.map((category) => {
+                            return (
+                              <Link
+                                key={category.id}
+                                className="dropdown-item"
+                                to={"/category?category=" + category.id}
+                              >
+                                {category.title}
+                              </Link>
+                            );
+                          })
+                        : null}
                     </NavDropdown>
                   </Nav>
                   <Nav style={{ alignItems: "center" }}>

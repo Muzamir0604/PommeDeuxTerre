@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 # from rest_framework.authtoken.views import obtain_auth_token
 from .views import CustomObtainAuthToken
-from django.conf.urls import include
+from django.conf.urls import include, url
+from django.views.static import serve
 from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
 
@@ -30,7 +32,10 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('api/', include('rest_framework.urls')),
 
+
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL,
+#                       document_root=settings.MEDIA_ROOT)
