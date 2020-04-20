@@ -8,7 +8,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  shortList: {},
+  shortList: [],
   categories: {},
   isLoading: false,
   error: [],
