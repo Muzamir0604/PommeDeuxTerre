@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000","http://localhost","http://192.168.56.1:3000","http://10.10.153.8"
+    "http://localhost:3000", "http://localhost", "http://192.168.56.1:3000", "http://10.10.153.8"
 ]
 
 ROOT_URLCONF = 'pommedeuxterreapi.urls'
@@ -94,7 +95,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES':{
+    'DEFAULT_PERMISSION_CLASSES': {
         'rest_framework.permissions.IsAuthenticated',
     }
 }
@@ -133,5 +134,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, '/static/')
+)
+
+# Heroku config setting
+django_heroku.settings(locals())
