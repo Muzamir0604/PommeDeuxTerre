@@ -14,10 +14,14 @@ django-cors-headers = "*"
 python-decouple = "*"
 django-filter = "*"
 pillow = "*"
-django-admin-sortable2 = {editable = true,git = "https://github.com/jrief/django-admin-sortable2"}
 django-cleanup = "*"
 django-nested-inline = "*"
-django-suit = "*"
+dj-static = "*"
+psycopg2 = "*"
+gunicorn = "*"
+django-admin-sortable2 = "*"
+django-grappelli = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.8"

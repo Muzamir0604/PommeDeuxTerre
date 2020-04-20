@@ -1,6 +1,3 @@
-# from adminsortable2.admin import SortableInlineAdminMixin
-# https://django-admin-sortable2.readthedocs.io/en/latest/usage.html#integrate-your-models
-# TODO: add admin sortable for thumbnail purpose
 
 # https://django-filer.readthedocs.io/en/latest/installation.html Consider Django filer
 from django.contrib import admin

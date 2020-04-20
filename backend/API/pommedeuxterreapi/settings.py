@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config
-
+from dj_database_url import parse as dburl
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,13 +26,13 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['10.10.153.8']
+ALLOWED_HOSTS = ['10.10.153.8', 'backend-api-pommedeuxterre.herokuapp.com']
 LOGIN_REDIRECT_URL = '../../blog/'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'suit',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,35 +48,6 @@ INSTALLED_APPS = [
 
 ]
 
-SUIT_CONFIG = {
-    # header
-    'ADMIN_NAME': 'Django Suit',
-    'HEADER_DATE_FORMAT': 'l, j. F Y',
-    'HEADER_TIME_FORMAT': 'H:i',
-
-    # forms
-    'SHOW_REQUIRED_ASTERISK': True,  # Default True
-    'CONFIRM_UNSAVED_CHANGES': True,  # Default True
-
-    # menu
-    'SEARCH_URL': '/admin/auth/user/',
-    'MENU_ICONS': {
-        'sites': 'icon-leaf',
-        'auth': 'icon-lock',
-    },
-    'MENU_OPEN_FIRST_CHILD': True,  # Default True
-    'MENU_EXCLUDE': ('auth.group',),
-    'MENU': (
-        'sites',
-        {'app': 'auth', 'icon': 'icon-lock', 'models': ('user', 'group')},
-        {'label': 'Settings', 'icon': 'icon-cog',
-            'models': ('auth.user', 'auth.group')},
-        {'label': 'Support', 'icon': 'icon-question-sign', 'url': '/support/'},
-    ),
-
-    'LIST_PER_PAGE': 15
-
-}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -119,13 +90,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\', '/')
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+default_dburl = 'sqlite:///'+os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
-
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -174,4 +142,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
