@@ -46,7 +46,7 @@ const ReviewForm = (props) => {
     dispatch(getUserPostReview(id));
     sleep(2000);
     // eslint-disable-next-line
-  }, []);
+  }, [state]);
 
   const reviewinit = { ...props.reviews };
 

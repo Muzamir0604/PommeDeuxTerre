@@ -19,6 +19,7 @@ import About from "./app/containers/about";
 
 // dont forget to install react-router-dom
 // and react-cookie
+// https://stackoverflow.com/questions/32616844/git-how-to-push-a-subdirectory-to-a-separate-branch-of-the-same-repository
 
 const routing = (
   <BrowserRouter>
