@@ -12,6 +12,6 @@ router.register('categories', CategoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('uploads/', ImageUploadView.as_view()),
+    path('uploads/', ImageUploadView.as_view(), name="upload-image"),
     path('image/', ImageUploadOnly.as_view())
 ]

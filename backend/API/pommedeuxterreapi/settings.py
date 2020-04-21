@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'blog',
+    'accounts',
     'rest_framework.authtoken',
     'adminsortable2',
     'django_cleanup',
