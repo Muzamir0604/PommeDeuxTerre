@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { loginApi, createUser } from "../api/user";
 import { fetchUsers } from "../actions/userActions";
 import { setAuth } from "../actions/authActions";
@@ -8,14 +8,26 @@ import { fetchShortList } from "../actions/categoryAction";
 
 import { useDispatch } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
+import { releaseUser } from "../actions/userActions";
 
 // Use Axios
 // https://designrevision.com/react-axios/
 
 //TODO: install in dev, jest, mock, enzyme and react redux testing library
 //TODO: implementing jest, mock and react-redux-testing library for login.js
+//TODO: failed login message
 function Login(props) {
   const dispatch = useDispatch();
+
+  const releaseUserDispatch = () => {
+    dispatch(releaseUser());
+    props.cookies.remove("token", { path: "/" });
+    props.cookies.remove("userId", { path: "/" });
+  };
+  const cancelLog = () => {
+    releaseUserDispatch();
+    props.history.push("/");
+  };
   // eslint-disable-next-line
   const [Tcookies, setTCookie] = useCookies(["token"]);
   // eslint-disable-next-line
@@ -85,11 +97,19 @@ function Login(props) {
   const redirected = <Redirect to="/" />;
 
   const loginSignup = (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "50%",
+        paddingTop: "20px",
+      }}
+    >
       <h1>{isLoginView ? "Login" : "Register"}</h1>
-      <span>Username</span>
+      <Form.Label>Username</Form.Label>
       <br />
-      <input
+      <Form.Control
         onKeyPress={keyPress}
         type="text"
         name="username"
@@ -97,9 +117,8 @@ function Login(props) {
         onChange={inputChanged}
       />
       <br />
-      <span>Password</span>
-      <br />
-      <input
+      <Form.Label>Password</Form.Label>
+      <Form.Control
         onKeyPress={keyPress}
         type="password"
         name="password"
@@ -109,10 +128,23 @@ function Login(props) {
       <br />
       <Button variant="success" onClick={login}>
         {isLoginView ? "Login" : "Register"}
+      </Button>{" "}
+      <Button
+        variant="danger"
+        onClick={() => {
+          cancelLog();
+        }}
+      >
+        Cancel
       </Button>
-      <p onClick={toggleView}>
-        {isLoginView ? "CreateAccount" : "back to login"}
-      </p>
+      <br />
+      <div
+        href="#"
+        style={{ fontSize: "16px", paddingTop: "5px" }}
+        onClick={toggleView}
+      >
+        {isLoginView ? "CreateAccount" : "Back to login"}
+      </div>
     </div>
   );
 

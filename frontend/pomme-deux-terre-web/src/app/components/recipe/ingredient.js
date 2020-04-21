@@ -1,11 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/recipe.css";
 
 function Ingredient(props) {
   return (
     <React.Fragment>
       <h5>Ingredients</h5>
-      <ol style={{ fontSize: "12px", alignSelf: "left", height: "auto" }}>
+      <ol>
         {props.ingredients.map((ingredient) => {
           return (
             <li key={ingredient.id}>

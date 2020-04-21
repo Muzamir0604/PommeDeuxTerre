@@ -16,8 +16,8 @@ function NavBarHead(props) {
 
   const releaseUserDispatch = () => {
     dispatch(releaseUser());
-    props.cookies.remove("token");
-    props.cookies.remove("userId");
+    props.cookies.remove("token", { path: "/" });
+    props.cookies.remove("userId", { path: "/" });
   };
 
   return (

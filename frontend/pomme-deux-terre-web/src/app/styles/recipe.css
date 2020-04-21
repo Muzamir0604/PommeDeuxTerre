@@ -1,0 +1,10 @@
+ol {
+  font-size: 12px;
+  align-self: left;
+  height: auto;
+}
+.recipe-card {
+  margin: 2px 2px;
+  background-color: lightgrey;
+  border: 0px;
+}
