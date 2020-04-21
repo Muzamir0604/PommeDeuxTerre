@@ -26,12 +26,14 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['10.10.153.8', 'backend-api-pommedeuxterre.herokuapp.com']
+ALLOWED_HOSTS = ['10.10.153.8',
+                 'backend-api-pommedeuxterre.herokuapp.com']
 LOGIN_REDIRECT_URL = '../../blog/'
 
 # Application definition
 
 INSTALLED_APPS = [
+
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'adminsortable2',
     'django_cleanup',
-    'django_filters'
+    'django_filters',
+    'nested_admin'
 
 ]
 
@@ -151,3 +154,5 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'pommedeuxterreapi.urls'
+
+GRAPPELLI_ADMIN_TITLE = "PommeDeuxTerre"

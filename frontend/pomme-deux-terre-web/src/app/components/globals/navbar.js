@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withCookies } from "react-cookie";
 import { Navbar, Nav, NavDropdown, Col, Row, Image } from "react-bootstrap";
 
@@ -8,7 +8,6 @@ import { releaseUser } from "../../actions/userActions";
 import "../../styles/globals/navbar.css";
 
 // https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
-//TODO: Add css file
 
 function NavBarHead(props) {
   const dispatch = useDispatch();

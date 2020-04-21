@@ -89,3 +89,6 @@ div.navbar-toprow.row {
 .navbar {
   padding: 0px 16px;
 }
+nav.row {
+  margin: 0px 5px;
+}

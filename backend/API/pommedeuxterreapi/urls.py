@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
+    url(r'^_nested_admin/', include('nested_admin.urls')),
     path('admin/', admin.site.urls),
     path('auth/', CustomObtainAuthToken.as_view()),
     path('blog/', include('blog.urls')),

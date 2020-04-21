@@ -98,6 +98,10 @@ class Post(models.Model):
     user = models.ForeignKey(
         User, related_name="user_posts", on_delete=models.CASCADE, null=True)
 
+    def no_of_recipes(self):
+        recipes = Recipe.objects.filter(post=self)
+        return len(recipes)
+
     def no_of_reviews(self):
         reviews = Review.objects.filter(post=self)
         return len(reviews)

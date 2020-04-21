@@ -6,21 +6,22 @@ from .models import Post, Review, Category, PostImage, Ingredient, Instruction, 
 
 from django.db import models
 from django.forms.models import ModelForm
+from nested_admin import NestedModelAdmin, NestedInlineModelAdmin, NestedStackedInline, NestedTabularInline
 
 
-class IngredientInline(admin.TabularInline):
+class IngredientInline(NestedTabularInline):
     model = Ingredient
     fk_name = "recipe"
     extra = 0
 
 
-class InstructionInline(admin.TabularInline):
+class InstructionInline(NestedTabularInline):
     model = Instruction
     fk_name = "recipe"
     extra = 0
 
 
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(NestedModelAdmin):
     model = Recipe
     extra = 0
 
@@ -28,10 +29,11 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ['name', 'post', 'created_at', 'updated_at']
 
 
-class RecipeInline(admin.TabularInline):
+class RecipeInline(NestedTabularInline):
     model = Recipe
     fk_name = "post"
     extra = 0
+    inlines = [InstructionInline, IngredientInline]
 
 #  class ReviewInline(admin.StackedInline):
 #     model = Review
@@ -39,7 +41,7 @@ class RecipeInline(admin.TabularInline):
 #     extra = 0
 
 
-class PostImageInline(admin.TabularInline):
+class PostImageInline(NestedTabularInline):
     model = PostImage
     fk_name = "post_id"
     extra = 0
@@ -47,12 +49,12 @@ class PostImageInline(admin.TabularInline):
     readonly_fields = ('image_tag',)
 
 
-# class PostImageAdmin(admin.ModelAdmin):
+# class PostImageAdmin(NestedModelAdmin):
 #     list_display = ['id', 'image_tag', 'image']
 
 
-class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'created_at',
+class PostAdmin(NestedModelAdmin):
+    list_display = ['title', 'user', 'category', 'no_of_recipes', 'created_at',
                     'updated_at', 'no_of_reviews', 'avg_rating', 'is_published']
     list_editable = ['category', 'is_published']
     # radio_fields = {"post_recipes": admin.VERTICAL}
@@ -61,12 +63,12 @@ class PostAdmin(admin.ModelAdmin):
     # search_fields = ['title', 'category']
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(NestedModelAdmin):
     list_display = ['title', 'created_at',
                     'updated_at']
 
 
-class ReviewAdmin(admin.ModelAdmin):
+class ReviewAdmin(NestedModelAdmin):
     # readonly_fields = ('title', 'title', 'post', 'user',
     #                    'stars', 'created_at', 'updated_at')
     list_display = ['title', 'post', 'user',

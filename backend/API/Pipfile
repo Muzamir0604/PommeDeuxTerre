@@ -23,6 +23,7 @@ django-admin-sortable2 = "*"
 django-grappelli = "*"
 dj-database-url = "*"
 whitenoise = "*"
+django-nested-admin = "*"
 
 [requires]
 python_version = "3.8"
