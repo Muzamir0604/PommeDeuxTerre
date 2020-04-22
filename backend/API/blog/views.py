@@ -171,7 +171,7 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ReviewViewSet(viewsets.ModelViewSet):
+class ReviewAPIViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     authentication_classes = (TokenAuthentication,)

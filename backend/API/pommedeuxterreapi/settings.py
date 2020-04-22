@@ -65,8 +65,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000", "http://localhost", "http://192.168.56.1:3000", "http://10.10.153.8", "https://pommedeuxterre-3bd49.web.app", "https://pommedeuxterre-3bd49.firebaseapp.com"
+    "http://localhost:3000", "http://localhost", "http://192.168.56.1:3000", "http://10.10.153.8", "https://pommedeuxterre-3bd49.web.app", "https://pommedeuxterre-3bd49.firebaseapp.com",
 ]
+
 
 ROOT_URLCONF = 'pommedeuxterreapi.urls'
 
