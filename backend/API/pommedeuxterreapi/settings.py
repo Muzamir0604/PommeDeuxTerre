@@ -16,6 +16,8 @@ from dj_database_url import parse as dburl
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+TESTING_MODE = True
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -90,7 +92,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pommedeuxterreapi.wsgi.application'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "image")
+MEDIA_ROOT = os.path.join(
+    BASE_DIR, 'media_test' if TESTING_MODE else 'image')
+
 MEDIA_URL = '/media/'
 
 # Database
