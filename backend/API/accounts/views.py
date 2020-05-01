@@ -1,9 +1,10 @@
-from rest_framework import generics, views, status
-from .serializers import UserListSerializer, UserSerializer, UserBlogDetailSerializer
+from rest_framework import generics
+from .serializers import UserListSerializer, UserSerializer,\
+                         UserBlogDetailSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
-from rest_framework.decorators import action
+
 from django.contrib.auth.models import User
 
 

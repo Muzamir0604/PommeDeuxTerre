@@ -24,6 +24,9 @@ django-grappelli = "*"
 dj-database-url = "*"
 whitenoise = "*"
 django-nested-admin = "*"
+pep8 = "*"
+pylint = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.8"

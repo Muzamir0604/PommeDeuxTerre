@@ -1,19 +1,20 @@
-
-from django.shortcuts import render, get_object_or_404
-from rest_framework import viewsets, status, generics, views
+from rest_framework import viewsets, status, views
 from rest_framework.decorators import action
-from .models import Post, Review, Category, PostImage
-from .serializers import PostSerializer, ReviewSerializer, CategorySerializer, ImageSerializer, ImageOnlySerializer
-from rest_framework.response import Response
-from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
-from django_filters import rest_framework as filters
-from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
-from django.http import JsonResponse
 from rest_framework.renderers import JSONRenderer
-from rest_framework import filters
+from rest_framework.filters import SearchFilter
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
+
+from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
+
+from .models import Post, Review, Category, PostImage
+from .serializers import PostSerializer, ReviewSerializer, CategorySerializer,\
+    ImageSerializer, ImageOnlySerializer
+
 
 # https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
 # https://stackoverflow.com/questions/52903232/how-to-upload-multiple-images-using-django-rest-framework
@@ -44,6 +45,7 @@ class ImageUploadOnly(views.APIView):
 
         images = dict((request.data).lists())['image']
         flag = 1
+        arr = []
         for img_name in images:
             modified_data = modify_input(
                 img_name)
@@ -102,14 +104,13 @@ class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
                      'category__title', 'user__username', 'post_recipes__name']
 
     @action(detail=True, methods=['GET'])
     def reviews(self, request, pk=None):
-        user = request.user
         post = Post.objects.get(id=pk)
         try:
             reviews = Review.objects.filter(post=post.id)
@@ -157,9 +158,11 @@ class PostViewSet(viewsets.ModelViewSet):
                 response = {'message': 'Review updated',
                             'result': serializer.data}
                 return Response(response, status=status.HTTP_200_OK)
-            except:
+            # was initially except here instead of finally
+            finally:
                 review = Review.objects.create(
-                    user=user, post=post, stars=stars, title=title, description=description)
+                    user=user, post=post, stars=stars, title=title,
+                    description=description)
                 serializer = ReviewSerializer(review, many=False)
                 response = {'message': 'Review created',
                             'result': serializer.data}
@@ -179,7 +182,8 @@ class ReviewAPIViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['post', 'user']
 
-    # to overwrite the create and update function of viewset hence restricting use
+    # to overwrite the create and update function of viewset hence
+    # restricting use
 
     def update(self, request, *args, **kwargs):
         response = {'message': 'you can\'t update like that'}

@@ -9,7 +9,8 @@ class Instruction(models.Model):
     title = models.CharField(max_length=100)
     # description = models.TextField(max_length=100, null=True)
     recipe = models.ForeignKey(
-        'Recipe', related_name="recipe_instructions", null=True, on_delete=models.CASCADE)
+        'Recipe', related_name="recipe_instructions", null=True,
+        on_delete=models.CASCADE)
     # ingredient = models.ManyToManyField('Ingredient')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
@@ -35,11 +36,13 @@ class Ingredient(models.Model):
     )
     name = models.CharField(max_length=64)
     recipe = models.ForeignKey(
-        'Recipe', related_name="recipe_ingredients", null=True, on_delete=models.CASCADE)
+        'Recipe', related_name="recipe_ingredients", null=True,
+        on_delete=models.CASCADE)
     quantity = models.IntegerField(
         validators=[MinValueValidator(1)], null=True, blank=True)
     unit = models.CharField(
-        max_length=5, choices=UNIT_CHOICES, default=UNIT_CHOICES[0][0], null=True, blank=True)
+        max_length=5, choices=UNIT_CHOICES, default=UNIT_CHOICES[0][0],
+        null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -53,7 +56,8 @@ class Recipe(models.Model):
     cook_time = models.IntegerField(validators=[MinValueValidator(1)])
     servings = models.IntegerField(validators=[MinValueValidator(1)])
     post = models.ForeignKey(
-        'Post', related_name="post_recipes", null=True, on_delete=models.CASCADE)
+        'Post', related_name="post_recipes", null=True,
+        on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -63,7 +67,8 @@ class Recipe(models.Model):
 
 class PostImage(models.Model):
     post_id = models.ForeignKey(
-        'Post', related_name="post_images", null=True, default=1, on_delete=models.CASCADE)
+        'Post', related_name="post_images", null=True,
+        on_delete=models.CASCADE)
     image = models.ImageField(blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
@@ -73,7 +78,8 @@ class PostImage(models.Model):
 
     def image_tag(self):
         from django.utils.html import mark_safe
-        return mark_safe('<img src="%s" width="100px" height="100px" style="object-fit: cover;" />' % (self.image.url))
+        return mark_safe('<img src="%s" width="100px" \
+        height="100px" style="object-fit: cover;" />' % (self.image.url))
     image_tag.short_description = 'thumbnail'
 
 
@@ -94,7 +100,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     is_published = models.BooleanField(default=False)
     category = models.ForeignKey(
-        Category, related_name="category_posts", on_delete=models.CASCADE, null=True)
+        Category, related_name="category_posts", on_delete=models.CASCADE,
+        null=True)
     user = models.ForeignKey(
         User, related_name="user_posts", on_delete=models.CASCADE, null=True)
 
