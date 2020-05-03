@@ -1,12 +1,14 @@
 
-# https://django-filer.readthedocs.io/en/latest/installation.html Consider Django filer
+# https://django-filer.readthedocs.io/en/latest/installation.html
+# Consider Django filer
 from django.contrib import admin
-from .models import Post, Review, Category, PostImage, Ingredient, Instruction, Recipe
+from .models import Post, Review, Category, PostImage, Ingredient,\
+                    Instruction, Recipe
 
 
-from django.db import models
-from django.forms.models import ModelForm
-from nested_admin import NestedModelAdmin, NestedInlineModelAdmin, NestedStackedInline, NestedTabularInline
+# from django.db import models
+# from django.forms.models import ModelForm
+from nested_admin import NestedModelAdmin, NestedTabularInline
 
 
 class IngredientInline(NestedTabularInline):
@@ -55,7 +57,8 @@ class PostImageInline(NestedTabularInline):
 
 class PostAdmin(NestedModelAdmin):
     list_display = ['title', 'user', 'category', 'no_of_recipes', 'created_at',
-                    'updated_at', 'no_of_reviews', 'avg_rating', 'is_published']
+                    'updated_at', 'no_of_reviews', 'avg_rating', 'is_published'
+                    ]
     list_editable = ['category', 'is_published']
     # radio_fields = {"post_recipes": admin.VERTICAL}
     inlines = [PostImageInline, RecipeInline]
