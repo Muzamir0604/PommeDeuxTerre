@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'blog',
-    'accounts',
+    'user',
+    'core',
     'rest_framework.authtoken',
     'adminsortable2',
     'django_cleanup',
@@ -169,3 +170,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'pommedeuxterreapi.urls'
 
 GRAPPELLI_ADMIN_TITLE = "PommeDeuxTerre"
+
+AUTH_USER_MODEL = 'blog.User'

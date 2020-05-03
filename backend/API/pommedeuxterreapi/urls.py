@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', CustomObtainAuthToken.as_view()),
     path('blog/', include('blog.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('user/', include('user.urls')),
     path('api/', include('rest_framework.urls')),
 
 

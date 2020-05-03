@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog.models import Category, Post, Review
 from django.urls import reverse
 
@@ -21,7 +21,9 @@ class PublicCategoryApiTests(APITestCase):
     """Test unauthenticated user API access"""
 
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.category = Category.objects.create(
             title="TestCat", description="TestDescription")
 
@@ -36,7 +38,7 @@ class PublicCategoryApiTests(APITestCase):
             user=self.user
             )
 
-        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(get_user_model().objects.count(), 1)
         self.assertEqual(Category.objects.count(), 1)
         self.assertEqual(Post.objects.count(), 1)
         self.assertEqual(Review.objects.count(), 1)

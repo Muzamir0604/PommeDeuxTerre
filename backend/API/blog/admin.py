@@ -3,7 +3,7 @@
 # Consider Django filer
 from django.contrib import admin
 from .models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe
+                    Instruction, Recipe, User
 
 
 # from django.db import models
@@ -83,4 +83,5 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Category, CategoryAdmin)
 # admin.site.register(PostImage, PostImageAdmin)
+# admin.site.register(User)
 admin.site.register(Recipe, RecipeAdmin)

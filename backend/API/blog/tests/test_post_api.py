@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.urls import reverse
 
@@ -29,7 +29,9 @@ class PublicPostApiTests(APITestCase):
         return ContentFile(file_obj.read(), name=name)
 
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.category = Category.objects.create(
             title="TestCat", description="TestDescription")
         self.category.category_posts.create(
@@ -57,7 +59,9 @@ class PrivatePostApiTests(APITestCase):
     """Test authenticated Post API access"""
 
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.client.force_authenticate(user=self.user)
 
         self.category = Category.objects.create(

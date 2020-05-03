@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Post, Review, Category, PostImage, Ingredient,\
                     Instruction, Recipe, Reply
-from django.contrib.auth.models import User
+
+from django.contrib.auth import get_user_model
 
 
 class ReplySerializer(serializers.ModelSerializer):
@@ -49,8 +50,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class UserNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username')
+        model = get_user_model()
+        fields = ('id', 'email')
 
 
 class PostTitleSerializer(serializers.ModelSerializer):

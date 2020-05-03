@@ -1,9 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
-
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse
-
 from blog.models import Review, Post
 
 
@@ -17,7 +15,9 @@ def review_detail_url(review_id):
 class PublicReviewApiTests(APITestCase):
     """Test unauthenticated user API access"""
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.post = Post.objects.create(
             title="post-title",
             description="post-description",
@@ -43,7 +43,9 @@ class PublicReviewApiTests(APITestCase):
 class PrivateReviewApiTests(APITestCase):
     """Test authenticated user API access"""
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.client.force_authenticate(user=self.user)
         self.post = Post.objects.create(
             title="post-title",

@@ -1,11 +1,11 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog import models
 
 
 def sample_user(username="bob", password="test1234"):
     """Create sample user"""
-    return User.objects.create_user(username, password)
+    return get_user_model().objects.create_user(username, password)
 
 
 def sample_category(title="Food", description="anything foods"):

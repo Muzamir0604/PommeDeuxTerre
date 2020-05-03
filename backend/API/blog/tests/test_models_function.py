@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog import models
 from django.db import IntegrityError
 
@@ -33,9 +33,10 @@ def sample_review(post, user,
 
 class PostModelFunctionTest(TestCase):
     """Test Post model functions"""
-
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="password213")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="password213",
+                                                    name="Bob")
         self.category = models.Category.objects.create(
             title="Foodie"
         )
@@ -59,7 +60,9 @@ class PostModelFunctionTest(TestCase):
 
     def test_post_avg_rating_published(self):
         self.post = sample_post(self.category, self.user, True)
-        user2 = User.objects.create(username="muzamir", password="testing123")
+        user2 = get_user_model().objects.create(email="bob2@hotmail.com",
+                                                password="testing123",
+                                                name="Bob2")
         self.post.post_reviews.add(
             sample_review(
                 post=self.post,
@@ -77,7 +80,9 @@ class PostModelFunctionTest(TestCase):
 class ReviewModelFunctionTest(TestCase):
     """Test Review Model function and features"""
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="password213")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="password213",
+                                                    name="Bob")
         self.category = models.Category.objects.create(
             title="Foodie"
         )

@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.urls import reverse
 
@@ -17,7 +17,9 @@ IMAGE_URL = reverse('upload-image')
 class PrivateImageApiTests(APITestCase):
     """Test Authenticated Image API Access"""
     def setUp(self):
-        self.user = User.objects.create(username="Bob", password="12345")
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="12345",
+                                                    name="Bob")
         self.client.force_authenticate(user=self.user)
         self.category = Category.objects.create(
             title="TestCat", description="TestDescription")
