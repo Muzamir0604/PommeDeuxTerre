@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'blog',
-    'user',
+    'accounts',
     'core',
     'rest_framework.authtoken',
     'adminsortable2',
@@ -171,4 +171,4 @@ ROOT_URLCONF = 'pommedeuxterreapi.urls'
 
 GRAPPELLI_ADMIN_TITLE = "PommeDeuxTerre"
 
-AUTH_USER_MODEL = 'blog.User'
+AUTH_USER_MODEL = 'accounts.User'

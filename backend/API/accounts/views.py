@@ -1,5 +1,5 @@
 from rest_framework import generics, authentication, permissions
-from user.serializers import UserSerializer, AuthTokenSerializer
+from accounts.serializers import UserSerializer, AuthTokenSerializer
 from pommedeuxterreapi.views import CustomObtainAuthToken
 from rest_framework.settings import api_settings
 

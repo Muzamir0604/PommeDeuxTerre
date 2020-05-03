@@ -2,8 +2,8 @@
 # https://django-filer.readthedocs.io/en/latest/installation.html
 # Consider Django filer
 from django.contrib import admin
-from .models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe, User
+from core.models import Post, Review, Category, PostImage, Ingredient,\
+                    Instruction, Recipe
 
 
 # from django.db import models

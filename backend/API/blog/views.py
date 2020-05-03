@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 
-from .models import Post, Review, Category, PostImage
+from core.models import Post, Review, Category, PostImage
 from .serializers import PostSerializer, ReviewSerializer, CategorySerializer,\
     ImageSerializer, ImageOnlySerializer
 

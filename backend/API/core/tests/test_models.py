@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from blog import models
+from core import models
 
 
 def sample_user(username="bob", password="test1234"):

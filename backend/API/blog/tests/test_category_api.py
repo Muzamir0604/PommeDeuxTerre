@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from django.contrib.auth import get_user_model
-from blog.models import Category, Post, Review
+from core.models import Category, Post, Review
 from django.urls import reverse
 
 

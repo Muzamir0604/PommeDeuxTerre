@@ -8,7 +8,7 @@ from django.urls import reverse
 from io import BytesIO
 from PIL import Image
 
-from blog.models import Post, Category, PostImage
+from core.models import Post, Category, PostImage
 # Remember to change SEtting TESTING = TRUE
 
 IMAGE_URL = reverse('upload-image')

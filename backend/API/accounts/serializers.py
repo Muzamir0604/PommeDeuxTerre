@@ -1,41 +1,6 @@
 from rest_framework import serializers
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model, authenticate
-# from django.contrib.auth.models import User
-# from rest_framework.authtoken.models import Token
-# from blog.serializers import ReviewSerializer
-
-# https://github.com/KristianOellegaard/django-hvad
-
-
-# class UserListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = get_user_model()
-#         fields = ('id', 'username', 'password')
-#         extra_kwargs = {'password': {'write_only': True, 'required': True}}
-
-#     def create(self, validated_data):
-#         user = get_user_model().objects.create_user(**validated_data)
-#         # creates token everytime user created
-#         Token.objects.create(user=user)
-#         return user
-
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'password',
-#                   'first_name', 'last_name', 'email')
-#         extra_kwargs = {'password': {'write_only': True, 'required': True}}
-
-
-# class UserBlogDetailSerializer(serializers.ModelSerializer):
-#     user_reviews = ReviewSerializer(many=True, read_only=True)
-
-#     class Meta:
-#         model = get_user_model()
-#         fields = ('id', 'username', 'user_reviews')
-#         # extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
 
 class UserSerializer(serializers.ModelSerializer):

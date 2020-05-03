@@ -8,7 +8,7 @@ from django.urls import reverse
 from io import BytesIO
 from PIL import Image
 
-from blog.models import Post, Category
+from core.models import Post, Category
 
 POST_URL = reverse('post-list')
 

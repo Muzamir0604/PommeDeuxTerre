@@ -1,7 +1,5 @@
 from django.urls import path
-# from .views import UserList, UserDetail, UserFullDetail
-# from django.conf.urls import include
-from user import views
+from accounts import views
 
 # urlpatterns = [
 #     path('users/', UserList.as_view(), name="user-list"),
@@ -10,7 +8,7 @@ from user import views
 #          UserFullDetail.as_view(), name="user-full-detail")
 # ]
 
-app_name = 'user'
+app_name = 'accounts'
 
 urlpatterns = [
     path('create/', views.CreateUserView.as_view(), name='create'),
