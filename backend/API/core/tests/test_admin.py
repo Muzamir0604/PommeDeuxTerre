@@ -2,7 +2,7 @@
 # from django.contrib.auth import get_user_model
 # from django.urls import reverse
 
-#FIXME: check on admin test case issues
+# FIXME: check on admin test case issues
 # class AdminSiteTests(TestCase):
 
 #     def setUp(self):

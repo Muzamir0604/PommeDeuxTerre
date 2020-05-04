@@ -1,6 +1,20 @@
+import uuid
+import os
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
+
+# TODO: create a many to many field for ingredients and tags
+# TODO: separate unit quantity from ingredients
+# TODO: create teardown for image upload
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('upload/recipe/', filename)
 
 
 class Instruction(models.Model):
@@ -67,7 +81,7 @@ class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=True,
         on_delete=models.CASCADE)
-    image = models.ImageField(blank=False, null=False)
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
