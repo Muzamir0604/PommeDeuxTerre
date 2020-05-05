@@ -43,13 +43,42 @@ def sample_recipe(post, name="Fish curry",
 class ModelTests(TestCase):
     """Test model validity"""
 
-    # TODO: create user with email successful
-    # TODO: test new user email normalized
-    # TODO: create new supeuser
-    # TODO: test new user invalid email
     def setUp(self):
         self.user = sample_user()
         self.category = sample_category()
+
+    def test_create_user_with_email_successful(self):
+        """Test creating a new user with an email is successful"""
+        email = "muzamir@gmail.com"
+        password = "Testpass123"
+        user = get_user_model().objects.create_user(
+            email=email,
+            password=password
+        )
+        self.assertEqual(user.email, email)
+        self.assertTrue(user.check_password(password))
+
+    def test_new_user_email_normalized(self):
+        """
+        Test the email for a new user is normalized
+        """
+        email = "test@BIJOE.NET"
+
+        user = get_user_model().objects.create_user(email, 'test123')
+
+        self.assertEqual(user.email, email.lower())
+
+    def test_new_user_invalid_email(self):
+        """Test creating user with no email raises error"""
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, 'test123')
+
+    def test_create_new_superuser(self):
+        """Test creating a new super user"""
+        get_user_model().objects.create_superuser(
+            'test@muzamir.com',
+            'test123'
+        )
 
     def test_category_str(self):
         """Test the Category string representation"""
@@ -99,3 +128,14 @@ class ModelTests(TestCase):
             recipe=self.recipe,
         )
         self.assertEqual(str(self.instructions), self.instructions.title)
+
+    def test_tag_str(self):
+        """ Test the tag string representation"""
+        tag = models.Tag.objects.create(
+            user=self.user,
+            name="Vegan"
+        )
+
+        self.assertEqual(str(tag), tag.name)
+    
+ 

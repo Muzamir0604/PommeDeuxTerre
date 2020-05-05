@@ -1,8 +1,20 @@
 from rest_framework import serializers
 from core.models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe, Reply
+                    Instruction, Recipe, Reply, Tag
 
 from django.contrib.auth import get_user_model
+
+# TODO: Reply model with serializer test
+# TODO: client API serializer vs url test cases
+
+
+class TagSerializer(serializers.ModelSerializer):
+    """ Serializer for tag objects"""
+
+    class Meta:
+        model = Tag
+        fields = ('id', 'name')
+        read_only_fields = ('id',)
 
 
 class ReplySerializer(serializers.ModelSerializer):
@@ -28,11 +40,15 @@ class InstructionSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_instructions = InstructionSerializer(many=True)
     recipe_ingredients = IngredientSerializer(many=True)
+    tags = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Tag.objects.all()
+    )
 
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'prep_time', 'cook_time', 'servings',
-                  'recipe_instructions', 'recipe_ingredients')
+                  'recipe_instructions', 'recipe_ingredients', 'tags')
 
 
 class ImageOnlySerializer(serializers.ModelSerializer):

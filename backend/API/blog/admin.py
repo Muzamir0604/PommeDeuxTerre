@@ -3,12 +3,15 @@
 # Consider Django filer
 from django.contrib import admin
 from core.models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe
-
-
-# from django.db import models
-# from django.forms.models import ModelForm
+                    Instruction, Recipe, Tag            
 from nested_admin import NestedModelAdmin, NestedTabularInline
+
+
+class TagAdmin(NestedModelAdmin):
+    model = Tag
+    extra = 0
+    field = ('id', 'name')
+    readonly_fields = ('id',)
 
 
 class IngredientInline(NestedTabularInline):
@@ -22,13 +25,35 @@ class InstructionInline(NestedTabularInline):
     fk_name = "recipe"
     extra = 0
 
+# FIXME: INLINE on same row as fields
+
 
 class RecipeAdmin(NestedModelAdmin):
     model = Recipe
     extra = 0
 
-    inlines = [InstructionInline, IngredientInline]
     list_display = ['name', 'post', 'created_at', 'updated_at']
+
+    fieldsets = (
+        ('', {
+            'fields': (('name',), ('prep_time', 'cook_time', 'servings',),
+                       ('tags', 'post',))
+            }),
+        ('InstructionInline', {
+            "classes": ("placeholder recipe_instructions-group",),
+            "fields": (),
+        }),
+    )
+    GRAPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
+        "core": {
+            "Recipe": {"id__iexact",
+                       "name__icontains",
+                       "post__icontains",
+                       "post__post_recipes__icontains"
+                       },
+        }
+    }
+    inlines = [InstructionInline, IngredientInline]
 
 
 class RecipeInline(NestedTabularInline):
@@ -84,4 +109,7 @@ admin.site.register(Review, ReviewAdmin)
 admin.site.register(Category, CategoryAdmin)
 # admin.site.register(PostImage, PostImageAdmin)
 # admin.site.register(User)
+# admin.site.register(Quantity)
+admin.site.register(Tag, TagAdmin)
+admin.site.register(Ingredient)
 admin.site.register(Recipe, RecipeAdmin)

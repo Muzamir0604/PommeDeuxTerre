@@ -4,9 +4,8 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# TODO: create a many to many field for ingredients and tags
+# TODO: create a many to many field for ingredients
 # TODO: separate unit quantity from ingredients
-# TODO: create teardown for image upload
 
 
 def recipe_image_file_path(instance, filename):
@@ -19,11 +18,9 @@ def recipe_image_file_path(instance, filename):
 
 class Instruction(models.Model):
     title = models.CharField(max_length=100)
-    # description = models.TextField(max_length=100, null=True)
     recipe = models.ForeignKey(
         'Recipe', related_name="recipe_instructions", null=True,
         on_delete=models.CASCADE)
-    # ingredient = models.ManyToManyField('Ingredient')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -67,6 +64,7 @@ class Recipe(models.Model):
     prep_time = models.IntegerField(validators=[MinValueValidator(1)])
     cook_time = models.IntegerField(validators=[MinValueValidator(1)])
     servings = models.IntegerField(validators=[MinValueValidator(1)])
+    tags = models.ManyToManyField('Tag')
     post = models.ForeignKey(
         'Post', related_name="post_recipes", null=True,
         on_delete=models.CASCADE)
@@ -138,6 +136,21 @@ class Post(models.Model):
 
     def __str__(self):
         return "%s: %s" % (self.category, self.title)
+
+
+class Tag(models.Model):
+    """Tag to be used for a recipe"""
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Review(models.Model):

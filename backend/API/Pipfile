@@ -27,6 +27,7 @@ django-nested-admin = "*"
 pep8 = "*"
 pylint = "*"
 pylint-django = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"
