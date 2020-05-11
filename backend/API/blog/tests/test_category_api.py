@@ -29,7 +29,7 @@ class PublicCategoryApiTests(APITestCase):
 
         self.category.category_posts.create(
             title="post-title", description="post-description",
-            user=self.user, is_published=True)
+            user=self.user, is_published=True, category=self.category)
         self.post = Post.objects.get(category=self.category)
         self.post.post_reviews.create(
             stars=4,
@@ -54,7 +54,6 @@ class PublicCategoryApiTests(APITestCase):
         self.assertEqual(
             response.json()[0]['category_posts'][0]['no_of_reviews'], 1)
 
-    # TODO: read category by id
     def test_read_category_id(self):
         """ Test category query by id"""
         url = CATEGORY_URL

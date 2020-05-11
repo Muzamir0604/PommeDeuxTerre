@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.urls import reverse
 
-from io import BytesIO
+
 from PIL import Image
 
 from core.models import Post, Category, PostImage
@@ -24,15 +24,6 @@ def sample_post_image(post_id, image):
 
 class PublicPostApiTests(APITestCase):
     """Test unauthenticated Post API access"""
-
-    @staticmethod
-    def get_image_file(name, ext='png', size=(50, 50), color=(256, 0, 0)):
-        file_obj = BytesIO()
-        image = Image.new("RGBA", size=size, color=color)
-        image.save(file_obj, ext)
-        file_obj.seek(0)
-        return ContentFile(file_obj.read(), name=name)
-
     def setUp(self):
         self.user = get_user_model().objects.create(email="bob@hotmail.com",
                                                     password="12345",
@@ -46,8 +37,6 @@ class PublicPostApiTests(APITestCase):
         self.post.post_reviews.create(
             stars=4, title="great title", description="nice description",
             user=self.user)
-        # self.post.post_images.create(
-        #     image=self.get_image_file('image.png'))
         with tempfile.NamedTemporaryFile(suffix='.jpg') as ntf:
             img = Image.new('RGB', (10, 10))
             img.save(ntf, format='JPEG')
@@ -63,13 +52,27 @@ class PublicPostApiTests(APITestCase):
     def tearDown(self):
         self.post.post_images.all().delete()
 
-    def test_read_posts(self):
+    def test_read_posts_published(self):
         """ Test reading posts"""
         url = POST_URL
         response = self.client.get(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Post.objects.count(), 1)
+
+    def test_read_posts_unpublished(self):
+        """ Test reading unpublished post returns empty"""
+        self.category.category_posts.add(
+            Post.objects.create(
+                                title="The curry post",
+                                description="post-description",
+                                user=self.user,
+                                is_published=False,
+                                category=self.category)
+                                )
+        url = POST_URL
+        response = self.client.get(url, format='json')
+        self.assertEqual(len(response.data), 1)
 
 
 class PrivatePostApiTests(APITestCase):
@@ -90,8 +93,6 @@ class PrivatePostApiTests(APITestCase):
         self.post.post_reviews.create(
             stars=4, title="great title", description="nice description",
             user=self.user)
-        # self.post.post_images.create(
-        #     image=self.get_image_file('image.png'))
         with tempfile.NamedTemporaryFile(suffix='.jpg') as ntf:
             img = Image.new('RGB', (10, 10))
             img.save(ntf, format='JPEG')
@@ -107,15 +108,8 @@ class PrivatePostApiTests(APITestCase):
     def tearDown(self):
         self.post.post_images.all().delete()
 
-    @staticmethod
-    def get_image_file(name, ext='png', size=(50, 50), color=(256, 0, 0)):
-        file_obj = BytesIO()
-        image = Image.new("RGBA", size=size, color=color)
-        image.save(file_obj, ext)
-        file_obj.seek(0)
-        return ContentFile(file_obj.read(), name=name)
-
     # TODO: Create POST
+
     def test_delete_posts(self):
         """Test deleting post """
 

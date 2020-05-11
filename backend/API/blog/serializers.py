@@ -79,12 +79,12 @@ class PostTitleSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     post = PostTitleSerializer(many=False)
     user = UserNameSerializer(many=False)
-    review_replies = ReplySerializer(many=True)
 
     class Meta:
         model = Review
         fields = ('id', 'title', 'description', 'stars',
-                  'user', 'post', 'review_replies')
+                  'user', 'post')
+        read_only_fields = ('id',)
 
 
 class FilteredReviewSerializer(serializers.ListSerializer):

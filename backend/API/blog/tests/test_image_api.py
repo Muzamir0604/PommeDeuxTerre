@@ -31,7 +31,7 @@ class PrivateImageApiTests(APITestCase):
             title="TestCat", description="TestDescription")
         self.post = Post.objects.create(
             title="post-title", description="post-description",
-            category=self.category, is_published=True)
+            category=self.category, is_published=True, user=self.user)
 
     def tearDown(self):
         self.post.post_images.all().delete()

@@ -111,10 +111,10 @@ class Post(models.Model):
     is_published = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, related_name="category_posts", on_delete=models.CASCADE,
-        null=True)
+        blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="user_posts",
-        on_delete=models.CASCADE, null=True)
+        on_delete=models.CASCADE, blank=True)
 
     def no_of_recipes(self):
         recipes = Recipe.objects.filter(post=self)
