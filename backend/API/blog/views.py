@@ -101,17 +101,27 @@ class ImageUploadView(views.APIView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(is_published=True)
     serializer_class = PostSerializer
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
-    permission_classes = (AllowAny,)
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
                      'category__title', 'user__username', 'post_recipes__name']
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_permissions(self):
+        """ Instatiates and returns a list of permissions"""
+        if self.action == 'review_post' or self.action == 'review_update':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
     def get_serializer_class(self):
         """Return appropriate serializer class"""
-        if self.action == "review_post":
+        if self.action == "review_post"\
+           or self.action == "review_update":
             return ReviewSerializer
         return PostSerializer
 
@@ -146,7 +156,6 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['POST'],
-            permission_classes=(IsAuthenticated,),
             authentication_classes=(TokenAuthentication,))
     def review_post(self, request, pk=None):
         if 'stars' in request.data:
@@ -169,7 +178,6 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['PUT', 'PATCH'],
-            permission_classes=(IsAuthenticated,),
             authentication_classes=(TokenAuthentication,))
     def review_update(self, request, pk=None):
         post = Post.objects.get(id=pk)

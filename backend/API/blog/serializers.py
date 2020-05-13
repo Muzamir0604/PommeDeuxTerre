@@ -87,6 +87,13 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class CategoryTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'title', 'description']
+        read_only_fields = ('id',)
+
+
 class FilteredReviewSerializer(serializers.ListSerializer):
     def to_representation(self, data):
         data = data.order_by('-created_at')[:3]
@@ -103,44 +110,18 @@ class LimitedReviewSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    post_images = ImageSerializer(many=True, required=False)
-    post_recipes = RecipeSerializer(many=True, required=False)
-    post_reviews = LimitedReviewSerializer(many=True, read_only=True)
-    user = UserNameSerializer(many=False, required=False)
+    images = ImageSerializer(many=True, required=False, read_only=True)
+    recipes = RecipeSerializer(many=True, required=False, read_only=True)
+    reviews = LimitedReviewSerializer(many=True, read_only=True)
+    user = UserNameSerializer(many=False, required=False, read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'description', 'post_images',
-                  'no_of_reviews', 'avg_rating', 'post_reviews', 'user',
-                  'post_recipes')
-
-    def create(self, validated_data):
-        print(validated_data)
-        # print()
-        # images_data = validated_data.pop('post_images')
-        # recipes_data = validated_data.pop('post_recipes')
-
-        post = Post.objects.create(**validated_data)
-        # for image_data in images_data:
-        #     PostImage.objects.create(post_id=post, **image_data)
-        # for recipe_data in recipes_data:
-        #     Recipe.objects.create(post=post, **recipe_data)
-
-        return post
-
-# FIXME: Link to create and update with nested serializer below
-# https://www.django-rest-framework.org/api-guide/serializers/#dealing-with-nested-objects
-
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     print(data)
-    #     data['category'] = CategorySerializer(
-    #         Category.objects.get(pk=data['category'])).data
-    #     data['post_recipes'] = RecipeSerializer(
-    #         Recipe.objects.get(pk=data['post_recipes'])).data
-    #     data['post_images'] = ImageSerializer(
-    #         PostImage.objects.get(pk=data['post_images'])).data
-    #     return data
+        fields = ('id', 'title', 'description', 'images', 'category',
+                  'no_of_reviews', 'avg_rating', 'reviews', 'user',
+                  'recipes', 'is_published')
+        read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
+                            'reviews', 'recipes', 'images')
 
 
 class FilteredPostSerializer(serializers.ListSerializer):

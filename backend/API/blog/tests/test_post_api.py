@@ -5,10 +5,9 @@ from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.urls import reverse
-
+from django.db import transaction
 
 from PIL import Image
-
 from core.models import Post, Category, PostImage
 
 POST_URL = reverse('post-list')
@@ -108,7 +107,18 @@ class PrivatePostApiTests(APITestCase):
     def tearDown(self):
         self.post.post_images.all().delete()
 
-    # TODO: Create POST
+    def test_create_posts(self):
+        """Test create posts"""
+        url = POST_URL
+        payload = {
+            "title": "best day ever",
+            "description": "Best desc ever",
+            "category": self.category.id,
+            "is_published": False
+        }
+        with transaction.atomic():
+            res = self.client.post(url, payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_delete_posts(self):
         """Test deleting post """
@@ -121,10 +131,33 @@ class PrivatePostApiTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Post.objects.count(), 0)
 
-    def test_update_posts(self):
-        """Test updating posts """
+    def test_partial_update_posts(self):
+        """Test partial updating posts """
         url = post_detail_url(self.post.id)
-        res = self.client.patch(url)
-
+        payload = {
+            "title": "post-changed-title",
+            "description": "post-description",
+        }
+        res = self.client.patch(url, payload)
+        self.post.refresh_from_db()
+        self.assertEqual(self.post.title, payload['title'])
+        self.assertEqual(self.post.is_published, True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(Post.objects.count(), 1)
+
+    def test_update_posts(self):
+        """Test updating posts"""
+        url = post_detail_url(self.post.id)
+        category = Category.objects.create(title="NewCat")
+        payload = {
+            "title": "post_full_title",
+            "description": "post-124",
+            "category": category.id,
+            "is_published": False
+        }
+        res = self.client.put(url, payload)
+        self.post.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.post.title, payload['title'])
+        self.assertEqual(self.post.description, payload['description'])
+        self.assertEqual(self.post.category.id, payload['category'])
+        self.assertEqual(self.post.is_published, payload['is_published'])
