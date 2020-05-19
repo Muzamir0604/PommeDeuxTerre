@@ -12,8 +12,6 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "formik": "^2.1.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
@@ -40,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --watch --silent",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,12 +59,16 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@editorjs/editorjs": "^2.17.0",
     "@editorjs/header": "^2.4.0",
     "@editorjs/image": "^2.3.3",
     "@editorjs/list": "^1.4.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest-cli": "^25.2.7",
     "jest-enzyme": "^7.1.2",
     "react-test-renderer": "^16.13.1"
@@ -77,6 +79,17 @@
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "./node_modules/"
+
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   }
 }
