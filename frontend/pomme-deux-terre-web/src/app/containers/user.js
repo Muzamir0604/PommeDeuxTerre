@@ -8,7 +8,7 @@ import { Row, Col, Container, Form, Button, Alert } from "react-bootstrap";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
 import AdsColumn from "../components/globals/ads";
-import { useFormik } from "formik";
+import { useFormik, isEmptyArray } from "formik";
 import * as Yup from "yup";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,21 +30,21 @@ const UserProfile = (props) => {
   const formik = useFormik({
     initialValues: {
       id: user.id,
-      username: user.username,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      name: user.name,
+      // first_name: user.first_name,
+      // last_name: user.last_name,
       email: user.email,
     },
     validationSchema: Yup.object({
-      username: Yup.string()
+      name: Yup.string()
         .max(20, "Must be 20 characters or less")
         .required("Required"),
-      first_name: Yup.string()
-        .max(35, "Must be 35 characters or less")
-        .required("Required"),
-      last_name: Yup.string()
-        .max(20, "Must be 35 characters or less")
-        .required("Required"),
+      // first_name: Yup.string()
+      //   .max(35, "Must be 35 characters or less")
+      //   .required("Required"),
+      // last_name: Yup.string()
+      //   .max(20, "Must be 35 characters or less")
+      //   .required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
     }),
     onSubmit: (values) => {
@@ -56,7 +56,7 @@ const UserProfile = (props) => {
     },
   });
 
-  if (parseInt(props.match.params.id) === parseInt(user.id)) {
+  if (userDetails) {
     form = (
       <React.Fragment>
         <Container
@@ -74,21 +74,21 @@ const UserProfile = (props) => {
           <Form onSubmit={formik.handleSubmit}>
             <Form.Row>
               <Form.Group>
-                <Form.Label>Username</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
-                  name="username"
+                  name="name"
                   type="text"
-                  value={formik.values.username}
+                  value={formik.values.name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  placeholder="Username"
+                  placeholder="Name"
                 />
-                {formik.touched.username && formik.errors.username ? (
-                  <p style={{ color: "red" }}>{formik.errors.username}</p>
+                {formik.touched.name && formik.errors.name ? (
+                  <p style={{ color: "red" }}>{formik.errors.name}</p>
                 ) : null}
               </Form.Group>
             </Form.Row>
-            <Form.Row>
+            {/* <Form.Row>
               <Form.Group as={Col} style={{ paddingLeft: "0px" }}>
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
@@ -118,7 +118,7 @@ const UserProfile = (props) => {
                   <p style={{ color: "red" }}>{formik.errors.last_name}</p>
                 ) : null}
               </Form.Group>
-            </Form.Row>
+            </Form.Row> */}
             <Form.Row>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
@@ -164,7 +164,7 @@ const UserProfile = (props) => {
       <NavBarHead />
       <Row>
         <AdsColumn />
-
+        {console.log(userDetails)}
         <Col sm={8}>{form}</Col>
 
         <AdsColumn />

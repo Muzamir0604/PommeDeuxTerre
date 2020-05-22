@@ -3,12 +3,12 @@ export const API_URL =
     ? process.env.REACT_APP_DEV_API_URL
     : process.env.REACT_APP_PROD_API_URL;
 
-export const API_AUTH = API_URL + "/auth/";
+export const API_AUTH = API_URL + "/accounts/token/";
 
-export const CREATE_USER = API_URL + "/accounts/users/";
+export const CREATE_USER = API_URL + "/accounts/create/";
 
 // POST,GET,PUT,DELETE
-export const USER_LIST_DETAIL = API_URL + "/accounts/users/";
+export const USER_LIST_DETAIL = API_URL + "/accounts/me/";
 export const POST_LIST_DETAIL = API_URL + "/blog/posts/";
 export const REVIEW_LIST_DETAIL = API_URL + "/blog/reviews/";
 

@@ -25,8 +25,6 @@ class InstructionInline(NestedTabularInline):
     fk_name = "recipe"
     extra = 0
 
-# FIXME: INLINE on same row as fields
-
 
 class RecipeAdmin(NestedModelAdmin):
     model = Recipe
@@ -34,16 +32,6 @@ class RecipeAdmin(NestedModelAdmin):
 
     list_display = ['name', 'post', 'created_at', 'updated_at']
 
-    fieldsets = (
-        ('', {
-            'fields': (('name',), ('prep_time', 'cook_time', 'servings',),
-                       ('tags', 'post',))
-            }),
-        ('InstructionInline', {
-            "classes": ("placeholder recipe_instructions-group",),
-            "fields": (),
-        }),
-    )
     GRAPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
         "core": {
             "Recipe": {"id__iexact",
@@ -62,11 +50,6 @@ class RecipeInline(NestedTabularInline):
     extra = 0
     inlines = [InstructionInline, IngredientInline]
 
-#  class ReviewInline(admin.StackedInline):
-#     model = Review
-#     fk_name = "post"
-#     extra = 0
-
 
 class PostImageInline(NestedTabularInline):
     model = PostImage
@@ -76,16 +59,12 @@ class PostImageInline(NestedTabularInline):
     readonly_fields = ('image_tag',)
 
 
-# class PostImageAdmin(NestedModelAdmin):
-#     list_display = ['id', 'image_tag', 'image']
-
-
 class PostAdmin(NestedModelAdmin):
     list_display = ['title', 'user', 'category', 'no_of_recipes', 'created_at',
                     'updated_at', 'no_of_reviews', 'avg_rating', 'is_published'
                     ]
     list_editable = ['category', 'is_published']
-    # radio_fields = {"post_recipes": admin.VERTICAL}
+
     inlines = [PostImageInline, RecipeInline]
     fields = (('title', 'category'), 'user', 'description', 'is_published')
     # search_fields = ['title', 'category']

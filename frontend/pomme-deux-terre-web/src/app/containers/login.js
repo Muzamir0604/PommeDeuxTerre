@@ -33,15 +33,16 @@ function Login(props) {
   // eslint-disable-next-line
   const [Icookies, setICookie] = useCookies(["userId"]);
 
-  const setUser = (user, token) => {
-    dispatch(setAuth(token));
-    dispatch(fetchUsers(user));
-  };
+  // const setUser = (user, token) => {
+  //   dispatch(setAuth(token));
+  //   dispatch(fetchUsers(user));
+  // };
 
   const [state, setState] = useState({
     credentials: {
-      username: "",
+      name: "",
       password: "",
+      email:"",
     },
   });
   const [isLoginView, setIsLoginView] = useState(true);
@@ -60,7 +61,8 @@ function Login(props) {
 
   const fetchUserDetails = (userId, token) => {
     if (userId > -1) {
-      setUser(userId, token);
+      dispatch(setAuth(token));
+      dispatch(fetchUsers(userId));
     }
   };
   const inputChanged = (event) => {
@@ -69,6 +71,7 @@ function Login(props) {
     setState({ credentials: cred });
   };
   const login = (event) => {
+
     if (isLoginView) {
       loginApi(state.credentials)
         .then((res) => {
@@ -81,6 +84,7 @@ function Login(props) {
           console.log(e.response);
         });
     } else {
+
       createUser(state.credentials)
         .then((res) => setIsLoginView({ isLoginView: true }))
         .catch((error) => console.log(error));
@@ -107,16 +111,27 @@ function Login(props) {
       }}
     >
       <h1>{isLoginView ? "Login" : "Register"}</h1>
-      <Form.Label>Username</Form.Label>
+      <Form.Label>Email</Form.Label>
       <br />
       <Form.Control
         onKeyPress={keyPress}
         type="text"
-        name="username"
-        value={state.credentials.username}
+        name="email"
+        value={state.credentials.email}
         onChange={inputChanged}
       />
+       <br />
+       {isLoginView? "": <React.Fragment><Form.Label>Name</Form.Label>
       <br />
+      <Form.Control
+        onKeyPress={keyPress}
+        type="text"
+        name="name"
+        value={state.credentials.name}
+        onChange={inputChanged}
+      />
+      <br /></React.Fragment>}
+     
       <Form.Label>Password</Form.Label>
       <Form.Control
         onKeyPress={keyPress}

@@ -12,9 +12,7 @@ const initialState = {
   isLoading: false,
   user: {
     id: {},
-    username: {},
-    first_name: {},
-    last_name: {},
+    name: {},
     email: {}
   },
   error: []
@@ -51,9 +49,7 @@ const user = (state = initialState, action) => {
 
         user: {
           ...state.user,
-          username: action.user.username,
-          first_name: action.user.first_name,
-          last_name: action.user.last_name,
+          name: action.user.name,
           email: action.user.email
         },
         error: null
