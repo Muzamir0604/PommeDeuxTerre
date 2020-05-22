@@ -41,6 +41,12 @@ export const fetchShortListFailure = (error) => {
   };
 };
 
+/**
+ * @function fetchCategory
+ * Uses getCategory API constant
+ * * @param  {integer} category {The category id of the post}
+ * Updates Category reducer with relevat information
+ */
 export const fetchCategory = (category) => (dispatch) => {
   dispatch(fetchCategoryRequest());
   getCategory(category)

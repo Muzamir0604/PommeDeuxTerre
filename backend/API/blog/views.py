@@ -104,7 +104,7 @@ class PostViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
-                     'category__title', 'user__username', 'post_recipes__name']
+                     'category__title', 'user__email', 'post_recipes__name']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

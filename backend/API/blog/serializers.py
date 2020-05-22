@@ -110,18 +110,18 @@ class LimitedReviewSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many=True, required=False, read_only=True)
+    post_images = ImageSerializer(many=True, required=False, read_only=True)
     recipes = RecipeSerializer(many=True, required=False, read_only=True)
     reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False, required=False, read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'description', 'images', 'category',
+        fields = ('id', 'title', 'description', 'post_images', 'category',
                   'no_of_reviews', 'avg_rating', 'reviews', 'user',
                   'recipes', 'is_published')
         read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
-                            'reviews', 'recipes', 'images')
+                            'reviews', 'recipes', 'post_images')
 
 
 class FilteredPostSerializer(serializers.ListSerializer):

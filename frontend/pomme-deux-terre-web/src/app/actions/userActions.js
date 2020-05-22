@@ -46,7 +46,6 @@ export const updateUser = (id, user) => (dispatch) => {
   dispatch(updateUserRequest());
   updateUserApi(id, user)
     .then((response) => {
-      console.log("SUCCESS::", response);
       dispatch(updateUserSuccess(user));
     })
     .catch((error) => {
