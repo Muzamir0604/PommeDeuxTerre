@@ -8,7 +8,7 @@ import { Row, Col, Container, Form, Button, Alert } from "react-bootstrap";
 import NavBarHead from "../components/globals/navbar";
 import PageFooter from "../components/globals/footer";
 import AdsColumn from "../components/globals/ads";
-import { useFormik, isEmptyArray } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

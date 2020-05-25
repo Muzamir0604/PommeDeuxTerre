@@ -36,13 +36,14 @@ function Post(props) {
   const dispatch = useDispatch();
 
   const post = useSelector((state) => state.postReducer.post);
+  
   const reviews = useSelector((state) => state.reviewReducer);
-  // const auth = useSelector((state) => state.authReducer);
+ 
 
   useEffect(() => {
     dispatch(fetchPost(props.match.params.id));
     // eslint-disable-next-line
-  }, [reviews, props.match.params.id]);
+  }, [reviews,props.match.params.id]);
 
   const [preptime, setpreptime] = useState(0);
   const [cooktime, setcooktime] = useState(0);
@@ -60,6 +61,7 @@ function Post(props) {
       });
     }
   }, [post.post_recipes]);
+
 
   return (
     <React.Fragment>
@@ -90,21 +92,21 @@ function Post(props) {
                             <span>
                               <FontAwesomeIcon icon={faClock} />
                               <p className="recipe-detail">
-                                &nbsp; Prep Time: {preptime}
+                                &nbsp; Prep Time: {preptime} min(s)
                               </p>
                             </span>
                             <br />
                             <span>
                               <FontAwesomeIcon icon={faCalendarWeek} />
                               <p className="recipe-detail">
-                                &nbsp; Cook Time: {cooktime}
+                                &nbsp; Cook Time: {cooktime} min(s)
                               </p>
                             </span>
                             <br />
                             <span>
                               <FontAwesomeIcon icon={faUsers} />
                               <p className="recipe-detail">
-                                &nbsp; Servings: {serving}
+                                &nbsp; Servings: {serving} 
                               </p>
                             </span>
                           </React.Fragment>

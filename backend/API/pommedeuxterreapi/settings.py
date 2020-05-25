@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['10.10.153.8','192.168.1.100',
+ALLOWED_HOSTS = ['10.10.153.8','192.168.1.104',
                  'backend-api-pommedeuxterre.herokuapp.com']
 LOGIN_REDIRECT_URL = '../../blog/'
 
@@ -53,8 +53,6 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_filters',
     'nested_admin',
-
-
 ]
 
 MIDDLEWARE = [

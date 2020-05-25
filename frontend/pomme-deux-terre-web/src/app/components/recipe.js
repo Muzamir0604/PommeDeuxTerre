@@ -19,7 +19,7 @@ function RecipeCard(props) {
                 <Row className="justify-content-md-center">
                   <Col>
                     <hr />
-                    <h5>How to make {recipe.name}</h5>
+                    <h5>{recipe.name}</h5>
                     <hr />
                   </Col>
                 </Row>

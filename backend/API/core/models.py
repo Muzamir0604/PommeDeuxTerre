@@ -40,7 +40,8 @@ class Ingredient(models.Model):
         ('m', 'metre'),
         ('g', 'gram'),
         ('kg', 'kilogram'),
-        ('pc', 'piece(s)')
+        ('pc', 'piece(s)'),
+        ('pinch','pinch(es)')
 
     )
     name = models.CharField(max_length=64)

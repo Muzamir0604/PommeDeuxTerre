@@ -102,6 +102,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.filter(is_published=True)
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
+    authentication_classes = (TokenAuthentication,)
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
                      'category__title', 'user__email', 'post_recipes__name']
