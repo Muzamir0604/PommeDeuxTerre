@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Button, Row } from "react-bootstrap";
-
+import { Card, Button } from "react-bootstrap";
+import "../styles/globals/card.css"
 import TextTruncate from "react-text-truncate";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +12,9 @@ function CardPost(props) {
   return (
     <React.Fragment>
       <Card
-        style={{ width: "100%", height: "100%", borderRadius: "25px" }}
+      className="card-post"
+        style={{ width: "100%", height: "100%", borderRadius: "25px"
+       }}
         key={props.post.id}
       >
         <Card.Img
@@ -68,7 +70,7 @@ function CardPost(props) {
           </Card.Text>
           <div style={{display:"flex",flexDirection: "column"}}>
           <Button
-         
+            className="card-button"
             variant="primary"
             onClick={() => history.push("/posts/" + props.post.id)}
           >

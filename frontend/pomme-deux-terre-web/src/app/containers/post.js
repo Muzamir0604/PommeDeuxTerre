@@ -82,6 +82,7 @@ function Post(props) {
                           Average Rating: <Star star={post.avg_rating} /> (
                           {post.no_of_reviews}){" "}
                         </p>
+                        { post.user ? <p>Written by: {post.user.name}</p>: null}
                       </Col>
                       <Col className="recipe-detail" sm={5}>
                         {undefined !== post.post_recipes &&

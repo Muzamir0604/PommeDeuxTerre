@@ -22,6 +22,7 @@ a.nav-link:hover {
 }
 a.nav-link {
   padding-bottom: 0px;
+  font-size: 14px;
 }
 .navbar-nav {
   padding-top: 0px;
