@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Row } from "react-bootstrap";
 
 import TextTruncate from "react-text-truncate";
 import { useHistory } from "react-router-dom";
@@ -26,7 +26,7 @@ function CardPost(props) {
               : require("../../assets/blog/castle.png")
           }
           style={{
-            height: "40%",
+            height: "50%",
             borderTopRightRadius: "25px",
             borderTopLeftRadius: "25px",
           }}
@@ -35,6 +35,7 @@ function CardPost(props) {
           <Card.Title style={{ color: "black", marginTop: "10px" }}>
             {props.post.title}
           </Card.Title>
+          
           <Card.Text style={{ color: "black" }}>
             {display ? (
               <TextTruncate
@@ -65,13 +66,16 @@ function CardPost(props) {
               />
             )}
           </Card.Text>
+          <div style={{display:"flex",flexDirection: "column"}}>
           <Button
-            style={{ display: "flex", justifyContent: "flex-end" }}
+         
             variant="primary"
             onClick={() => history.push("/posts/" + props.post.id)}
           >
             Find out more
           </Button>
+          <p>Posted by: {props.post.user.name}</p>
+          </div>
         </Card.Body>
       </Card>
     </React.Fragment>

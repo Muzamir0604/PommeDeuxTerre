@@ -4,7 +4,7 @@ import { Card, Row, Col, Container } from "react-bootstrap";
 import Star from "../components/globals/star";
 import "../styles/review.css";
 
-//FIXME: to add posted by...
+
 function ReviewCard(props) {
   return (
     <React.Fragment>
@@ -22,7 +22,7 @@ function ReviewCard(props) {
                       </Col>
                       <Col sm={6} style={{ textAlign: "right" }}>
                         <Star star={review.stars} />
-                        {/* <div>Posted by {review.user.name}</div> */}
+                        <div>Posted by {review.user.name}</div>
                       </Col>
                     </Row>
                   </Container>
