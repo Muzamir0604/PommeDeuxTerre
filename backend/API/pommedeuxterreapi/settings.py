@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['10.10.153.8','192.168.1.104',
+ALLOWED_HOSTS = ['10.10.153.8','192.168.1.101',
                  'backend-api-pommedeuxterre.herokuapp.com']
 LOGIN_REDIRECT_URL = '../../blog/'
 
