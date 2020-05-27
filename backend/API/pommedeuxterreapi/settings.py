@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['10.10.153.8','192.168.1.101',
+ALLOWED_HOSTS = ['10.10.153.8','192.168.1.102',
                  'backend-api-pommedeuxterre.herokuapp.com']
 LOGIN_REDIRECT_URL = '../../blog/'
 
@@ -95,7 +95,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pommedeuxterreapi.wsgi.application'
 
 MEDIA_ROOT = os.path.join(
-    BASE_DIR, 'media_test' if TESTING_MODE else 'image')
+    BASE_DIR, 
+    'media_test' if TESTING_MODE else 'image')
 
 MEDIA_URL = '/media/'
 
