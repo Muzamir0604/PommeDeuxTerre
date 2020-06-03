@@ -1,8 +1,10 @@
-import { FETCH_POST } from "../actions/types";
+import { FETCH_POST_SUCCESS, FETCH_POST_FAILURE } from "../actions/types";
 
 const postReducer = (
   state = {
     post: [],
+    isLoading: false,
+    error:[]
   },
   action
 ) => {
@@ -17,11 +19,16 @@ const postReducer = (
         ...state,
         post: action.payload,
       };
-    case FETCH_POST:
+    case FETCH_POST_SUCCESS:
       return {
         ...state,
         post: action.payload,
       };
+    case FETCH_POST_FAILURE:
+      return{
+        ...state,
+        error: action.payload,
+      }
     default:
       return { ...state };
   }

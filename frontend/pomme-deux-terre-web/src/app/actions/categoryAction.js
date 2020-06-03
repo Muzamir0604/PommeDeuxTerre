@@ -9,6 +9,12 @@ import {
   FETCH_CATEGORY_REQUEST,
 } from "../actions/types";
 
+/**
+ * @function fetchShortList
+ * Retrieves Data from CategoryShortList
+ * Updates categoryReducer
+ * @return {None}
+ */
 export const fetchShortList = () => (dispatch) => {
   dispatch(fetchShortListRequest());
   getCategoryShortList()
