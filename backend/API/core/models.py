@@ -75,7 +75,8 @@ class Recipe(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
-
+# TODO: Resize image before saving
+# https://stackoverflow.com/questions/57111648/how-to-resize-an-imagefield-image-before-saving-it-in-python-django-model
 class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=True,

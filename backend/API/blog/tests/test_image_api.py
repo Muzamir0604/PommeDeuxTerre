@@ -6,6 +6,8 @@ from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.urls import reverse
+from django.db import transaction, IntegrityError
+
 
 from PIL import Image
 
@@ -37,16 +39,19 @@ class PrivateImageApiTests(APITestCase):
         self.post.post_images.all().delete()
 
     def test_create_image(self):
-        with tempfile.NamedTemporaryFile(suffix='.jpg') as ntf:
-            img = Image.new('RGB', (10, 10))
-            img.save(ntf, format='JPEG')
-            ntf.seek(0)
+        try:
+            with transaction.atomic():
+                with tempfile.NamedTemporaryFile(suffix='.jpg') as ntf:
+                    img = Image.new('RGB', (10, 10))
+                    img.save(ntf, format='JPEG')
+                    ntf.seek(0)
 
-            data = {"post_id": self.post.id,
-                    "image": ntf}
-            url = IMAGE_URL
-            res = self.client.post(url, data)
-
+                    data = {"post_id": self.post.id,
+                            "image": ntf}
+                    url = IMAGE_URL
+                    res = self.client.post(url, data)
+        except IntegrityError:
+            pass
         self.post.refresh_from_db()
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(PostImage.objects.count(), 1)
