@@ -65,7 +65,6 @@ class Recipe(models.Model):
     prep_time = models.IntegerField(validators=[MinValueValidator(1)])
     cook_time = models.IntegerField(validators=[MinValueValidator(1)])
     servings = models.IntegerField(validators=[MinValueValidator(1)])
-    tags = models.ManyToManyField('Tag')
     post = models.ForeignKey(
         'Post', related_name="post_recipes", null=True,
         on_delete=models.CASCADE)
@@ -111,6 +110,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     is_published = models.BooleanField(default=False)
+    tags = models.ManyToManyField('Tag')
     category = models.ForeignKey(
         Category, related_name="category_posts", on_delete=models.CASCADE,
         blank=True)

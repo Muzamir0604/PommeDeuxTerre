@@ -3,7 +3,7 @@
 # Consider Django filer
 from django.contrib import admin
 from core.models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe, Tag            
+    Instruction, Recipe, Tag
 from nested_admin import NestedModelAdmin, NestedTabularInline
 
 
@@ -66,7 +66,8 @@ class PostAdmin(NestedModelAdmin):
     list_editable = ['category', 'is_published']
 
     inlines = [PostImageInline, RecipeInline]
-    fields = (('title', 'category'), 'user', 'description', 'is_published')
+    fields = (('title', 'category'), 'user', ('description', 'tags'),
+              'is_published')
     # search_fields = ['title', 'category']
 
 
