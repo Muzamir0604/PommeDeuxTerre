@@ -31,6 +31,7 @@ function CardPost(props) {
             height: "50%",
             borderTopRightRadius: "25px",
             borderTopLeftRadius: "25px",
+            objectFit:"cover"
           }}
         />
         <Card.Body style={{ padding: "5px 20px" }}>

@@ -6,6 +6,7 @@ import os
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django_resized import ResizedImageField
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
@@ -88,7 +89,9 @@ class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=True,
         on_delete=models.CASCADE)
-    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
+    image = ResizedImageField(size=[320, 236], quality=75, null=True,
+                              upload_to=recipe_image_file_path,
+                              force_format='PNG')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -158,6 +161,7 @@ class Tag(models.Model):
         on_delete=models.CASCADE,
 
     )
+
     def __str__(self):
         return self.name
 

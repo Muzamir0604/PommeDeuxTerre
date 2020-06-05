@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Star from "../components/globals/star";
 import ImageCarousel from "../components/globals/oneImageCarousel";
 import "../styles/container/category.css";
+import Tags from "../components/tag";
 
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -59,6 +60,8 @@ function Category(props) {
                             <p className="numReview">({post.no_of_reviews})</p>
                             <hr />
                             <p>{post.description}</p>
+                            <Tags tags={post.tags} count={post.tags.length} />
+                            <p>Written by: {post.user.name}</p>
                           </Col>
                           <Col className="image-col" style={{ order: 2 }}>
                             {/* <Link

@@ -30,6 +30,7 @@ coverage = "*"
 python-decouple = "*"
 boto3 = "*"
 django-storages = "*"
+django-resized = "*"
 
 [requires]
 python_version = "3.8"

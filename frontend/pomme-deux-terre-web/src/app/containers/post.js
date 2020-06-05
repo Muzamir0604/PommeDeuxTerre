@@ -22,12 +22,7 @@ import {
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
 import Tags from "../components/tag";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClock,
-  faCalendarWeek,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import Brief from "../components/recipe/recipe-brief"
 import ReviewForm from "./review-form";
 import "../styles/container/post.css";
 
@@ -71,7 +66,7 @@ function Post(props) {
           <div>
             <Jumbotron fluid key={post.id}>
               <Container>
-                <Row>
+                <Row className="row-post-primary">
                   <Col className="recipe-info" sm={8}>
                     <h1 key={post.id}>{post.title}</h1>
                     <p>{post.description}</p>
@@ -85,31 +80,8 @@ function Post(props) {
                       </Col>
                       <Col className="recipe-detail" sm={5}>
                         {undefined !== post.post_recipes &&
-                        post.post_recipes.length &&
-                        undefined !== post.post_recipes &&
                         post.post_recipes.length ? (
-                          <React.Fragment>
-                            <span>
-                              <FontAwesomeIcon icon={faClock} />
-                              <p className="recipe-detail">
-                                &nbsp; Prep Time: {preptime} min(s)
-                              </p>
-                            </span>
-                            <br />
-                            <span>
-                              <FontAwesomeIcon icon={faCalendarWeek} />
-                              <p className="recipe-detail">
-                                &nbsp; Cook Time: {cooktime} min(s)
-                              </p>
-                            </span>
-                            <br />
-                            <span>
-                              <FontAwesomeIcon icon={faUsers} />
-                              <p className="recipe-detail">
-                                &nbsp; Servings: {serving}
-                              </p>
-                            </span>
-                          </React.Fragment>
+                          <Brief cooktime={cooktime} preptime={preptime} serving={serving}/>
                         ) : null}
                       </Col>
                     </Row>
