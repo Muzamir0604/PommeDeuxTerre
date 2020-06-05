@@ -9,7 +9,8 @@ import { Image } from "react-bootstrap";
 
 function ImageCarousel(props) {
   let renderCompoent = (
-    <Carousel dynamicHeight={true} showThumbs={false} autoPlay>
+    <Carousel dynamicHeight={false} 
+    showThumbs={false} showStatus={false} showIndicators={false}>
       {props.images.map((image) => {
         return (
           <div key={image.id} style={{ height: "100%" }}>
