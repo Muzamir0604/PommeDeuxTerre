@@ -39,7 +39,8 @@ function App(props) {
         </Col>
         <AdsColumn />
       </Row>
-      <PageFooter />
+     <PageFooter />
+      
     </React.Fragment>
   );
 }

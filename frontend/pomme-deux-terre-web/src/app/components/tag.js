@@ -14,8 +14,8 @@ function Tags(props) {
     <div data-test="component-tags">
       {props.tags.slice(0, count).map((tag) => {
         return (
-          <Badge style={{justifyContent: "space-between",
-        fontSize:"12px",margin:"2px", marginTop:"6px"}} variant="info" key={tag.id}>
+          <Badge data-test="component-badge-tags" style={{justifyContent: "space-between",
+        fontSize:"12px",margin:"2px", marginTop:"4px", marginBottom:"4px"}} variant="info" key={tag.id}>
             {tag.name}
           </Badge>
         );

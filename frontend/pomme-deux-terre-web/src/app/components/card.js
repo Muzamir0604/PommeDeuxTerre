@@ -4,7 +4,7 @@ import { Card, Button } from "react-bootstrap";
 import "../styles/globals/card.css"
 import TextTruncate from "react-text-truncate";
 import { useHistory } from "react-router-dom";
-
+import Tags from "../components/tag"
 function CardPost(props) {
   const history = useHistory();
   const [display, setDisplay] = useState(false);
@@ -76,7 +76,11 @@ function CardPost(props) {
           >
             Find out more
           </Button>
-          <p>Posted by: {props.post.user.name}</p>
+          <p style={{marginBottom: "4px"}}>Posted by: {props.post.user.name}</p>
+          </div>
+          <div>
+          {undefined !== props.post.tags &&
+                    props.post.tags.length ? <Tags tags={props.post.tags} count={5}/> : null }
           </div>
         </Card.Body>
       </Card>

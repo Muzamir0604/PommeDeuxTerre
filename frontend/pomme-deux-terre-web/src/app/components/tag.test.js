@@ -16,6 +16,12 @@ test("renders without error", () => {
   const component = findByTestAttr(wrapper, "component-tags");
   expect(component.length).toBe(1);
 });
+test("render correct number of badges",()=>{
+  const wrapper = setup({ tags: [{ name: "hello" },{name:"nuts"}], count: 2 });
+  const component = findByTestAttr(wrapper, "component-badge-tags");
+  expect(component.length).toBe(2)
+
+})
 test("does not throw warning with expected props", () => {
     const expectedProps = { tags: [{ name: "hello" },{name:"nuts"}], count: 2 };
     checkProps(Tags, expectedProps);
