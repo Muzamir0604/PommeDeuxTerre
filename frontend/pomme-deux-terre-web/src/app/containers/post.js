@@ -21,6 +21,7 @@ import {
 
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
+import Tags from "../components/tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
@@ -36,14 +37,13 @@ function Post(props) {
   const dispatch = useDispatch();
 
   const post = useSelector((state) => state.postReducer.post);
-  
+
   const reviews = useSelector((state) => state.reviewReducer);
- 
 
   useEffect(() => {
     dispatch(fetchPost(props.match.params.id));
     // eslint-disable-next-line
-  }, [reviews,props.match.params.id]);
+  }, [reviews, props.match.params.id]);
 
   const [preptime, setpreptime] = useState(0);
   const [cooktime, setcooktime] = useState(0);
@@ -61,7 +61,6 @@ function Post(props) {
       });
     }
   }, [post.post_recipes]);
-
 
   return (
     <React.Fragment>
@@ -82,7 +81,7 @@ function Post(props) {
                           Average Rating: <Star star={post.avg_rating} /> (
                           {post.no_of_reviews}){" "}
                         </p>
-                        { post.user ? <p>Written by: {post.user.name}</p>: null}
+                        {post.user ? <p>Written by: {post.user.name}</p> : null}
                       </Col>
                       <Col className="recipe-detail" sm={5}>
                         {undefined !== post.post_recipes &&
@@ -107,13 +106,16 @@ function Post(props) {
                             <span>
                               <FontAwesomeIcon icon={faUsers} />
                               <p className="recipe-detail">
-                                &nbsp; Servings: {serving} 
+                                &nbsp; Servings: {serving}
                               </p>
                             </span>
                           </React.Fragment>
                         ) : null}
                       </Col>
                     </Row>
+                    {undefined !== post.tags && post.tags.length ? (
+                      <Tags tags={post.tags} count={post.tags.length} />
+                    ) : null}
                   </Col>
 
                   <Col className="image-card">

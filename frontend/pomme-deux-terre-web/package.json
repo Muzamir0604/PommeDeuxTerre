@@ -66,6 +66,7 @@
     "@editorjs/header": "^2.4.0",
     "@editorjs/image": "^2.3.3",
     "@editorjs/list": "^1.4.0",
+    "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "identity-obj-proxy": "^3.0.0",
