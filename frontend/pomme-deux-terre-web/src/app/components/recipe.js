@@ -23,13 +23,18 @@ function RecipeCard(props) {
                     <hr />
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <Instruction instructions={recipe.recipe_instructions} />
-                  </Col>
-                  <Col>
+                <Row
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                     <Col style={{flexBasis:"30%"}}>
                     <Ingredient ingredients={recipe.recipe_ingredients} />
                   </Col>
+                  <Col style={{flexBasis:"70%"}}>
+                    <Instruction instructions={recipe.recipe_instructions} />
+                  </Col>
+               
                 </Row>
               </Container>
             </Card>

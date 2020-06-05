@@ -5,8 +5,9 @@ import "../../styles/recipe.css";
 function Ingredient(props) {
   return (
     <React.Fragment>
+
       <h5>Ingredients</h5>
-      <ol>
+      <ol style={{paddingLeft: "1em"}}>
         {props.ingredients.map((ingredient) => {
           return (
             <li key={ingredient.id}>
@@ -15,7 +16,8 @@ function Ingredient(props) {
           );
         })}
       </ol>
-    </React.Fragment>
+
+      </React.Fragment>
   );
 }
 
