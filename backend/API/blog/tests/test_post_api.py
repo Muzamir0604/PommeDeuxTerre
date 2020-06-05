@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
 import tempfile
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -23,6 +25,7 @@ def sample_post_image(post_id, image):
 
 class PublicPostApiTests(APITestCase):
     """Test unauthenticated Post API access"""
+
     def setUp(self):
         self.user = get_user_model().objects.create(email="bob@hotmail.com",
                                                     password="12345",
@@ -44,7 +47,7 @@ class PublicPostApiTests(APITestCase):
                 sample_post_image(post_id=self.post,
                                   image=ContentFile(ntf.read())
                                   )
-                              )
+            )
         self.post.post_recipes.create(
             name="new recipe", prep_time=10, cook_time=10, servings=10)
 
@@ -63,12 +66,12 @@ class PublicPostApiTests(APITestCase):
         """ Test reading unpublished post returns empty"""
         self.category.category_posts.add(
             Post.objects.create(
-                                title="The curry post",
-                                description="post-description",
-                                user=self.user,
-                                is_published=False,
-                                category=self.category)
-                                )
+                title="The curry post",
+                description="post-description",
+                user=self.user,
+                is_published=False,
+                category=self.category)
+        )
         url = POST_URL
         response = self.client.get(url, format='json')
         self.assertEqual(len(response.data), 1)
@@ -100,7 +103,7 @@ class PrivatePostApiTests(APITestCase):
                 sample_post_image(post_id=self.post,
                                   image=ContentFile(ntf.read())
                                   )
-                              )
+            )
         self.post.post_recipes.create(
             name="new recipe", prep_time=10, cook_time=10, servings=10)
 

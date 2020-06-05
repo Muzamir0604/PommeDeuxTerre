@@ -3,7 +3,6 @@ import { API_AUTH, CREATE_USER, USER_LIST_DETAIL } from "./constant";
 import { getConfig } from "../utils/config";
 
 export const loginApi = (credentials) => {
-  console.log(credentials)
   return axios.post(API_AUTH, 
   {"email":credentials.email, 
   "password":credentials.password},

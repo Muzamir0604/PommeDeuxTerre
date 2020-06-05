@@ -1,10 +1,13 @@
-
-# https://django-filer.readthedocs.io/en/latest/installation.html
-# Consider Django filer
+"""
+Central admin for Pomme Deux Terre
+"""
 from django.contrib import admin
 from core.models import Post, Review, Category, PostImage, Ingredient,\
     Instruction, Recipe, Tag
 from nested_admin import NestedModelAdmin, NestedTabularInline
+# pylint: disable=missing-class-docstring
+# https://django-filer.readthedocs.io/en/latest/installation.html
+# Consider Django filer
 
 
 class TagAdmin(NestedModelAdmin):

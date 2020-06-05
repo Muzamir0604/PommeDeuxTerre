@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Container } from "react-bootstrap";
 import { loginApi, createUser } from "../api/user";
 import { fetchUsers } from "../actions/userActions";
 import { setAuth } from "../actions/authActions";
@@ -9,6 +9,8 @@ import { fetchShortList } from "../actions/categoryAction";
 import { useDispatch } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { releaseUser } from "../actions/userActions";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 // Use Axios
 // https://designrevision.com/react-axios/
@@ -32,19 +34,7 @@ function Login(props) {
   const [Tcookies, setTCookie] = useCookies(["token"]);
   // eslint-disable-next-line
   const [Icookies, setICookie] = useCookies(["userId"]);
-
-  // const setUser = (user, token) => {
-  //   dispatch(setAuth(token));
-  //   dispatch(fetchUsers(user));
-  // };
-
-  const [state, setState] = useState({
-    credentials: {
-      name: "",
-      password: "",
-      email:"",
-    },
-  });
+  //eslint-disable-next-line
   const [isLoginView, setIsLoginView] = useState(true);
 
   function useQuery() {
@@ -58,22 +48,15 @@ function Login(props) {
     dispatch(fetchShortList());
     // eslint-disable-next-line
   }, []);
-
   const fetchUserDetails = (userId, token) => {
     if (userId > -1) {
       dispatch(setAuth(token));
       dispatch(fetchUsers(userId));
     }
   };
-  const inputChanged = (event) => {
-    let cred = state.credentials;
-    cred[event.target.name] = event.target.value;
-    setState({ credentials: cred });
-  };
-  const login = (event) => {
-
+  const login = () => {
     if (isLoginView) {
-      loginApi(state.credentials)
+      loginApi(loginFormik.values)
         .then((res) => {
           setTCookie("token", res.data.token);
           setICookie("userId", res.data.id);
@@ -84,25 +67,62 @@ function Login(props) {
           console.log(e.response);
         });
     } else {
-
-      createUser(state.credentials)
+      createUser({
+        name: signupFormik.values.name,
+        email: signupFormik.values.email,
+        password: signupFormik.values.password,
+      })
         .then((res) => setIsLoginView({ isLoginView: true }))
         .catch((error) => console.log(error));
     }
   };
+  const loginFormik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email").required("Require your email"),
+      password: Yup.string().required("Password is required"),
+    }),
+    onSubmit: (values) => {
+      setTimeout(() => {
+        login();
+      }, 400);
+    },
+  });
+  const signupFormik = useFormik({
+    initialValues: {
+      name:"",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(50, "Must be 50 characters or less")
+        .required("Required"),
+      email: Yup.string().email("Invalid email").required("Require your email"),
+      password: Yup.string().required("Password is required"),
+      passwordConfirmation: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Passwords must match"
+      ),
+    }),
+    onSubmit: (values) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2));
+        login();
+      }, 400);
+    },
+  });
   const toggleView = () => {
     setIsLoginView(!isLoginView);
   };
-  const keyPress = (event) => {
-    if (event.key === "Enter") {
-      login();
-    }
-  };
-  const redirected = <Redirect to="/" />;
 
-  const loginSignup = (
-    <div
-      className="container"
+  const redirected = <Redirect to="/" />;
+  const componentLogin = (
+    <Container
       style={{
         marginLeft: "auto",
         marginRight: "auto",
@@ -110,48 +130,60 @@ function Login(props) {
         paddingTop: "20px",
       }}
     >
-      <h1>{isLoginView ? "Login" : "Register"}</h1>
-      <Form.Label>Email</Form.Label>
-      <br />
-      <Form.Control
-        onKeyPress={keyPress}
-        type="text"
-        name="email"
-        value={state.credentials.email}
-        onChange={inputChanged}
-      />
-       <br />
-       {isLoginView? "": <React.Fragment><Form.Label>Name</Form.Label>
-      <br />
-      <Form.Control
-        onKeyPress={keyPress}
-        type="text"
-        name="name"
-        value={state.credentials.name}
-        onChange={inputChanged}
-      />
-      <br /></React.Fragment>}
-     
-      <Form.Label>Password</Form.Label>
-      <Form.Control
-        onKeyPress={keyPress}
-        type="password"
-        name="password"
-        value={state.credentials.password}
-        onChange={inputChanged}
-      />
-      <br />
-      <Button variant="success" onClick={login}>
-        {isLoginView ? "Login" : "Register"}
-      </Button>{" "}
-      <Button
-        variant="danger"
-        onClick={() => {
-          cancelLog();
-        }}
-      >
-        Cancel
-      </Button>
+      <h1>Login</h1>
+
+      <Form onSubmit={loginFormik.handleSubmit}>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              type="text"
+              value={loginFormik.values.email}
+              onChange={loginFormik.handleChange}
+              onBlur={loginFormik.handleBlur}
+              placeholder="email"
+            />
+            {loginFormik.touched.email && loginFormik.errors.email ? (
+              <p style={{ color: "red" }}>{loginFormik.errors.email}</p>
+            ) : null}
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              type="password"
+              value={loginFormik.values.password}
+              onChange={loginFormik.handleChange}
+              onBlur={loginFormik.handleBlur}
+              placeholder="password"
+            />
+            {loginFormik.touched.password && loginFormik.errors.password ? (
+              <p style={{ color: "red" }}>{loginFormik.errors.password}</p>
+            ) : null}
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Button style={{ marginRight: "5px" }} type="submit">
+            Login
+          </Button>
+
+          <Button type="Button" style={{}} onClick={loginFormik.handleReset}>
+            Clear
+          </Button>
+          <Button
+            style={{ marginLeft: "4px" }}
+            variant="danger"
+            onClick={() => {
+              cancelLog();
+            }}
+          >
+            Back to Home
+          </Button>
+        </Form.Row>
+      </Form>
       <br />
       <div
         href="#"
@@ -160,15 +192,131 @@ function Login(props) {
       >
         {isLoginView ? "CreateAccount" : "Back to login"}
       </div>
-    </div>
+    </Container>
   );
+  const componentSignUp = (
+    <Container
+      style={{
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "50%",
+        paddingTop: "20px",
+      }}
+    >
+      <h1>SignUp</h1>
+
+      <Form onSubmit={signupFormik.handleSubmit}>
+      <Form.Row>
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  name="name"
+                  type="text"
+                  value={signupFormik.values.name}
+                  onChange={signupFormik.handleChange}
+                  onBlur={signupFormik.handleBlur}
+                  placeholder="name"
+                />
+                {signupFormik.touched.name && signupFormik.errors.name ? (
+                  <p style={{ color: "red" }}>{signupFormik.errors.name}</p>
+                ) : null}
+              </Form.Group>
+            </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              name="email"
+              type="text"
+              value={signupFormik.values.email}
+              onChange={signupFormik.handleChange}
+              onBlur={signupFormik.handleBlur}
+              placeholder="email"
+            />
+            {signupFormik.touched.email && signupFormik.errors.email ? (
+              <p style={{ color: "red" }}>{signupFormik.errors.email}</p>
+            ) : null}
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              type="password"
+              value={signupFormik.values.password}
+              onChange={signupFormik.handleChange}
+              onBlur={signupFormik.handleBlur}
+              placeholder="password"
+            />
+            {signupFormik.touched.password && signupFormik.errors.password ? (
+              <p style={{ color: "red" }}>{signupFormik.errors.password}</p>
+            ) : null}
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Password Confirmation</Form.Label>
+            <Form.Control
+              name="passwordConfirmation"
+              type="password"
+              autoComplete="new-password"
+              value={signupFormik.values.passwordConfirmation}
+              onChange={signupFormik.handleChange}
+              onBlur={signupFormik.handleBlur}
+              placeholder="password confirmation"
+            />
+            {signupFormik.touched.passwordConfirmation &&
+            signupFormik.errors.passwordConfirmation ? (
+              <p style={{ color: "red" }}>
+                {signupFormik.errors.passwordConfirmation}
+              </p>
+            ) : null}
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Button style={{ marginRight: "5px" }} type="submit">
+            SignUp
+          </Button>
+
+          <Button type="Button" style={{}} onClick={signupFormik.handleReset}>
+            Clear
+          </Button>
+          <Button
+            style={{ marginLeft: "4px" }}
+            variant="danger"
+            onClick={() => {
+              cancelLog();
+            }}
+          >
+            Back to Home
+          </Button>
+        </Form.Row>
+      </Form>
+      <br />
+      <div
+        href="#"
+        style={{ fontSize: "16px", paddingTop: "5px" }}
+        onClick={toggleView}
+      >
+        {isLoginView ? "CreateAccount" : "Back to login"}
+      </div>
+    </Container>
+  );
+
+  let revisedLoginSignUp;
+  if (isLoginView) {
+    revisedLoginSignUp = <React.Fragment>{componentLogin}</React.Fragment>;
+  } else {
+    revisedLoginSignUp = <React.Fragment>{componentSignUp}</React.Fragment>;
+  }
 
   let renderComponent;
 
   if (props.cookies.get("user-id")) {
     renderComponent = redirected;
   } else {
-    renderComponent = loginSignup;
+    renderComponent = revisedLoginSignUp;
   }
 
   return <React.Fragment>{renderComponent}</React.Fragment>;

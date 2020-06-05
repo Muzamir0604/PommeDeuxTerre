@@ -1,8 +1,14 @@
+"""
+Central Model for PommeDeux Terre
+"""
 import uuid
 import os
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
+
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
 
 # TODO: create a many to many field for ingredients
 # TODO: separate unit quantity from ingredients
@@ -41,7 +47,7 @@ class Ingredient(models.Model):
         ('g', 'gram'),
         ('kg', 'kilogram'),
         ('pc', 'piece(s)'),
-        ('pinch','pinch(es)')
+        ('pinch', 'pinch(es)')
 
     )
     name = models.CharField(max_length=64)
@@ -76,6 +82,8 @@ class Recipe(models.Model):
 
 # TODO: Resize image before saving
 # https://stackoverflow.com/questions/57111648/how-to-resize-an-imagefield-image-before-saving-it-in-python-django-model
+
+
 class PostImage(models.Model):
     post_id = models.ForeignKey(
         'Post', related_name="post_images", null=True,

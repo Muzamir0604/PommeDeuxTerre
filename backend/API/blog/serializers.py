@@ -1,12 +1,15 @@
+"""
+Central Serializer for PommeDeuxTerre
+"""
 from rest_framework import serializers
-from core.models import Post, Review, Category, PostImage, Ingredient,\
-                    Instruction, Recipe, Reply, Tag
-
 from django.contrib.auth import get_user_model
+from core.models import Post, Review, Category, PostImage, Ingredient,\
+    Instruction, Recipe, Reply, Tag
+
 
 # TODO: Reply model with serializer test
 # TODO: client API serializer vs url test cases
-
+# pylint: disable=missing-class-docstring
 
 class TagSerializer(serializers.ModelSerializer):
     """ Serializer for tag objects"""
@@ -40,7 +43,6 @@ class InstructionSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_instructions = InstructionSerializer(many=True)
     recipe_ingredients = IngredientSerializer(many=True)
-   
 
     class Meta:
         model = Recipe
@@ -122,7 +124,8 @@ class PostSerializer(serializers.ModelSerializer):
                   'no_of_reviews', 'avg_rating', 'post_reviews', 'user',
                   'post_recipes', 'is_published', 'tags')
         read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
-                            'post_reviews', 'post_recipes', 'post_images','tags')
+                            'post_reviews', 'post_recipes', 'post_images',
+                            'tags')
 
 
 class FilteredPostSerializer(serializers.ListSerializer):
