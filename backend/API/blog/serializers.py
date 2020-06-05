@@ -10,6 +10,18 @@ from core.models import Post, Review, Category, PostImage, Ingredient,\
 # TODO: Reply model with serializer test
 # TODO: client API serializer vs url test cases
 # pylint: disable=missing-class-docstring
+class FilteredTagSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.order_by('-created_at')[:4]
+        return super(FilteredTagSerializer, self).to_representation(data)
+
+
+class LimitedTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        list_serializer_class = FilteredTagSerializer
+        model = Tag
+        fields = ('id', 'name')
+
 
 class TagSerializer(serializers.ModelSerializer):
     """ Serializer for tag objects"""
@@ -113,10 +125,7 @@ class PostSerializer(serializers.ModelSerializer):
     post_recipes = RecipeSerializer(many=True, required=False, read_only=True)
     post_reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False, required=False, read_only=True)
-    tags = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Tag.objects.all()
-    )
+    tags = TagSerializer(many=True, required=False)
 
     class Meta:
         model = Post
@@ -138,12 +147,13 @@ class LimitedPostSerializer(serializers.ModelSerializer):
     post_images = ImageSerializer(many=True)
     post_reviews = LimitedReviewSerializer(many=True, read_only=True)
     user = UserNameSerializer(many=False)
+    tags = LimitedTagSerializer(many=True, read_only=True)
 
     class Meta:
         list_serializer_class = FilteredPostSerializer
         model = Post
         fields = ('id', 'title', 'description', 'post_images', 'user',
-                  'no_of_reviews', 'avg_rating', 'created_at', 'post_reviews')
+                  'no_of_reviews', 'avg_rating', 'created_at', 'post_reviews', 'tags')
 
 
 class CategorySerializer(serializers.ModelSerializer):
