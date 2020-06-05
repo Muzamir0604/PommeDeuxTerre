@@ -71,6 +71,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest-cli": "^25.2.7",
     "jest-enzyme": "^7.1.2",
+    "moxios": "^0.4.0",
     "react-test-renderer": "^16.13.1"
   },
   "jest": {
@@ -85,7 +86,6 @@
     },
     "transformIgnorePatterns": [
       "./node_modules/"
-
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
