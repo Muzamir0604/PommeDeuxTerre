@@ -150,7 +150,7 @@ class Post(models.Model):
 
 class Tag(models.Model):
     """Tag to be used for a recipe"""
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user = models.ForeignKey(
@@ -158,7 +158,6 @@ class Tag(models.Model):
         on_delete=models.CASCADE,
 
     )
-
     def __str__(self):
         return self.name
 

@@ -31,8 +31,34 @@ def sample_review(post, user,
                                         description="Excellent work")
 
 
+class TagModelFunctionTest(TestCase):
+    """Test Tag Model function"""
+
+    def setUp(self):
+        self.user = get_user_model().objects.create(email="bob@hotmail.com",
+                                                    password="password213",
+                                                    name="Bob")
+        self.category = models.Category.objects.create(
+            title="Foodie"
+        )
+        self.post = sample_post(self.category, self.user, True)
+
+
+    def test_tag_unique_name(self):
+        self.tag = models.Tag.objects.create(name="Nuts", user=self.user)
+        self.user1 = get_user_model().objects.create(email="jeremy@hotmail.com",
+                                                    password="password213",
+                                                    name="Jeremy")
+        try:
+            models.Tag.objects.create(name="Nuts", user=self.user1)
+        except:
+            message = "Integrity Error"
+        self.assertEqual(message, "Integrity Error")
+
+
 class PostModelFunctionTest(TestCase):
     """Test Post model functions"""
+
     def setUp(self):
         self.user = get_user_model().objects.create(email="bob@hotmail.com",
                                                     password="password213",
@@ -79,6 +105,7 @@ class PostModelFunctionTest(TestCase):
 
 class ReviewModelFunctionTest(TestCase):
     """Test Review Model function and features"""
+
     def setUp(self):
         self.user = get_user_model().objects.create(email="bob@hotmail.com",
                                                     password="password213",
