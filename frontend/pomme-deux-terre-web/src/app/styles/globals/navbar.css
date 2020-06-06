@@ -31,9 +31,22 @@ a.nav-link {
 .mr-auto {
   align-items: center;
 }
+.dropdown-menu.show{
+  align-items: center;
+  padding:2px;
+  border-color: transparent;
+  margin-top: 0px;
+}
+.dropdown-toggle.nav-link{
+  text-align: center;
+}
 .dropdown-item {
   background-color: #009a89;
   color: black;
+  
+  text-align: center;
+  padding: 0px;
+  font-size: 14px;
   /* align-items: center; */
 }
 .dropdown-item:hover {
