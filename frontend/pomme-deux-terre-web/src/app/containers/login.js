@@ -15,9 +15,6 @@ import * as Yup from "yup";
 // Use Axios
 // https://designrevision.com/react-axios/
 
-//TODO: install in dev, jest, mock, enzyme and react redux testing library
-//TODO: implementing jest, mock and react-redux-testing library for login.js
-//TODO: failed login message
 function Login(props) {
   const dispatch = useDispatch();
 
@@ -64,7 +61,7 @@ function Login(props) {
           props.history.push("/");
         })
         .catch((e) => {
-          console.log(e.response);
+          console.log(e.response.data.non_field_errors[0]);
         });
     } else {
       createUser({
@@ -123,12 +120,7 @@ function Login(props) {
   const redirected = <Redirect to="/" />;
   const componentLogin = (
     <Container
-      style={{
-        marginLeft: "auto",
-        marginRight: "auto",
-        width: "50%",
-        paddingTop: "20px",
-      }}
+    className="login-container"
     >
       <h1>Login</h1>
 
@@ -196,12 +188,8 @@ function Login(props) {
   );
   const componentSignUp = (
     <Container
-      style={{
-        marginLeft: "auto",
-        marginRight: "auto",
-        width: "50%",
-        paddingTop: "20px",
-      }}
+    className="signup-container"
+  
     >
       <h1>SignUp</h1>
 

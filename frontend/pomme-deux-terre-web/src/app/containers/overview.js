@@ -43,7 +43,7 @@ function Overview(props) {
             <InputGroup className="mb-3">
               <FormControl
                 ref={searchInput}
-                placeholder="Search for Post, Description, User, Category and Recipe"
+                placeholder="Search for Post, Description, User, Category, Recipe and Tags"
                 aria-label="Search Bar"
                 aria-describedby="basic-addon2"
                 values="HELLo"

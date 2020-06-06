@@ -1,0 +1,18 @@
+//TODO: center the forms
+
+.login-container{
+    padding-top: 25px;
+    margin: 0 auto;
+    width:80%;
+    justify-content: center;
+}
+.signup-container{
+    padding-top: 25px;
+    margin: 0 auto;
+    width:80%;
+    
+}
+Form{
+    align-content: center;
+}
+
