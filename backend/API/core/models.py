@@ -160,6 +160,7 @@ class Tag(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    
     def save(self,*args, **kwargs):
         self.name = self.name.lower().title()
         return super(Tag, self).save(*args, **kwargs)

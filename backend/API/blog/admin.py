@@ -83,8 +83,9 @@ class PostAdmin(NestedModelAdmin):
     list_editable = ['category', 'is_published']
 
     inlines = [PostImageInline, RecipeInline]
-    fields = (('title', 'category'), 'user', ('description', 'tags'),
-              'is_published')
+    fields = (('title', 'category', 'is_published'), 'user', 'description', 'tags'
+              )
+    filter_horizontal = ('tags',)
     # search_fields = ['title', 'category']
 
 
