@@ -105,7 +105,7 @@ class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
-                     'category__title', 'user__email', 'post_recipes__name']
+                     'category__title', 'user__email', 'post_recipes__name','tags__name']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
