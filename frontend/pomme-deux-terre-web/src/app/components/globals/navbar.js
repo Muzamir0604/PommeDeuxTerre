@@ -36,7 +36,7 @@ function NavBarHead(props) {
                   src={require("../../../assets/AppleTop.ico")}
                 />
                 Apple Two Earth{" "}
-                <p className="quotes-tag"> - Earth Wind Fire Water</p>
+                <p className="quotes-tag"></p>
               </Navbar>
 
               <Navbar

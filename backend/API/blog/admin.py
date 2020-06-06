@@ -5,6 +5,8 @@ from django.contrib import admin
 from core.models import Post, Review, Category, PostImage, Ingredient,\
     Instruction, Recipe, Tag
 from nested_admin import NestedModelAdmin, NestedTabularInline
+from django.db import models
+from django.forms import Textarea, TextInput
 # pylint: disable=missing-class-docstring
 # https://django-filer.readthedocs.io/en/latest/installation.html
 # Consider Django filer
@@ -21,12 +23,24 @@ class IngredientInline(NestedTabularInline):
     model = Ingredient
     fk_name = "recipe"
     extra = 0
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(
+            attrs={'rows': 2,
+                   'cols': 40,
+                   'style': 'height: 2em; width:30em;'})},
+    }
 
 
 class InstructionInline(NestedTabularInline):
     model = Instruction
     fk_name = "recipe"
     extra = 0
+    formfield_overrides = {
+        models.CharField: {'widget': Textarea(
+                           attrs={'rows': 2,
+                                  'cols': 40,
+                                  'style': 'height: 3em; width:50em;'})},
+    }
 
 
 class RecipeAdmin(NestedModelAdmin):
