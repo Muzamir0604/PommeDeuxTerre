@@ -1,10 +1,8 @@
 import React from "react";
 import { withCookies } from "react-cookie";
 import CardCarousel from "../components/post-carousel";
-
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
 import Search from "./search";
 
 

@@ -64,11 +64,6 @@ function Category(props) {
                             <p>Written by: {post.user.name}</p>
                           </Col>
                           <Col className="image-col" style={{ order: 2 }}>
-                            {/* <Link
-                              key={post.id}
-                              to={"/posts/" + post.id}
-                              onDoubleClick
-                            > */}
                             {undefined !== post.post_images &&
                             post.post_images.length ? (
                               <ImageCarousel images={post.post_images} />
@@ -78,19 +73,7 @@ function Category(props) {
                                 src={require("../../assets/blog/castle.png")}
                               />
                             )}
-                            {/* </Link> */}
                           </Col>
-                          {/* <Col className="image-col" style={{ order: 2 }}>
-                            <Link key={post.id} to={"/posts/" + post.id}>
-                              <Card.Img
-                                src={
-                                  post.post_images.length > 0
-                                    ? post.post_images[0].image
-                                    : require("../../assets/blog/castle.png")
-                                }
-                              />
-                            </Link>
-                          </Col> */}
                         </Row>
                       </Container>
                     </Jumbotron>

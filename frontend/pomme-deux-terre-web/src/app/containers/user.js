@@ -31,20 +31,12 @@ const UserProfile = (props) => {
     initialValues: {
       id: user.id,
       name: user.name,
-      // first_name: user.first_name,
-      // last_name: user.last_name,
       email: user.email,
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .max(20, "Must be 20 characters or less")
         .required("Required"),
-      // first_name: Yup.string()
-      //   .max(35, "Must be 35 characters or less")
-      //   .required("Required"),
-      // last_name: Yup.string()
-      //   .max(20, "Must be 35 characters or less")
-      //   .required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
     }),
     onSubmit: (values) => {
@@ -88,37 +80,6 @@ const UserProfile = (props) => {
                 ) : null}
               </Form.Group>
             </Form.Row>
-            {/* <Form.Row>
-              <Form.Group as={Col} style={{ paddingLeft: "0px" }}>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  name="first_name"
-                  type="text"
-                  onChange={formik.handleChange}
-                  value={formik.values.first_name}
-                  onBlur={formik.handleBlur}
-                  placeholder="First Name"
-                />
-                {formik.touched.first_name && formik.errors.first_name ? (
-                  <p style={{ color: "red" }}>{formik.errors.first_name}</p>
-                ) : null}
-              </Form.Group>
-
-              <Form.Group as={Col}>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  name="last_name"
-                  type="text"
-                  value={formik.values.last_name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="Last Name"
-                />
-                {formik.touched.last_name && formik.errors.last_name ? (
-                  <p style={{ color: "red" }}>{formik.errors.last_name}</p>
-                ) : null}
-              </Form.Group>
-            </Form.Row> */}
             <Form.Row>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
@@ -164,9 +125,7 @@ const UserProfile = (props) => {
       <NavBarHead />
       <Row>
         <AdsColumn />
-        {console.log(userDetails)}
         <Col sm={8}>{form}</Col>
-
         <AdsColumn />
       </Row>
       <PageFooter />

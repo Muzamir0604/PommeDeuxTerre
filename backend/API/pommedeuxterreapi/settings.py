@@ -45,8 +45,21 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_filters',
     'nested_admin',
-    'storages'
+    'storages',
+    'django.contrib.sites',
+    'allauth',
+    'rest_auth',
+    'rest_auth.registration',
 ]
+
+SITE_ID = 1
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=(3)
+ACCOUNT_EMAIL_VERIFICATION="mandatory"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,7 +98,7 @@ MEDIA_PATH = 'media_test' if TESTING_MODE else 'image'
 
 MEDIA_ROOT = os.path.join(
     BASE_DIR, MEDIA_PATH
-    )
+)
 
 MEDIA_URL = '/media/'
 
@@ -174,3 +187,10 @@ ROOT_URLCONF = config('URL_CONF', cast=str)
 GRAPPELLI_ADMIN_TITLE = config('ADMIN_TITLE', cast=str)
 
 AUTH_USER_MODEL = config('AUTH_USER_MODEL', cast=str)
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False

@@ -20,8 +20,8 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from .views import CustomObtainAuthToken
-
-
+from rest_auth.views import PasswordResetConfirmView
+from .customViews import PasswordResetView
 urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     url(r'^_nested_admin/', include('nested_admin.urls')),
@@ -30,6 +30,10 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('accounts/', include('accounts.urls')),
     path('api/', include('rest_framework.urls')),
+    path('reset_password/', PasswordResetView.as_view(),
+         name='password_reset'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
 
 
 ]

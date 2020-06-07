@@ -9,19 +9,12 @@ import AdsColumn from "../components/globals/ads";
 import { Row, Col, Image } from "react-bootstrap";
 
 function About(props) {
-  //   const dispatch = useDispatch();
-
-  //   const post = useSelector((state) => state.postReducer.post);
-  //   const reviews = useSelector((state) => state.reviewReducer);
-  // const auth = useSelector((state) => state.authReducer);
-
   return (
     <React.Fragment>
       <NavBarHead />
       <Row>
         <AdsColumn />
         <Col sm={8}>
-          {/* <h2>About us</h2> */}
           <Row style={{ paddingTop: "10px" }}>
             <h4>Our vision</h4>
             <p style={{ display: "inline", margin: "10px 2px" }}>
