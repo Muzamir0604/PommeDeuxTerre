@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { findByTestAttr, checkProps } from "../utils/testUtils";
-import Tags from "./tag";
+import { findByTestAttr, checkProps } from "../../utils/testUtils";
+import Tags from "../../components/tag";
 
 const defaultProps = { tags: [{ name: "hello" }], count: 1 };
 

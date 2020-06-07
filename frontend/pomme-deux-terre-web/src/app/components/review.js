@@ -3,17 +3,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import Star from "../components/globals/star";
 import "../styles/review.css";
+import PropTypes from "prop-types"
 
 
 function ReviewCard(props) {
   return (
     <React.Fragment>
-      <Container>
+      <Container data-test="component-review">
         <h4>Review</h4>
         {props.reviews
           ? props.reviews.map((review) => {
               return (
-                <Card className="review-card" key={review.id}>
+                <Card data-test="component-review-card" className="review-card" key={review.id}>
                   <Container>
                     <Row>
                       <Col sm={6}>
@@ -33,6 +34,16 @@ function ReviewCard(props) {
       </Container>
     </React.Fragment>
   );
+}
+ReviewCard.propTypes = {
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    stars: PropTypes.number.isRequired,
+    user:PropTypes.exact({
+      name: PropTypes.string.isRequired
+    })
+  })).isRequired,
 }
 
 export default ReviewCard;
