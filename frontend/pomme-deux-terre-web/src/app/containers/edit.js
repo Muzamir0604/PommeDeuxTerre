@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { UPLOAD_IMAGE_ONLY } from "../api/constant";
 import "./edit.css";
 
-//TODO: check if image removed, image from database also removed
+
 //TODO: Create specific layout for writing posts
 //TODO: Map posts content to specific fields
 

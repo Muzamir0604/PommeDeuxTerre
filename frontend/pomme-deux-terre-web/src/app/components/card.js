@@ -5,6 +5,8 @@ import "../styles/globals/card.css"
 import TextTruncate from "react-text-truncate";
 import { useHistory } from "react-router-dom";
 import Tags from "../components/tag"
+
+
 function CardPost(props) {
   const history = useHistory();
   const [display, setDisplay] = useState(false);
