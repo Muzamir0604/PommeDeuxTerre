@@ -14,34 +14,49 @@ import { persistor } from "./app/store";
 import Category from "./app/containers/category";
 import Post from "./app/containers/post";
 import About from "./app/containers/about";
+import PostForm from "./app/containers/post-form";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
+import theme from "./app/styles/theme";
+import { makeStyles } from "@material-ui/styles";
 // import EditLayout from "./app/containers/edit";
 // import ReviewForm from "./app/containers/review-form";
 
 // dont forget to install react-router-dom
 // and react-cookie
 // https://stackoverflow.com/questions/32616844/git-how-to-push-a-subdirectory-to-a-separate-branch-of-the-same-repository
-
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: "#F5F5F5",
+  },
+  top: {
+    marginTop: "3em",
+  },
+}));
 const routing = (
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <CookiesProvider>
-          <Route exact path="/" component={App} />
-          <Route exact path="/login" component={Login} />
+          <ThemeProvider theme={theme}>
+            <Route exact path="/" component={App} />
+            <Route exact path="/login" component={Login} />
 
-          <Route path="/posts/:id" component={Post} />
+            <Route path="/posts/:id" component={Post} />
+            <Route exact path="/forms/post" component={PostForm} />
 
-          <Route exact path={"/user/:id"} component={UserProfile} />
-          <Route exact path={"/category/"} component={Category} />
-          <Route exact path={"/aboutus"} component={About} />
-          {/* <Route exact path={"/edit"} component={EditLayout} /> */}
-          {/* <Route exact path={"/review"} component={ReviewForm} /> */}
-          {/* <Route path={"/"} component={Root}>
+            <Route exact path={"/user/:id"} component={UserProfile} />
+            <Route exact path={"/category/"} component={Category} />
+            <Route exact path={"/aboutus"} component={About} />
+            {/* <Route exact path={"/edit"} component={EditLayout} /> */}
+            {/* <Route exact path={"/review"} component={ReviewForm} /> */}
+            {/* <Route path={"/"} component={Root}>
               <IndexRoute component={Home} />
               <Route path{"home"} component={Home}/>
               <Route path{"user/:id"} component={User}/>
               // to access ID, go to component file, call this.props.params.id
         </Route> */}
+          </ThemeProvider>
         </CookiesProvider>
       </PersistGate>
     </Provider>

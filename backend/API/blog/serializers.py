@@ -59,7 +59,17 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'prep_time', 'cook_time', 'servings',
-                  'recipe_instructions', 'recipe_ingredients')
+                  'recipe_instructions', 'recipe_ingredients', 'post')
+
+    def create(self, validated_data):
+        instructions = validated_data.pop('recipe_instructions')
+        ingredients = validated_data.pop('recipe_ingredients')
+        recipe = Recipe.objects.create(**validated_data)
+        for instruction in instructions:
+            Instruction.objects.create(recipe=recipe, **instruction)
+        for ingredient in ingredients:
+            Ingredient.objects.create(recipe=recipe, **ingredient)
+        return recipe
 
 
 class ImageOnlySerializer(serializers.ModelSerializer):
@@ -133,8 +143,10 @@ class PostSerializer(serializers.ModelSerializer):
                   'no_of_reviews', 'avg_rating', 'post_reviews', 'user',
                   'post_recipes', 'is_published', 'tags')
         read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
-                            'post_reviews', 'post_recipes', 'post_images',
+                            'post_reviews', 'post_recipes','post_images'
                             'tags')
+
+
 
 
 class FilteredPostSerializer(serializers.ListSerializer):

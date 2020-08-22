@@ -5,12 +5,11 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Search from "./search";
 
-
 function Overview(props) {
   const authorized = (
     <React.Fragment>
       <Container>
-        <Search />
+        {/* <Search /> */}
         {undefined !== props.shortList && props.shortList.length
           ? props.shortList.map((category) => {
               let CatList = (
@@ -41,9 +40,9 @@ function Overview(props) {
       </Container>
     </React.Fragment>
   );
- 
+
   let renderComponent;
- 
+
   renderComponent = authorized;
 
   return <React.Fragment>{renderComponent}</React.Fragment>;

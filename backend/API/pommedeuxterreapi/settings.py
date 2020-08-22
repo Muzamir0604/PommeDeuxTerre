@@ -22,6 +22,8 @@ DEBUG = config('DEBUG', cast=bool, default=False)
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
+CORS_ORIGIN_WHITELIST = 'http://localhost:3000', 'http://192.168.56.1:3000', 'http://127.0.0.1:8000', 'http://10.10.153.8', 'https://pommedeuxterre-3bd49.web.app', 'https://pommedeuxterre-3bd49.firebaseapp.com'
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', cast=str)
 
 # Application definition
@@ -58,8 +60,8 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=(3)
-ACCOUNT_EMAIL_VERIFICATION="mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = (3)
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,7 +74,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
 
 TEMPLATES = [
     {

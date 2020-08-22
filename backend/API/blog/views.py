@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, views
+from rest_framework import viewsets, status, views, generics
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from core.models import Post, Review, Category, PostImage
 from .serializers import PostSerializer, ReviewSerializer, CategorySerializer,\
-    ImageSerializer, ImageOnlySerializer
+    ImageSerializer, ImageOnlySerializer, RecipeSerializer
 
 
 # https://stackoverflow.com/questions/59451364/multiple-file-upload-with-reactjs
@@ -22,17 +22,17 @@ from .serializers import PostSerializer, ReviewSerializer, CategorySerializer,\
 
 
 def modify_input_for_multiple_files(post_id, image):
-    dict = {}
-    dict['post_id'] = post_id
-    dict['image'] = image
-    return dict
+    temp_dict = {}
+    temp_dict['post_id'] = post_id
+    temp_dict['image'] = image
+    return temp_dict
 
 
 def modify_input(image):
-    dict = {}
+    temp_dict = {}
     # dict['post_id'] = post_id
-    dict['image'] = image
-    return dict
+    temp_dict['image'] = image
+    return temp_dict
 
 
 class ImageUploadOnly(views.APIView):
@@ -64,6 +64,12 @@ class ImageUploadOnly(views.APIView):
             return Response(res)
         else:
             return Response(arr, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RecipeView(generics.ListCreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = RecipeSerializer
 
 
 class ImageUploadView(views.APIView):
@@ -105,7 +111,8 @@ class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filterset_fields = ['category', 'user']
     search_fields = ['title', 'description',
-                     'category__title', 'user__email', 'post_recipes__name','tags__name']
+                     'category__title', 'user__email', 'post_recipes__name',
+                     'tags__name']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -226,6 +233,7 @@ class ReviewAPIViewSet(viewsets.ModelViewSet):
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
+# TODO: add pagination capabilities
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

@@ -11,9 +11,6 @@ from django_resized import ResizedImageField
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
 
-# TODO: create a many to many field for ingredients
-# TODO: separate unit quantity from ingredients
-
 
 def recipe_image_file_path(instance, filename):
     """Generate file path for new recipe image"""
@@ -114,6 +111,10 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
 class Post(models.Model):
     title = models.CharField(max_length=64, default="")
@@ -160,8 +161,8 @@ class Tag(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    
-    def save(self,*args, **kwargs):
+
+    def save(self, *args, **kwargs):
         self.name = self.name.lower().title()
         return super(Tag, self).save(*args, **kwargs)
 

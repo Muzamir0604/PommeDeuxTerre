@@ -49,7 +49,7 @@ function Category(props) {
             {undefined !== CategoryData && CategoryData.length
               ? CategoryData.map((post) => {
                   return (
-                    <Jumbotron key={post.id} fluid>
+                    <Jumbotron key={post.id} >
                       <Container>
                         <Row>
                           <Col sm={8} style={{ order: 1 }}>
