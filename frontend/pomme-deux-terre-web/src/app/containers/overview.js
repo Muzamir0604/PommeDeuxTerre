@@ -2,22 +2,19 @@ import React from "react";
 import { withCookies } from "react-cookie";
 import CardCarousel from "../components/post-carousel";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Box } from "@material-ui/core";
 import Search from "./search";
 
 function Overview(props) {
   const authorized = (
     <React.Fragment>
-      <Container>
-        {/* <Search /> */}
+      <Box>
+        <Search />
         {undefined !== props.shortList && props.shortList.length
           ? props.shortList.map((category) => {
               let CatList = (
                 <React.Fragment>
-                  <Container
-                    key={category.id}
-                    style={{ paddingBottom: "10px" }}
-                  >
+                  <Box key={category.id} style={{ paddingBottom: "10px" }}>
                     <hr />
                     <h3 style={{ paddingTop: "5px" }}>
                       <Link
@@ -29,7 +26,7 @@ function Overview(props) {
                       </Link>
                     </h3>
                     <CardCarousel posts={category.category_posts} />
-                  </Container>
+                  </Box>
                 </React.Fragment>
               );
               return (
@@ -37,7 +34,7 @@ function Overview(props) {
               );
             })
           : null}
-      </Container>
+      </Box>
     </React.Fragment>
   );
 

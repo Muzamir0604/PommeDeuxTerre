@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
 import { Image } from "react-bootstrap";
 
@@ -22,6 +22,9 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 // import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+
+import { setPost } from "../../actions/postActions";
+import { fetchShortList } from "../../actions/categoryAction";
 
 import SideMenu from "./sidemenu";
 import "../../styles/globals/navbar.css";
@@ -92,6 +95,14 @@ function NavBarHead(props) {
   let history = useHistory();
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchShortList());
+    // eslint-disable-next-line
+  }, []);
+  // eslint-disable-next-line
+  const listing = (post) => {
+    dispatch(setPost(post));
+  };
   const CatshortList = useSelector((state) => state.categoryReducer.shortList);
 
   const releaseUserDispatch = () => {
@@ -263,7 +274,7 @@ function NavBarHead(props) {
                 variant="h7"
                 noWrap
                 onClick={() => {
-                  // navigate("/");
+                  history.push("/");
                 }}
               >
                 Apple Two Earth
