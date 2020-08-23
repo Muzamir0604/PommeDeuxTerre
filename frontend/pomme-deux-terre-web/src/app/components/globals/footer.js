@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Grid, Divider, Typography, BottomNavigation } from "@material-ui/core";
+import { Grid, Divider, Typography } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
@@ -63,6 +63,9 @@ const PageFooter = () => {
           </Link>
           <Link href="https://linkedin.com" className={classes.socialIcons}>
             <LinkedInIcon />
+          </Link>
+          <Link href="https://twitter.com" className={classes.socialIcons}>
+            <TwitterIcon />
           </Link>
         </Grid>
 

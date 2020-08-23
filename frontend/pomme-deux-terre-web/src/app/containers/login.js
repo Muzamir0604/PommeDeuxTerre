@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
-import { Button, Form, Container } from "react-bootstrap";
+import { Form, Container } from "react-bootstrap";
+import NavBar from "../components/globals/navbar";
+
+import {
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormHelperText,
+  Input,
+  InputLabel,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
 import { loginApi, createUser } from "../api/user";
 import { fetchUsers } from "../actions/userActions";
 import { setAuth } from "../actions/authActions";
@@ -15,7 +29,16 @@ import * as Yup from "yup";
 // Use Axios
 // https://designrevision.com/react-axios/
 
+const useStyles = makeStyles((theme) => ({
+  buttons: {
+    margin: theme.spacing(1),
+    marginLeft: theme.spacing(0),
+  },
+}));
+
 function Login(props) {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
 
   const releaseUserDispatch = () => {
@@ -90,7 +113,7 @@ function Login(props) {
   });
   const signupFormik = useFormik({
     initialValues: {
-      name:"",
+      name: "",
       email: "",
       password: "",
       passwordConfirmation: "",
@@ -119,16 +142,13 @@ function Login(props) {
 
   const redirected = <Redirect to="/" />;
   const componentLogin = (
-    <Container
-    className="login-container"
-    >
-      <h1>Login</h1>
-
-      <Form onSubmit={loginFormik.handleSubmit}>
-        <Form.Row>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
+    <>
+      <form onSubmit={loginFormik.handleSubmit}>
+        <FormLabel>Login</FormLabel>
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Email</InputLabel>
+            <Input
               name="email"
               type="text"
               value={loginFormik.values.email}
@@ -136,15 +156,18 @@ function Login(props) {
               onBlur={loginFormik.handleBlur}
               placeholder="email"
             />
-            {loginFormik.touched.email && loginFormik.errors.email ? (
-              <p style={{ color: "red" }}>{loginFormik.errors.email}</p>
-            ) : null}
-          </Form.Group>
-        </Form.Row>
-        <Form.Row>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          </FormControl>
+          {loginFormik.touched.email && loginFormik.errors.email ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {loginFormik.errors.email}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+        <br />
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Password</InputLabel>
+            <Input
               name="password"
               type="password"
               value={loginFormik.values.password}
@@ -152,30 +175,41 @@ function Login(props) {
               onBlur={loginFormik.handleBlur}
               placeholder="password"
             />
-            {loginFormik.touched.password && loginFormik.errors.password ? (
-              <p style={{ color: "red" }}>{loginFormik.errors.password}</p>
-            ) : null}
-          </Form.Group>
-        </Form.Row>
-        <Form.Row>
-          <Button style={{ marginRight: "5px" }} type="submit">
-            Login
-          </Button>
+          </FormControl>
+          {loginFormik.touched.password && loginFormik.errors.password ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {loginFormik.errors.password}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Login
+        </Button>
 
-          <Button type="Button" style={{}} onClick={loginFormik.handleReset}>
-            Clear
-          </Button>
-          <Button
-            style={{ marginLeft: "4px" }}
-            variant="danger"
-            onClick={() => {
-              cancelLog();
-            }}
-          >
-            Back to Home
-          </Button>
-        </Form.Row>
-      </Form>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="primary"
+          onClick={loginFormik.handleReset}
+        >
+          Clear
+        </Button>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            cancelLog();
+          }}
+        >
+          Back to Home
+        </Button>
+      </form>
       <br />
       <div
         href="#"
@@ -184,36 +218,34 @@ function Login(props) {
       >
         {isLoginView ? "CreateAccount" : "Back to login"}
       </div>
-    </Container>
+    </>
   );
   const componentSignUp = (
-    <Container
-    className="signup-container"
-  
-    >
-      <h1>SignUp</h1>
-
-      <Form onSubmit={signupFormik.handleSubmit}>
-      <Form.Row>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  name="name"
-                  type="text"
-                  value={signupFormik.values.name}
-                  onChange={signupFormik.handleChange}
-                  onBlur={signupFormik.handleBlur}
-                  placeholder="name"
-                />
-                {signupFormik.touched.name && signupFormik.errors.name ? (
-                  <p style={{ color: "red" }}>{signupFormik.errors.name}</p>
-                ) : null}
-              </Form.Group>
-            </Form.Row>
-        <Form.Row>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
+    <React.Fragment>
+      <form onSubmit={signupFormik.handleSubmit}>
+        <FormLabel>Sign Up</FormLabel>
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Name</InputLabel>
+            <Input
+              name="name"
+              type="text"
+              value={signupFormik.values.name}
+              onChange={signupFormik.handleChange}
+              onBlur={signupFormik.handleBlur}
+              placeholder="name"
+            />
+          </FormControl>
+          {signupFormik.touched.name && signupFormik.errors.name ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {signupFormik.errors.name}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Email</InputLabel>
+            <Input
               name="email"
               type="text"
               value={signupFormik.values.email}
@@ -221,15 +253,17 @@ function Login(props) {
               onBlur={signupFormik.handleBlur}
               placeholder="email"
             />
-            {signupFormik.touched.email && signupFormik.errors.email ? (
-              <p style={{ color: "red" }}>{signupFormik.errors.email}</p>
-            ) : null}
-          </Form.Group>
-        </Form.Row>
-        <Form.Row>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          </FormControl>
+          {signupFormik.touched.email && signupFormik.errors.email ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {signupFormik.errors.email}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Password</InputLabel>
+            <Input
               name="password"
               type="password"
               value={signupFormik.values.password}
@@ -237,15 +271,18 @@ function Login(props) {
               onBlur={signupFormik.handleBlur}
               placeholder="password"
             />
-            {signupFormik.touched.password && signupFormik.errors.password ? (
-              <p style={{ color: "red" }}>{signupFormik.errors.password}</p>
-            ) : null}
-          </Form.Group>
-        </Form.Row>
-        <Form.Row>
-          <Form.Group>
-            <Form.Label>Password Confirmation</Form.Label>
-            <Form.Control
+          </FormControl>
+          {signupFormik.touched.password && signupFormik.errors.password ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {signupFormik.errors.password}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+
+        <FormGroup>
+          <FormControl>
+            <InputLabel>Password Confirmation</InputLabel>
+            <Input
               name="passwordConfirmation"
               type="password"
               autoComplete="new-password"
@@ -254,42 +291,51 @@ function Login(props) {
               onBlur={signupFormik.handleBlur}
               placeholder="password confirmation"
             />
-            {signupFormik.touched.passwordConfirmation &&
-            signupFormik.errors.passwordConfirmation ? (
-              <p style={{ color: "red" }}>
-                {signupFormik.errors.passwordConfirmation}
-              </p>
-            ) : null}
-          </Form.Group>
-        </Form.Row>
-        <Form.Row>
-          <Button style={{ marginRight: "5px" }} type="submit">
-            SignUp
-          </Button>
+          </FormControl>
+          {signupFormik.touched.passwordConfirmation &&
+          signupFormik.errors.passwordConfirmation ? (
+            <FormHelperText id="component-error-text" style={{ color: "red" }}>
+              {signupFormik.errors.passwordConfirmation}
+            </FormHelperText>
+          ) : null}
+        </FormGroup>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          SignUp
+        </Button>
 
-          <Button type="Button" style={{}} onClick={signupFormik.handleReset}>
-            Clear
-          </Button>
-          <Button
-            style={{ marginLeft: "4px" }}
-            variant="danger"
-            onClick={() => {
-              cancelLog();
-            }}
-          >
-            Back to Home
-          </Button>
-        </Form.Row>
-      </Form>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="primary"
+          onClick={signupFormik.handleReset}
+        >
+          Clear
+        </Button>
+        <Button
+          className={classes.buttons}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            cancelLog();
+          }}
+        >
+          Back to Home
+        </Button>
+      </form>
       <br />
-      <div
-        href="#"
-        style={{ fontSize: "16px", paddingTop: "5px" }}
+      <a
+        href="#toggle"
+        style={{ fontSize: "16px", paddingTop: "5px", font: "bold" }}
         onClick={toggleView}
       >
         {isLoginView ? "CreateAccount" : "Back to login"}
-      </div>
-    </Container>
+      </a>
+    </React.Fragment>
   );
 
   let revisedLoginSignUp;
@@ -307,7 +353,12 @@ function Login(props) {
     renderComponent = revisedLoginSignUp;
   }
 
-  return <React.Fragment>{renderComponent}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <NavBar />
+      {renderComponent}
+    </React.Fragment>
+  );
 }
 
 export default withCookies(Login);

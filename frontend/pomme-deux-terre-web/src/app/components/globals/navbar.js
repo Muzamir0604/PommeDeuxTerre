@@ -173,6 +173,7 @@ function NavBarHead(props) {
             <MenuItem
               onClick={() => {
                 history.push("/login");
+                history.go(0);
               }}
             >
               Login
@@ -180,6 +181,7 @@ function NavBarHead(props) {
             <MenuItem
               onClick={() => {
                 history.push("/login/?signup=true");
+                history.go(0);
               }}
             >
               SignUp
@@ -295,7 +297,7 @@ function NavBarHead(props) {
               className={classes.title}
               onClick={() => {
                 // navigate("/about");
-                history.push("aboutus");
+                history.replace("/aboutus");
               }}
             >
               <Typography variant="h6" noWrap className={classes.title}>

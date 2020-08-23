@@ -10,10 +10,9 @@ import {
   ListItemText,
   Collapse,
   IconButton,
-  ExpandLess,
 } from "@material-ui/core";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+// import InboxIcon from "@material-ui/icons/MoveToInbox";
+// import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import SettingsRemoteIcon from "@material-ui/icons/SettingsRemote";

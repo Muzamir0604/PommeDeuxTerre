@@ -16,10 +16,8 @@ import Post from "./app/containers/post";
 import About from "./app/containers/about";
 import PostForm from "./app/containers/post-form";
 import { ThemeProvider } from "@material-ui/core/styles";
-import Navbar from "./app/components/globals/navbar";
 import { Grid } from "@material-ui/core";
 import theme from "./app/styles/theme";
-import { makeStyles } from "@material-ui/styles";
 import Ads from "./app/components/globals/ads";
 import Footer from "./app/components/globals/footer";
 // import EditLayout from "./app/containers/edit";
@@ -28,14 +26,6 @@ import Footer from "./app/components/globals/footer";
 // dont forget to install react-router-dom
 // and react-cookie
 // https://stackoverflow.com/questions/32616844/git-how-to-push-a-subdirectory-to-a-separate-branch-of-the-same-repository
-const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: "#F5F5F5",
-  },
-  top: {
-    marginTop: "3em",
-  },
-}));
 
 const routing = (
   <BrowserRouter>
