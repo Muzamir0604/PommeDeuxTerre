@@ -23,10 +23,11 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 
+import SideMenu from "./sidemenu";
 import "../../styles/globals/navbar.css";
 
 // https://www.w3schools.com/bootstrap/bootstrap_ref_comp_navs.asp
-
+//  FIXME: ANCHORORIGIN TOP RIGHT not working at the moment
 const useStyles = makeStyles((theme) => ({
   categoryMenuItem: {
     "&:focus": {
@@ -268,6 +269,7 @@ function NavBarHead(props) {
                 Apple Two Earth
               </Typography>
             </MenuItem>
+            <SideMenu categories={CatshortList} />
             <MenuItem
               className={classes.title}
               onClick={() => {

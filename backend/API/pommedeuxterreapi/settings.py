@@ -15,13 +15,15 @@ from decouple import config, Csv
 from dj_database_url import parse as dburl
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TESTING_MODE = config('TESTING_MODE', cast=bool, default=False)
+# TESTING_MODE = config('TESTING_MODE', cast=bool, default=False)
+TESTING_MODE = True
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=False)
 
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['127.0.0.1']
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
 CORS_ORIGIN_WHITELIST = 'http://localhost:3000', 'http://192.168.56.1:3000', 'http://127.0.0.1:8000', 'http://10.10.153.8', 'https://pommedeuxterre-3bd49.web.app', 'https://pommedeuxterre-3bd49.firebaseapp.com'
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', cast=str)
@@ -94,8 +96,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pommedeuxterreapi.wsgi.application'
 
-
-MEDIA_PATH = 'media_test' if TESTING_MODE else 'image'
+MEDIA_PATH = ''
+# MEDIA_PATH = 'media_test' if TESTING_MODE else 'image'
+if TESTING_MODE:
+    MEDIA_PATH = 'media_test'
+else:
+    MEDIA_PATH = 'image'
+print(MEDIA_PATH)
 
 MEDIA_ROOT = os.path.join(
     BASE_DIR, MEDIA_PATH
@@ -167,21 +174,20 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-STATICFILES_STORAGE = config('STATICFILES_STORAGE', cast=str)
+# STATICFILES_STORAGE = config('STATICFILES_STORAGE', cast=str)
 
 # AWS Settings
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = config('AWS_LOCATION')
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE', cast=str)
-
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_LOCATION = config('AWS_LOCATION')
+# AWS_DEFAULT_ACL = None
+# DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE', cast=str)
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 ROOT_URLCONF = config('URL_CONF', cast=str)
 
