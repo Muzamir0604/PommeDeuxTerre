@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
 import { Image } from "react-bootstrap";
 
@@ -95,7 +95,7 @@ function NavBarHead(props) {
   let history = useHistory();
 
   const dispatch = useDispatch();
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(fetchShortList());
     // eslint-disable-next-line
   }, []);
@@ -257,6 +257,7 @@ function NavBarHead(props) {
 
   return (
     <div className={classes.grow}>
+      {console.log("DIV", CatshortList)}
       {CatshortList ? (
         <AppBar className={classes.AppBar}>
           <Toolbar>

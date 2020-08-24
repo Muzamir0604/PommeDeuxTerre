@@ -5,16 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { fetchCategory } from "../actions/categoryAction";
 import NavBarHead from "../components/globals/navbar";
-import { Row, Col, Jumbotron, Container, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Star from "../components/globals/star";
-import ImageCarousel from "../components/globals/oneImageCarousel";
-import "../styles/container/category.css";
-import Tags from "../components/tag";
-
+// import Pagination from "@material-ui/lab/Pagination";
+import { Grid } from "@material-ui/core";
+import CardPost from "../components/card";
 // https://stackoverflow.com/questions/54843675/componentwillreceiveprops-componentdidupdate-for-react-hook
+// Work on pagination with django
+// https://www.django-rest-framework.org/api-guide/pagination/
+// https://material-ui.com/components/pagination/
+// FIXME: Add pagination for this page
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Category(props) {
+  // const slug = props.slug;
   const dispatch = useDispatch();
 
   function useQuery() {
@@ -41,42 +43,30 @@ function Category(props) {
     <React.Fragment>
       <NavBarHead />
 
-      <div className="container">
+      <Grid container spacing={2}>
         {undefined !== CategoryData && CategoryData.length
           ? CategoryData.map((post) => {
               return (
-                <Jumbotron key={post.id}>
-                  <Container>
-                    <Row>
-                      <Col sm={8} style={{ order: 1 }}>
-                        <Link key={post.id} to={"/posts/" + post.id}>
-                          <h3>{post.title}</h3>
-                        </Link>
-                        <Star star={post.avg_rating} />
-                        <p className="numReview">({post.no_of_reviews})</p>
-                        <hr />
-                        <p>{post.description}</p>
-                        <Tags tags={post.tags} count={post.tags.length} />
-                        <p>Written by: {post.user.name}</p>
-                      </Col>
-                      <Col className="image-col" style={{ order: 2 }}>
-                        {undefined !== post.post_images &&
-                        post.post_images.length ? (
-                          <ImageCarousel images={post.post_images} />
-                        ) : (
-                          <Card.Img
-                            className=""
-                            src={require("../../assets/blog/castle.png")}
-                          />
-                        )}
-                      </Col>
-                    </Row>
-                  </Container>
-                </Jumbotron>
+                <Grid item xs={12} sm={4} key={post.id}>
+                  <CardPost
+                    data={{
+                      navigation: `/posts/${post.id}`,
+                      title: post.title,
+                      description: post.description,
+                      image: post.post_images[0].image,
+                      user: post.user.name,
+                      updated_date: new Date(post.updated_at),
+                      created_date: new Date(post.created_at),
+                      tags: post.tags,
+                      reviewStarsAvg: post.avg_rating,
+                      reviewCount: post.no_of_reviews,
+                    }}
+                  />
+                </Grid>
               );
             })
           : null}
-      </div>
+      </Grid>
     </React.Fragment>
   );
 }

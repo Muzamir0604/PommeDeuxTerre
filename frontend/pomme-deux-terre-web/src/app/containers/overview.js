@@ -4,19 +4,17 @@ import CardCarousel from "../components/post-carousel";
 import { Link } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import Search from "./search";
+import { useSelector } from "react-redux";
 
-// FIXME : create material ui version, refer to coffeecard, tag, star, carousel, overview.js
-function Overview(props) {
+function Overview() {
+  const shortList = useSelector((state) => state.categoryReducer.shortList);
+
   const authorized = (
     <React.Fragment>
-      <Box
-        style={{
-          paddingTop: "3em",
-        }}
-      >
+      <Box>
         <Search />
-        {undefined !== props.shortList && props.shortList.length
-          ? props.shortList.map((category) => {
+        {undefined !== shortList && shortList.length
+          ? shortList.map((category) => {
               let CatList = (
                 <React.Fragment>
                   <Box key={category.id} style={{ paddingBottom: "10px" }}>

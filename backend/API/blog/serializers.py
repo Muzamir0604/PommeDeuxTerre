@@ -141,10 +141,10 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'description', 'post_images', 'category',
                   'no_of_reviews', 'avg_rating', 'post_reviews', 'user',
-                  'post_recipes', 'is_published', 'tags')
+                  'post_recipes', 'is_published', 'tags', 'created_at', 'updated_at')
         read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
                             'post_reviews', 'post_recipes', 'post_images'
-                            'tags')
+                            'tags', 'created_at')
 
 
 class FilteredPostSerializer(serializers.ListSerializer):

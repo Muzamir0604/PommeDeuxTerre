@@ -4,10 +4,8 @@ import { withCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPost } from "../actions/postActions";
 import NavBarHead from "../components/globals/navbar";
-import PageFooter from "../components/globals/footer";
 import Star from "../components/globals/star";
 import ImageCarousel from "../components/globals/oneImageCarousel";
-import AdsColumn from "../components/globals/ads";
 
 import {
   Row,

@@ -10,7 +10,6 @@ import {
   Input,
   InputLabel,
   Button,
-  Grid,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -33,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     margin: theme.spacing(1),
     marginLeft: theme.spacing(0),
-  },
-  container: {
-    paddingTop: "3em",
   },
 }));
 
@@ -146,7 +142,7 @@ function Login(props) {
   const redirected = <Redirect to="/" />;
   const componentLogin = (
     <>
-      <form onSubmit={loginFormik.handleSubmit} className={classes.container}>
+      <form onSubmit={loginFormik.handleSubmit}>
         <FormLabel>
           <Typography variant="h4">Login</Typography>
         </FormLabel>
@@ -227,7 +223,7 @@ function Login(props) {
   );
   const componentSignUp = (
     <React.Fragment>
-      <form onSubmit={signupFormik.handleSubmit} className={classes.container}>
+      <form onSubmit={signupFormik.handleSubmit}>
         <FormLabel>
           <Typography variant="h4">Sign Up</Typography>
         </FormLabel>
