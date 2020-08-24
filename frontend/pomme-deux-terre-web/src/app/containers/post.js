@@ -22,7 +22,7 @@ import {
 import ReviewCard from "../components/review";
 import RecipeCard from "../components/recipe";
 import Tags from "../components/tag";
-import Brief from "../components/recipe/recipe-brief"
+import Brief from "../components/recipe/recipe-brief";
 import ReviewForm from "./review-form";
 import "../styles/container/post.css";
 
@@ -60,94 +60,85 @@ function Post(props) {
   return (
     <React.Fragment>
       <NavBarHead />
-      <Row>
-        <AdsColumn />
-        <Col sm={8}>
-          <div>
-            <Jumbotron fluid key={post.id}>
-              <Container>
-                <Row className="row-post-primary">
-                  <Col className="recipe-info" sm={8}>
-                    <h1 key={post.id}>{post.title}</h1>
-                    <p>{post.description}</p>
-                    <Row>
-                      <Col sm={7}>
-                        <p>
-                          Average Rating: <Star star={post.avg_rating} /> (
-                          {post.no_of_reviews}){" "}
-                        </p>
-                        {post.user ? <p>Written by: {post.user.name}</p> : null}
-                      </Col>
-                      <Col className="recipe-detail" sm={5}>
-                        {undefined !== post.post_recipes &&
-                        post.post_recipes.length ? (
-                          <Brief cooktime={cooktime} preptime={preptime} serving={serving}/>
-                        ) : null}
-                      </Col>
-                    </Row>
-                    {undefined !== post.tags && post.tags.length ? (
-                      <Tags tags={post.tags} count={post.tags.length} />
+      <div>
+        <Jumbotron fluid key={post.id}>
+          <Container>
+            <Row className="row-post-primary">
+              <Col className="recipe-info" sm={8}>
+                <h1 key={post.id}>{post.title}</h1>
+                <p>{post.description}</p>
+                <Row>
+                  <Col sm={7}>
+                    <p>
+                      Average Rating: <Star star={post.avg_rating} /> (
+                      {post.no_of_reviews}){" "}
+                    </p>
+                    {post.user ? <p>Written by: {post.user.name}</p> : null}
+                  </Col>
+                  <Col className="recipe-detail" sm={5}>
+                    {undefined !== post.post_recipes &&
+                    post.post_recipes.length ? (
+                      <Brief
+                        cooktime={cooktime}
+                        preptime={preptime}
+                        serving={serving}
+                      />
                     ) : null}
                   </Col>
-
-                  <Col className="image-card">
-                    {undefined !== post.post_images &&
-                    post.post_images.length ? (
-                      <ImageCarousel images={post.post_images} />
-                    ) : (
-                      <Card.Img
-                        className="image-card-src"
-                        src={require("../../assets/blog/castle.png")}
-                      />
-                    )}
-                  </Col>
                 </Row>
-                <Row>
-                  {undefined !== post.post_recipes &&
-                  post.post_recipes.length ? (
-                    <RecipeCard recipes={post.post_recipes} />
-                  ) : null}
-                </Row>
-              </Container>
-            </Jumbotron>
-          </div>
+                {undefined !== post.tags && post.tags.length ? (
+                  <Tags tags={post.tags} count={post.tags.length} />
+                ) : null}
+              </Col>
 
-          <div>
-            {props.cookies.get("token") ? (
-              <Accordion defaultActiveKey="1">
-                <Card>
-                  <Card.Header>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="primary"
-                      eventKey="0"
-                    >
-                      Rate Me !
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      <ReviewForm reviews={reviews.data[0]} />
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-            ) : null}
+              <Col className="image-card">
+                {undefined !== post.post_images && post.post_images.length ? (
+                  <ImageCarousel images={post.post_images} />
+                ) : (
+                  <Card.Img
+                    className="image-card-src"
+                    src={require("../../assets/blog/castle.png")}
+                  />
+                )}
+              </Col>
+            </Row>
+            <Row>
+              {undefined !== post.post_recipes && post.post_recipes.length ? (
+                <RecipeCard recipes={post.post_recipes} />
+              ) : null}
+            </Row>
+          </Container>
+        </Jumbotron>
+      </div>
 
-            <Jumbotron fluid key={post.id}>
-              {undefined !== post.post_reviews && post.post_reviews.length ? (
-                <ReviewCard reviews={post.post_reviews} />
-              ) : (
-                <Container>
-                  <p>No reviews</p>
-                </Container>
-              )}
-            </Jumbotron>
-          </div>
-        </Col>
-        <AdsColumn />
-      </Row>
-      <PageFooter />
+      <div>
+        {props.cookies.get("token") ? (
+          <Accordion defaultActiveKey="1">
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="primary" eventKey="0">
+                  Rate Me !
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <ReviewForm reviews={reviews.data[0]} />
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+        ) : null}
+
+        <Jumbotron fluid key={post.id}>
+          {undefined !== post.post_reviews && post.post_reviews.length ? (
+            <ReviewCard reviews={post.post_reviews} />
+          ) : (
+            <Container>
+              <p>No reviews</p>
+            </Container>
+          )}
+        </Jumbotron>
+      </div>
     </React.Fragment>
   );
 }

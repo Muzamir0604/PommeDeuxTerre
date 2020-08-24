@@ -143,10 +143,8 @@ class PostSerializer(serializers.ModelSerializer):
                   'no_of_reviews', 'avg_rating', 'post_reviews', 'user',
                   'post_recipes', 'is_published', 'tags')
         read_only_fields = ('id', 'no_of_reviews', 'avg_rating',
-                            'post_reviews', 'post_recipes','post_images'
+                            'post_reviews', 'post_recipes', 'post_images'
                             'tags')
-
-
 
 
 class FilteredPostSerializer(serializers.ListSerializer):
@@ -165,7 +163,7 @@ class LimitedPostSerializer(serializers.ModelSerializer):
         list_serializer_class = FilteredPostSerializer
         model = Post
         fields = ('id', 'title', 'description', 'post_images', 'user',
-                  'no_of_reviews', 'avg_rating', 'created_at', 'post_reviews', 'tags')
+                  'no_of_reviews', 'avg_rating', 'created_at', 'updated_at', 'post_reviews', 'tags')
 
 
 class CategorySerializer(serializers.ModelSerializer):

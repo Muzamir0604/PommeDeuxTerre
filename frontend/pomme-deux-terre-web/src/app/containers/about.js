@@ -10,7 +10,13 @@ function About() {
   return (
     <React.Fragment>
       <NavBarHead />
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        style={{
+          paddingTop: "3em",
+        }}
+      >
         <Grid item xs={12} style={{ paddingTop: "10px" }}>
           <h4>Our vision</h4>
           <p style={{ display: "inline", margin: "10px 2px" }}>

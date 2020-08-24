@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import Search from "./search";
 
+// FIXME : create material ui version, refer to coffeecard, tag, star, carousel, overview.js
 function Overview(props) {
   const authorized = (
     <React.Fragment>
-      <Box>
+      <Box
+        style={{
+          paddingTop: "3em",
+        }}
+      >
         <Search />
         {undefined !== props.shortList && props.shortList.length
           ? props.shortList.map((category) => {

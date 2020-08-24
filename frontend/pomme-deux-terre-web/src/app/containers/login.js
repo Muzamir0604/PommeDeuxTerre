@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withCookies, useCookies } from "react-cookie";
-import { Form, Container } from "react-bootstrap";
 import NavBar from "../components/globals/navbar";
 
 import {
@@ -12,6 +11,7 @@ import {
   InputLabel,
   Button,
   Grid,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     margin: theme.spacing(1),
     marginLeft: theme.spacing(0),
+  },
+  container: {
+    paddingTop: "3em",
   },
 }));
 
@@ -143,8 +146,10 @@ function Login(props) {
   const redirected = <Redirect to="/" />;
   const componentLogin = (
     <>
-      <form onSubmit={loginFormik.handleSubmit}>
-        <FormLabel>Login</FormLabel>
+      <form onSubmit={loginFormik.handleSubmit} className={classes.container}>
+        <FormLabel>
+          <Typography variant="h4">Login</Typography>
+        </FormLabel>
         <FormGroup>
           <FormControl>
             <InputLabel>Email</InputLabel>
@@ -222,8 +227,10 @@ function Login(props) {
   );
   const componentSignUp = (
     <React.Fragment>
-      <form onSubmit={signupFormik.handleSubmit}>
-        <FormLabel>Sign Up</FormLabel>
+      <form onSubmit={signupFormik.handleSubmit} className={classes.container}>
+        <FormLabel>
+          <Typography variant="h4">Sign Up</Typography>
+        </FormLabel>
         <FormGroup>
           <FormControl>
             <InputLabel>Name</InputLabel>
@@ -319,7 +326,7 @@ function Login(props) {
         <Button
           className={classes.buttons}
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={() => {
             cancelLog();
           }}

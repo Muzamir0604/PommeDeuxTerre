@@ -1,26 +1,29 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
-import styles from "../../styles/blog/review-form.module.css";
+import { makeStyles } from "@material-ui/core/styles";
+import Rating from "@material-ui/lab/Rating";
 
-const renderStar = (isFull) => {
-  const icon = isFull ? faStar : regularStar;
-  return <FontAwesomeIcon icon={icon} size="lg" />;
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0px 0px",
+    margin: "0px 0px",
+  },
+});
+
+const HoverRating = ({ value }) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Rating
+        name="hover-feedback"
+        value={value}
+        precision={0.5}
+        readOnly={true}
+      />
+    </div>
+  );
 };
 
-const Star = ({ isFull, onClick }) => (
-  <span className={styles.star} onClick={onClick}>
-    {renderStar(isFull)}
-  </span>
-);
-
-const Stars = ({ count, handleClick }) => (
-  <span className={styles.stars}>
-    {[...Array(5).keys()].map((i) => (
-      <Star key={i} isFull={i < count} onClick={() => handleClick(i + 1)} />
-    ))}
-  </span>
-);
-
-export default Stars;
+export default HoverRating;
