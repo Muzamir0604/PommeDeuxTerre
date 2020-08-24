@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
   carousel: {
     margin: "10px 0px",
-    height: "100%",
+    height: "200px",
   },
 });
 function CardCarousel(props) {
@@ -42,6 +42,7 @@ function CardCarousel(props) {
         responsive={responsive}
         draggable
         showDots
+        swipeable
       >
         {props.posts.map((post, key) => {
           return (

@@ -22,6 +22,15 @@ import capitalize from "../utils/textTransformer";
 const useStyles = makeStyles((theme) => ({
   root: {
     // minWidth: 275,
+    marginBottom: "2em",
+    boxShadow: `-webkit-box-shadow: 10px 13px 5px -10px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 13px 5px -10px rgba(0,0,0,0.75);
+box-shadow: 10px 13px 5px -10px rgba(0,0,0,0.75);`,
+    "&:hover, &:focus": {
+      boxShadow: `-webkit-box-shadow: 10px 13px 5px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 13px 5px -2px rgba(0,0,0,0.75);
+box-shadow: 10px 13px 5px -2px rgba(0,0,0,0.75);`,
+    },
   },
   bullet: {
     display: "inline-block",
@@ -100,7 +109,6 @@ function CardPost(props) {
           </Typography>
           <Divider />
           <Typography variant="body2" component="p">
-            {description}
             <br />
             {'"a benevolent smile"'}
           </Typography>
