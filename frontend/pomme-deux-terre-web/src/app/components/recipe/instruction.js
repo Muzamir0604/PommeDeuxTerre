@@ -1,19 +1,22 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/recipe.css";
+import { Typography } from "@material-ui/core";
 
+//TODO: increase size of ordered list number
+// https://stackoverflow.com/questions/7990429/how-to-control-size-of-list-style-type-disc-in-css
 function Instruction(props) {
   return (
     <React.Fragment>
-  
-      <h5>Instructions</h5>
-      <ol style={{paddingLeft: "1em"}}>
+      <Typography variant="h5">Instructions</Typography>
+      <ol style={{ paddingLeft: "1em" }}>
         {props.instructions.map((instruction) => {
-          return <li key={instruction.id}>{instruction.title}</li>;
+          return (
+            <li key={instruction.id}>
+              <Typography variant="body1">{instruction.title}</Typography>
+            </li>
+          );
         })}
       </ol>
-  
-      </React.Fragment>
+    </React.Fragment>
   );
 }
 

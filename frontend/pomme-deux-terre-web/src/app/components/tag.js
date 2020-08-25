@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles((theme) => ({
   tags: {
     justifyContent: "space-between",
-    fontSize: "12px",
+    fontSize: "14px",
     margin: "2px",
     marginTop: "4px",
     marginBottom: "4px",

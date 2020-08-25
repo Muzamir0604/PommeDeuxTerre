@@ -1,46 +1,58 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Row, Col, Container } from "react-bootstrap";
 import Instruction from "./recipe/instruction";
 import Ingredient from "./recipe/ingredient";
-import "../styles/recipe.css";
+import { Paper, Grid, Card, Typography, Divider } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 
+const useStyles = makeStyles((theme) => ({
+  text: {
+    margin: "1em",
+  },
+  container: {
+    padding: "2em 2em",
+  },
+  recipeContainer: {
+    padding: "1em 2em 1em",
+  },
+}));
 function RecipeCard(props) {
-  // const history = useHistory();
+  const classes = useStyles();
   return (
     <React.Fragment>
-      <Container>
-        <h4>Recipe</h4>
-
+      <Grid container className={classes.container}>
+        <Grid item xs={12}>
+          <Typography variant="h4">Recipe</Typography>
+          <Divider />
+        </Grid>
         {props.recipes.map((recipe) => {
           return (
-            <Card key={recipe.id} className="recipe-card">
-              <Container>
-                <Row className="justify-content-md-center">
-                  <Col>
-                    <hr />
-                    <h5>{recipe.name}</h5>
-                    <hr />
-                  </Col>
-                </Row>
-                <Row
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                     <Col style={{flexBasis:"30%"}}>
-                    <Ingredient ingredients={recipe.recipe_ingredients} />
-                  </Col>
-                  <Col style={{flexBasis:"70%"}}>
-                    <Instruction instructions={recipe.recipe_instructions} />
-                  </Col>
-               
-                </Row>
-              </Container>
-            </Card>
+            <React.Fragment>
+              <Grid
+                container
+                key={recipe.id}
+                className={classes.recipeContainer}
+                spacing={1}
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h5"
+                    style={{ textDecoration: "underline" }}
+                  >
+                    {recipe.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Instruction instructions={recipe.recipe_instructions} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Ingredient ingredients={recipe.recipe_ingredients} />
+                </Grid>
+              </Grid>
+              <Divider />
+            </React.Fragment>
           );
         })}
-      </Container>
+      </Grid>
     </React.Fragment>
   );
 }

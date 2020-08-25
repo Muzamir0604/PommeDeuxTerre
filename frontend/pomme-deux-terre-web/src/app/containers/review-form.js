@@ -12,6 +12,7 @@ import {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// TODO: Replace with material ui
 const SignupSchema = Yup.object().shape({
   stars: Yup.number()
     .min(0, "Too Short!")
@@ -49,7 +50,6 @@ const ReviewForm = (props) => {
   }, [state]);
 
   const reviewinit = { ...props.reviews };
-
 
   return (
     <section>
