@@ -107,7 +107,7 @@ export default function SwipeableTemporaryDrawer(props) {
         </ListItem>
         <Collapse in={cat} component="li" timeout="auto" unmountOnExit>
           <List disablePadding>
-            {undefined !== props.categories || props.categories.length === 0
+            {undefined !== props.categories && props.categories.length === 0
               ? props.categories.map((category, key) => {
                   return (
                     <ListItem

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { withCookies, useCookies } from "react-cookie";
 import { Image } from "react-bootstrap";
 
@@ -257,7 +257,6 @@ function NavBarHead(props) {
 
   return (
     <div className={classes.grow}>
-      {console.log("DIV", CatshortList)}
       {CatshortList ? (
         <AppBar className={classes.AppBar}>
           <Toolbar>
@@ -337,7 +336,7 @@ function NavBarHead(props) {
                   horizontal: "center",
                 }}
               >
-                {undefined !== CatshortList || CatshortList.length
+                {undefined !== CatshortList && CatshortList.length
                   ? CatshortList.map((category) => {
                       return (
                         <MenuItem
