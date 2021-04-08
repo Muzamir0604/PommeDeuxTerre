@@ -30,7 +30,7 @@ python-decouple = "*"
 boto3 = "*"
 django-storages = "*"
 django-resized = "*"
-django = "==3.0.7"
+django = "==3.0.14"
 django-allauth = "*"
 django-rest-auth = {extras = ["with_social"],version = "*"}
 
